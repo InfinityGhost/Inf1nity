@@ -11,7 +11,7 @@
             <ColumnDefinition Width="18"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
+        <Rectangle Width="1" Height="16" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" HorizontalAlignment="Left" Margin="-3,0,0,0"/>
         <Ellipse Width="14" Height="14"
                  VerticalAlignment="Center" HorizontalAlignment="Center"
                  Stroke="Black" StrokeThickness="1">

@@ -29,7 +29,13 @@ namespace Inf1nity_Manager.Windows
 
         void CopyTagButton(object sender, RoutedEventArgs e) => Clipboard.SetText((string)DiscordTag.Content);
         void OpenDevDiscord(object sender, RoutedEventArgs e) => Process.Start(Information.Discord.DevLink);
-            
+
+        #endregion
+
+        #region Version Context Menu
+
+        void ChangeLogButton(object sender, RoutedEventArgs e) => Process.Start(Information.GitHub + "/releases/tag/v" + Version.Content);
+
         #endregion
 
         #region Website Context Menu

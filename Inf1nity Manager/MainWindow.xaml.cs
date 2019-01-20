@@ -31,7 +31,7 @@ namespace Inf1nity_Manager
 
         #region Window Events
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Console.Updated += StatusBar.Update;
             try
@@ -45,6 +45,9 @@ namespace Inf1nity_Manager
                 System.Diagnostics.Debug.WriteLine("No defaults found, using an empty config file.");
                 System.Diagnostics.Process.Start(DefaultConfigPath);
             }
+
+            await TrayIcon.Initialize();
+            TrayIcon.ShowWindow += TrayIcon_ShowWindow;
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -52,6 +55,26 @@ namespace Inf1nity_Manager
             Bot?.Stop();
             Hide();
             Environment.Exit(0x0);
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Minimized:
+                    {
+                        ShowInTaskbar = false;
+                        TrayIcon.Visible = true;
+                        Hide();
+                        break;
+                    }
+                case WindowState.Normal:
+                    {
+                        ShowInTaskbar = true;
+                        TrayIcon.Visible = false;
+                        break;
+                    }
+            }
         }
 
         #endregion
@@ -140,6 +163,18 @@ namespace Inf1nity_Manager
         {
             Config = (sender as Windows.Login).Config;
         }
+
+        #endregion
+
+        #region Tray Icon
+
+        private void TrayIcon_ShowWindow(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = WindowState.Normal;
+        }
+
+        private TrayIcon TrayIcon = new TrayIcon();
 
         #endregion
     }
