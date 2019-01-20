@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Inf1nity_Manager.Controls.CommandProcessor" Name="ControlRoot"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Inf1nity_Manager.Controls"
+             mc:Ignorable="d" 
+             d:DesignWidth="800" d:DesignHeight="24">
+    <TextBox DataContext="{Binding ElementName=ControlRoot}" Text="{Binding Buffer}" 
+             PreviewKeyDown="BufferKeyDown"
+             VerticalContentAlignment="Center"/>
+</UserControl>

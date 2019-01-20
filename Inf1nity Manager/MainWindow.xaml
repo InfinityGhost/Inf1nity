@@ -1,0 +1,92 @@
+﻿<Window xmlns:Controls="clr-namespace:Inf1nity_Manager.Controls"  x:Class="Inf1nity_Manager.MainWindow" Name="WindowRoot"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inf1nity_Manager"
+        mc:Ignorable="d"
+        Title="Inf1nity Manager" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" Closing="Window_Closing"
+        Width="800" Height="600">
+    <Grid DataContext="{Binding ElementName=WindowRoot}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition/>
+            <RowDefinition Height="18"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0">
+            <Menu.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,-2,-2,-2"/>
+                    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                    <Setter Property="FontSize" Value="18"/>
+                </Style>
+            </Menu.Resources>
+            
+            <MenuItem Header="File">
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Bot">
+                <MenuItem Click="BotStart">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xE768;"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Style>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Header" Value="Start"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Bot.Running}" Value="True">
+                                    <Setter Property="Header" Value="Stop"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+                <MenuItem Header="Login..." Click="LoginButton">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xE77B;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Console">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <Controls:Console x:Name="Console"/>
+                    <Grid Grid.Row="1" Margin="10,0" Name="BottomCommand">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Height" Value="24"/>
+                                    <Setter Property="Padding" Value="5,0"/>
+                                    <Setter Property="Margin" Value="2.5,0"/>
+                                </Style>
+                            </StackPanel.Resources>
+
+                        </StackPanel>
+                        <Controls:CommandProcessor CommandRun="CommandProcessor_CommandRun" Height="24"/>
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            
+            <Controls:Status x:Name="StatusBar" VerticalAlignment="Bottom"/>
+            <Controls:BotStatus Grid.Column="1" Active="{Binding Path=Bot.Connected}"/>
+        </Grid>
+    </Grid>
+</Window>
