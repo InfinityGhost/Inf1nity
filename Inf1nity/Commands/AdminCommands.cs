@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,11 @@ namespace Inf1nity.Commands
 {
     public class AdminCommands : ModuleBase
     {
-        #region Local methods
+        #region Local methods and properties
 
         public static int Delay = 2500;
 
-        public async void Reply(string message)
+        public async void CommandResponse(string message)
         {
             if (!string.IsNullOrWhiteSpace(message))
             {
@@ -31,7 +32,7 @@ namespace Inf1nity.Commands
         public async Task Delete([Remainder, Summary("Amount of messages")] int count)
         {
             await Context.Message.DeleteAsync();
-            string reply = null;
+            string response = null;
 
             var permissions = (Context.User as SocketGuildUser).GuildPermissions;
             if (permissions.Administrator || permissions.ManageMessages)
@@ -41,14 +42,14 @@ namespace Inf1nity.Commands
                 messages.DeleteAll(Context);
 
                 if (messages.Count() > 0)
-                    reply = $"Deleted {messages.Count()} messages.";
+                    response = $"Deleted {messages.Count()} messages.";
             }
             else
             {
-                reply = "Error: You lack permissions to manage messages.";
+                response = "Error: You lack permissions to manage messages.";
             }
 
-            Reply(reply);
+            CommandResponse(response);
         }
 
         [Command("del"), Summary("Deletes messages.")]
@@ -63,7 +64,27 @@ namespace Inf1nity.Commands
                 await message.First().DeleteAsync();
             }
             else
-                Reply("Error: You lack permissions to manage messages.");
+                CommandResponse("Error: You lack permissions to manage messages.");
+        }
+
+        [Command("announce"), Summary("Announces a string of text, mentions @everyone.")]
+        public async Task Announce([Remainder, Summary("The text to announce")] string announcement)
+        {
+            await Context.Message.DeleteAsync();
+            await ReplyAsync("**Announcement** @everyone " + Environment.NewLine + announcement);
+        }
+
+        [Command("vote"), Summary("Creates a vote, mentions @everyone.")]
+        public async Task Vote([Remainder, Summary("The text to vote on.")] string content)
+        {
+            await Context.Message.DeleteAsync();
+            var voteMessage = await ReplyAsync("**Vote** @everyone" + Environment.NewLine + content);
+
+            await voteMessage.AddReactionsAsync(new Emoji[]
+            {
+                new Emoji("👍"),
+                new Emoji("👎"),
+            });
         }
     }
 }
