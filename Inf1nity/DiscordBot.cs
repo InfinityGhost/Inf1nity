@@ -19,6 +19,11 @@ namespace Inf1nity
         public DiscordBot(string token)
         {
             Token = token;
+
+            AppDomain currentDomain = default;
+            currentDomain = AppDomain.CurrentDomain;
+            // Handler for unhandled exceptions.
+            currentDomain.UnhandledException += GlobalUnhandledExceptionHandler;
         }
 
         #region Properties & Event
@@ -134,7 +139,7 @@ namespace Inf1nity
         private Task HandleOutput(SocketMessage arg)
         {
             if (arg.Channel is SocketGuildChannel guildChannel)
-                HandleOutput($"{guildChannel.Guild.Name}/#{arg.Channel}/{arg.Author}/{arg.Content}");
+                HandleOutput($"{guildChannel.Guild.Name}/#{arg.Channel}/@{arg.Author}/{arg.Content}");
             else if (arg.Channel is SocketGroupChannel groupChannel)
                 HandleOutput($"{groupChannel.Name}/{arg.Author}/{arg.Content}");
             else
@@ -175,5 +180,29 @@ namespace Inf1nity
         }
 
         #endregion
+
+        #region Unhandled Exception Handling
+
+        private void GlobalUnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = default;
+            ex = (Exception)e.ExceptionObject;
+
+            var crashDump = new List<string>
+            {
+                $"Exception occured at {DateTime.Now}",
+                $"Source: {ex.Source}",
+                $"Message: {ex.Message}",
+                $"HelpLink: {ex.HelpLink}",
+                $"StackTrace ---{Environment.NewLine}{ex.StackTrace}",
+                $"TargetSite: {ex.TargetSite.Name}",
+                $"HResult: {ex.HResult}",
+            };
+
+            System.IO.File.WriteAllLines(System.IO.Directory.GetCurrentDirectory() + "\\crashlog" + ".log", crashDump);
+        }
+
+        #endregion
+
     }
 }
