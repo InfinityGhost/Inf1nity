@@ -1,12 +1,12 @@
-﻿<Window x:Class="Inf1nity_Manager.Windows.Login"
+﻿<Window x:Class="Inf1nity_Manager.Windows.Login" Name="Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inf1nity_Manager.Windows"
-        mc:Ignorable="d" SizeToContent="Height"
+        mc:Ignorable="d" SizeToContent="Height" WindowStartupLocation="CenterScreen"
         Title="Login" Width="300">
-    <Grid>
+    <Grid DataContext="{Binding ElementName=Window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition/>
@@ -35,7 +35,7 @@
 
         <StackPanel Grid.Row="1">
             <GroupBox Header="Discord Bot Token">
-                <TextBox x:Name="TokenBox"/>
+                <TextBox Text="{Binding Path=Config.Token}"/>
             </GroupBox>
         </StackPanel>
 

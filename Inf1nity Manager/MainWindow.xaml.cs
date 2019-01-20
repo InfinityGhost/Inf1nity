@@ -51,6 +51,7 @@ namespace Inf1nity_Manager
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             Bot?.Stop();
+            Hide();
             Environment.Exit(0x0);
         }
 
@@ -116,12 +117,8 @@ namespace Inf1nity_Manager
                 Bot?.Stop();
         }
 
-        private void LoginButton(object sender, RoutedEventArgs e)
-        {
-            var loginwindow = new Windows.Login(Config);
-            Config = loginwindow.Config;
-        }
+        private void LoginButton(object sender, RoutedEventArgs e) => new Windows.Login(Config);
 
-        #endregion        
+        #endregion
     }
 }

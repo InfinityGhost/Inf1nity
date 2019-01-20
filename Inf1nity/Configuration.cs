@@ -13,10 +13,17 @@ namespace Inf1nity
     public class Configuration : INotifyPropertyChanged
     {
         public Configuration() { }
-
         public Configuration(string path) : this() => Load(path);
 
-        string _token = string.Empty;
+        #region Properties
+
+        private string Path { set; get; }
+
+        #endregion
+
+        #region Settings
+
+        private string _token = string.Empty;
         public string Token
         {
             set
@@ -27,12 +34,23 @@ namespace Inf1nity
             get => _token;
         }
 
+        #endregion
+
         #region Management
 
         public void Load(string path)
         {
             var content = File.ReadAllLines(path);
             Token = content.Fetch("token");
+            Path = path;
+        }
+
+        public void Save()
+        {
+            if (!string.IsNullOrWhiteSpace(Path))
+                Save(Path);
+            else
+                throw new Exception("No default path.");
         }
 
         public void Save(string path)
@@ -41,6 +59,7 @@ namespace Inf1nity
             {
                 $"token:{Token}",
             });
+            Path = path;
         }
 
         #endregion
