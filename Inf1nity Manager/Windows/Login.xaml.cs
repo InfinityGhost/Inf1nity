@@ -44,8 +44,7 @@ namespace Inf1nity_Manager.Windows
 
         #region Buttons
 
-        private void AcceptButton(object sender, RoutedEventArgs e) => Close();
-        private void CancelButton(object sender, RoutedEventArgs e) => Close();
+        private void CloseButton(object sender, RoutedEventArgs e) => Close();
 
         private void SaveButton(object sender, RoutedEventArgs e)
         {
@@ -57,6 +56,7 @@ namespace Inf1nity_Manager.Windows
             {
                 Config.Save(LoadFile(Directory.GetCurrentDirectory()));
             }
+            Close();
         }
 
         #endregion

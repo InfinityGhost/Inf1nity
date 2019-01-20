@@ -38,7 +38,6 @@ namespace Inf1nity_Manager
             {
                 Config = new Configuration(DefaultConfigPath);
                 Console.Log("Loaded defaults.");
-                Login();
             }
             catch
             {
@@ -112,12 +111,24 @@ namespace Inf1nity_Manager
         private void BotStart(object sender, RoutedEventArgs e)
         {
             if (!Bot?.Connected ?? true)
+            {
+                Login();
                 Bot?.Start();
+            }
             else
                 Bot?.Stop();
         }
 
-        private void LoginButton(object sender, RoutedEventArgs e) => new Windows.Login(Config);
+        private void LoginButton(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new Windows.Login(Config);
+            loginWindow.Closed += HandleLoginClose;
+        }
+
+        private void HandleLoginClose(object sender, EventArgs e)
+        {
+            Config = (sender as Windows.Login).Config;
+        }
 
         #endregion
     }

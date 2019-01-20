@@ -15,17 +15,23 @@
             <RowDefinition Height="18"/>
         </Grid.RowDefinitions>
         
-        <Menu Grid.Row="0">
+        <Menu Grid.Row="0" Background="White">
             <Menu.Resources>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="0,-2,-2,-2"/>
+                    <Setter Property="Margin" Value="3,-8,-8,-8"/>
                     <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <!--<Setter Property="HorizontalAlignment" Value="Center"/>-->
+                    <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
             </Menu.Resources>
             
             <MenuItem Header="File">
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Exit">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xE894;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Bot">
                 <MenuItem Click="BotStart">

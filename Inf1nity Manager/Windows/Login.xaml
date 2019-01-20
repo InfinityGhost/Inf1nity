@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inf1nity_Manager.Windows"
         mc:Ignorable="d" SizeToContent="Height" WindowStartupLocation="CenterScreen"
-        Title="Login" Width="300">
+        Title="Login" Width="450">
     <Grid DataContext="{Binding ElementName=Window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -40,8 +40,8 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Accept" Click="CancelButton"/>
-            <Button Content="Cancel" Click="CancelButton"/>
+            <Button Content="Save" Click="SaveButton"/>
+            <Button Content="Close" Click="CloseButton"/>
         </StackPanel>
     </Grid>
 </Window>
