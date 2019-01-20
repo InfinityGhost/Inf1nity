@@ -61,6 +61,7 @@
     <Compile Include="Controls\BotStatus.xaml.cs">
       <DependentUpon>BotStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NegateBool.cs" />
     <Compile Include="Windows\FileHelper.cs" />
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>

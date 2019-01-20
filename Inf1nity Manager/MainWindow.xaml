@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inf1nity_Manager"
+        xmlns:convert="clr-namespace:Inf1nity_Manager.Converters"
         mc:Ignorable="d"
         Title="Inf1nity Manager" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" Closing="Window_Closing"
         Width="800" Height="600">
+    <Window.Resources>
+        <convert:NegateBool x:Key="NegateBool"/>
+    </Window.Resources>
     <Grid DataContext="{Binding ElementName=WindowRoot}">
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>
@@ -55,7 +59,7 @@
                         </Style>
                     </MenuItem.Style>
                 </MenuItem>
-                <MenuItem Header="Login..." Click="LoginButton">
+                <MenuItem Header="Login..." Click="LoginButton" IsEnabled="{Binding Bot.Running, Converter={StaticResource NegateBool}, Mode=OneWay}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE77B;"/>
                     </MenuItem.Icon>
