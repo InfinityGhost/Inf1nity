@@ -48,6 +48,9 @@ namespace Inf1nity_Manager
 
             await TrayIcon.Initialize();
             TrayIcon.ShowWindow += TrayIcon_ShowWindow;
+
+            if (Config.RunAtStart)
+                BotStart();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -93,7 +96,7 @@ namespace Inf1nity_Manager
         }
 
         private Configuration _config;
-        private Configuration Config
+        public Configuration Config
         {
             set
             {
@@ -142,9 +145,9 @@ namespace Inf1nity_Manager
 
         #region Bot MenuItem
 
-        private void BotStart(object sender, RoutedEventArgs e)
+        private void BotStart(object sender = null, RoutedEventArgs e = null)
         {
-            if (!Bot?.Connected ?? true)
+            if (!Bot?.Running ?? true)
             {
                 Login();
                 Bot?.Start();
@@ -153,15 +156,15 @@ namespace Inf1nity_Manager
                 Bot?.Stop();
         }
 
-        private void LoginButton(object sender, RoutedEventArgs e)
+        private void ConfigButton(object sender, RoutedEventArgs e)
         {
-            var loginWindow = new Windows.Login(Config);
+            var loginWindow = new Windows.ConfigurationManager(Config);
             loginWindow.Closed += HandleLoginClose;
         }
 
         private void HandleLoginClose(object sender, EventArgs e)
         {
-            Config = (sender as Windows.Login).Config;
+            Config = (sender as Windows.ConfigurationManager).Config;
         }
 
         #endregion

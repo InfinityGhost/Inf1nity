@@ -22,9 +22,9 @@ namespace Inf1nity_Manager.Windows
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : Window, INotifyPropertyChanged
+    public partial class ConfigurationManager : Window, INotifyPropertyChanged
     {
-        public Login(Configuration config)
+        public ConfigurationManager(Configuration config)
         {
             InitializeComponent();
             Config = config;
@@ -72,5 +72,9 @@ namespace Inf1nity_Manager.Windows
 
         #endregion
 
+        private void BannerLeftClick(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://discordapp.com/developers/applications");
+        }
     }
 }

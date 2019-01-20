@@ -41,7 +41,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Bot">
+            <MenuItem Header="Discord Bot">
                 <MenuItem Click="BotStart">
                     <MenuItem.Style>
                         <Style TargetType="MenuItem">
@@ -64,7 +64,7 @@
                         </Style>
                     </MenuItem.Style>
                 </MenuItem>
-                <MenuItem Header="Login..." Click="LoginButton" IsEnabled="{Binding Bot.Running, Converter={StaticResource NegateBool}, Mode=OneWay}">
+                <MenuItem Header="Configuration..." Click="ConfigButton" IsEnabled="{Binding Bot.Running, Converter={StaticResource NegateBool}, Mode=OneWay}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE77B;"/>
                     </MenuItem.Icon>

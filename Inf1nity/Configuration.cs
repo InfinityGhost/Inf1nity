@@ -6,7 +6,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using static Inf1nity.FileHelper.ReadWrite;
+using Inf1nity.Tools;
+using static Inf1nity.Tools.ReadWriteHelper;
 
 namespace Inf1nity
 {
@@ -18,6 +19,7 @@ namespace Inf1nity
         #region Properties
 
         private string Path { set; get; }
+        public string Version => "1.1";
 
         #endregion
 
@@ -34,6 +36,17 @@ namespace Inf1nity
             get => _token;
         }
 
+        private bool _runatstart = false;
+        public bool RunAtStart
+        {
+            set
+            {
+                _runatstart = value;
+                NotifyPropertyChanged();
+            }
+            get => _runatstart;
+        }
+
         #endregion
 
         #region Management
@@ -41,8 +54,10 @@ namespace Inf1nity
         public void Load(string path)
         {
             var content = File.ReadAllLines(path);
-            Token = content.Fetch("token");
             Path = path;
+
+            Token = SafeConverter.String(content.Fetch("token"));
+            RunAtStart = SafeConverter.Boolean(content.Fetch("runAtStart"));
         }
 
         public void Save()
@@ -57,7 +72,9 @@ namespace Inf1nity
         {
             File.WriteAllLines(path, new List<string>
             {
+                $"configVer:{Version}",
                 $"token:{Token}",
+                $"runAtStart:{RunAtStart}",
             });
             Path = path;
         }
