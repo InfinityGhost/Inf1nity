@@ -202,7 +202,8 @@
     <Compile Include="Commands\AdminCommands.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="DiscordBot.cs" />
-    <Compile Include="FileHelper\ReadWrite.cs" />
+    <Compile Include="Tools\ReadWrite.cs" />
+    <Compile Include="Tools\SafeConverter.cs" />
     <Compile Include="Information.cs" />
     <Compile Include="Interfaces\IHasOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
