@@ -43,7 +43,7 @@ namespace Inf1nity_Manager
             {
                 Config = new Configuration();
                 System.Diagnostics.Debug.WriteLine("No defaults found, using an empty config file.");
-                System.Diagnostics.Process.Start(DefaultConfigPath);
+                Config.Save(DefaultConfigPath);
             }
 
             await TrayIcon.Initialize();
