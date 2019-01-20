@@ -106,6 +106,17 @@ namespace Inf1nity_Manager
 
         #endregion
 
+        #region File MenuItem
+
+        private void AboutButton(object sender, RoutedEventArgs e)
+        {
+            new Windows.AboutBox().ShowDialog();
+        }
+
+        private void Close(object sender, RoutedEventArgs e) => Close();
+
+        #endregion
+
         #region Bot MenuItem
 
         private void BotStart(object sender, RoutedEventArgs e)

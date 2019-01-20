@@ -30,7 +30,12 @@
             </Menu.Resources>
             
             <MenuItem Header="File">
-                <MenuItem Header="Exit">
+                <MenuItem Header="About..." Click="AboutButton">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xE712;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Exit" Click="Close">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE894;"/>
                     </MenuItem.Icon>

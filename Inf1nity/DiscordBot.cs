@@ -28,6 +28,11 @@ namespace Inf1nity
 
         #region Properties & Event
 
+        public System.Reflection.Assembly GetAssembly()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly();
+        }
+
         public string Token { private set; get; }
 
         private bool _running;
