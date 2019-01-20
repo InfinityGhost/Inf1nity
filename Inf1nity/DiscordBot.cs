@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.API;
 using Discord.WebSocket;
+using Discord.Commands;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Inf1nity
 {
@@ -48,6 +50,10 @@ namespace Inf1nity
         public DiscordSocketClient Client { private set; get; } = new DiscordSocketClient();
         public DiscordSocketConfig Configuration { set; get; } = new DiscordSocketConfig();
 
+        public CommandService AdminCommands = new CommandService();
+        public CommandService UserCommands = new CommandService();
+        IServiceProvider Services = new ServiceCollection().BuildServiceProvider();
+
         #endregion
 
         #region Main Methods
@@ -75,8 +81,33 @@ namespace Inf1nity
 
         private Task Client_Ready()
         {
-            // TODO: add ready options
+            RegisterCommandServices();
+
             return Task.CompletedTask;
+        }
+
+        private async void RegisterCommandServices()
+        {
+            await AdminCommands.AddModuleAsync(typeof(Commands.AdminCommands), Services);
+            Client.MessageReceived += HandleAdminCommand;
+        }
+
+        private async Task HandleAdminCommand(SocketMessage arg)
+        {
+            if (!(arg is SocketUserMessage message))
+                return;
+            int argPos = 0;
+            if (!message.HasCharPrefix('&', ref argPos))
+                return;
+            var context = new CommandContext(Client, message);
+            var result = await AdminCommands.ExecuteAsync(context, argPos, Services);
+            if (!result.IsSuccess)
+            {
+                await arg.DeleteAsync();
+                var reply = await context.Channel.SendMessageAsync("Error: " + result.ErrorReason);
+                await Task.Delay(Commands.AdminCommands.Delay);
+                await reply.DeleteAsync();
+            }
         }
 
         #endregion

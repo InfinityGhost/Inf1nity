@@ -199,6 +199,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AdminCommands.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="DiscordBot.cs" />
     <Compile Include="FileHelper\ReadWrite.cs" />
@@ -209,8 +210,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
