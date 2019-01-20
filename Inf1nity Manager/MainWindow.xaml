@@ -21,7 +21,6 @@
                     <Setter Property="Margin" Value="3,-8,-8,-8"/>
                     <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                     <Setter Property="FontSize" Value="16"/>
-                    <!--<Setter Property="HorizontalAlignment" Value="Center"/>-->
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
             </Menu.Resources>
@@ -35,15 +34,22 @@
             </MenuItem>
             <MenuItem Header="Bot">
                 <MenuItem Click="BotStart">
-                    <MenuItem.Icon>
-                        <TextBlock Text="&#xE768;"/>
-                    </MenuItem.Icon>
                     <MenuItem.Style>
                         <Style TargetType="MenuItem">
                             <Setter Property="Header" Value="Start"/>
+                            <Setter Property="Icon">
+                                <Setter.Value>
+                                    <TextBlock Text="&#xE768;"/>
+                                </Setter.Value>
+                            </Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=Bot.Running}" Value="True">
                                     <Setter Property="Header" Value="Stop"/>
+                                    <Setter Property="Icon">
+                                        <Setter.Value>
+                                            <TextBlock Text="&#xE71A;"/>
+                                        </Setter.Value>
+                                    </Setter>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
