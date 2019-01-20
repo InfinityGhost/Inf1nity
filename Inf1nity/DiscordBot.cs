@@ -78,8 +78,22 @@ namespace Inf1nity
             Client.Connected += Client_Connected;
             Client.Disconnected += Client_Disconnected;
 
-            await Client.LoginAsync(TokenType.Bot, Token);
-            await Client.StartAsync();
+            try
+            {
+                await Client.LoginAsync(TokenType.Bot, Token);
+                await Client.StartAsync();
+            }
+            catch(Discord.Net.HttpException httpex)
+            {
+                Output?.Invoke(this, "Exception Occured: " + httpex.Message);
+                Output?.Invoke(this, "Make sure your token is valid!");
+                Stop();
+            }
+            catch(Exception ex)
+            {
+                Output?.Invoke(this, ex.ToString());
+                Stop();
+            }
         }
 
         public async void Stop()

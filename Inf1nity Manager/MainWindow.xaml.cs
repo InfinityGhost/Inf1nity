@@ -44,6 +44,7 @@ namespace Inf1nity_Manager
                 Config = new Configuration();
                 System.Diagnostics.Debug.WriteLine("No defaults found, using an empty config file.");
                 Config.Save(DefaultConfigPath);
+                new Windows.ConfigurationManager(Config);
             }
 
             await TrayIcon.Initialize();
@@ -109,18 +110,7 @@ namespace Inf1nity_Manager
         private string DefaultConfigPath = Directory.GetCurrentDirectory() + "\\default.cfg";
 
         #endregion
-
-        private void CommandProcessor_CommandRun(object sender, string e)
-        {
-            Bot?.RunCommand(e);
-        }
-
-        private void Login(object sender = null, EventArgs e = null)
-        {
-            Bot = new DiscordBot(Config.Token);
-            Bot.Output += Console.Log;
-        }
-
+        
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -178,6 +168,18 @@ namespace Inf1nity_Manager
         }
 
         private TrayIcon TrayIcon = new TrayIcon();
+
+        #endregion
+
+        #region Misc.
+
+        private void CommandProcessor_CommandRun(object sender, string e) => Bot?.RunCommand(e);
+
+        private void Login(object sender = null, EventArgs e = null)
+        {
+            Bot = new DiscordBot(Config.Token);
+            Bot.Output += Console.Log;
+        }
 
         #endregion
     }
