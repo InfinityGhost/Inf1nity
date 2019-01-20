@@ -27,6 +27,7 @@ namespace Inf1nity.Commands
 
         #endregion
 
+        [Command("del"), Summary("Deletes messages.")]
         public async Task Delete([Remainder, Summary("Amount of messages")] int count)
         {
             await Context.Message.DeleteAsync();
@@ -36,6 +37,9 @@ namespace Inf1nity.Commands
             if (permissions.Administrator || permissions.ManageMessages)
             {
                 var messages = await Context.Channel.GetMessagesAsync(count).FlattenAsync();
+
+                messages.DeleteAll(Context);
+
                 if (messages.Count() > 0)
                     reply = $"Deleted {messages.Count()} messages.";
             }
@@ -47,6 +51,7 @@ namespace Inf1nity.Commands
             Reply(reply);
         }
 
+        [Command("del"), Summary("Deletes messages.")]
         public async Task Delete()
         {
             await Context.Message.DeleteAsync();

@@ -91,12 +91,21 @@ namespace Inf1nity
 
         private Task Client_Ready()
         {
-            RegisterCommandServices();
+            RegisterCommands();
 
             return Task.CompletedTask;
         }
 
-        private async void RegisterCommandServices()
+        #endregion
+
+        #region Commands
+
+        public void RunCommand(string command)
+        {
+            // TODO: Run command options
+        }
+
+        private async void RegisterCommands()
         {
             await AdminCommands.AddModuleAsync(typeof(Commands.AdminCommands), Services);
             Client.MessageReceived += HandleAdminCommand;
@@ -118,15 +127,6 @@ namespace Inf1nity
                 await Task.Delay(Commands.AdminCommands.Delay);
                 await reply.DeleteAsync();
             }
-        }
-
-        #endregion
-
-        #region Commands
-
-        public void RunCommand(string command)
-        {
-            // TODO: Run command options
         }
 
         #endregion
