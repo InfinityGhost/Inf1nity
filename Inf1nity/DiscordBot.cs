@@ -26,7 +26,14 @@ namespace Inf1nity
             currentDomain.UnhandledException += GlobalUnhandledExceptionHandler;
         }
 
-        #region Properties & Event
+        #region Properties & Events
+
+        public DiscordSocketClient Client { private set; get; } = new DiscordSocketClient();
+        public DiscordSocketConfig Configuration { set; get; } = new DiscordSocketConfig();
+
+        public CommandService AdminCommands = new CommandService();
+        public CommandService UserCommands = new CommandService();
+        IServiceProvider Services = new ServiceCollection().BuildServiceProvider();
 
         public System.Reflection.Assembly GetAssembly()
         {
@@ -57,12 +64,6 @@ namespace Inf1nity
             get => _connected;
         }
 
-        public DiscordSocketClient Client { private set; get; } = new DiscordSocketClient();
-        public DiscordSocketConfig Configuration { set; get; } = new DiscordSocketConfig();
-
-        public CommandService AdminCommands = new CommandService();
-        public CommandService UserCommands = new CommandService();
-        IServiceProvider Services = new ServiceCollection().BuildServiceProvider();
 
         #endregion
 
