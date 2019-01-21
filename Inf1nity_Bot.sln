@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inf1nity", "Inf1nity\Inf1ni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inf1nity Manager", "Inf1nity Manager\Inf1nity Manager.csproj", "{E4C95B0B-5424-48CE-AB8D-ABAD663FA98E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inf1nity Console", "Inf1nity Console\Inf1nity Console.csproj", "{413B5454-4BE3-4C3B-B64C-9E66C63BAF16}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{E4C95B0B-5424-48CE-AB8D-ABAD663FA98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4C95B0B-5424-48CE-AB8D-ABAD663FA98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4C95B0B-5424-48CE-AB8D-ABAD663FA98E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{413B5454-4BE3-4C3B-B64C-9E66C63BAF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{413B5454-4BE3-4C3B-B64C-9E66C63BAF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{413B5454-4BE3-4C3B-B64C-9E66C63BAF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{413B5454-4BE3-4C3B-B64C-9E66C63BAF16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
