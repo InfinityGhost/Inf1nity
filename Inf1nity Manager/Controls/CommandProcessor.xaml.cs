@@ -63,7 +63,7 @@ namespace Inf1nity_Manager.Controls
             {
                 case Key.Enter:
                     {
-                        CommandRun?.Invoke(this, Buffer);
+                        CommandRun?.Invoke(this, (sender as TextBox).Text);
                         Buffer = string.Empty;
                         break;
                     }

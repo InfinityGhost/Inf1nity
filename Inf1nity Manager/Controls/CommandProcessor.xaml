@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Inf1nity_Manager.Controls"
              mc:Ignorable="d" 
              d:DesignWidth="800" d:DesignHeight="24">
-    <TextBox DataContext="{Binding ElementName=ControlRoot}" Text="{Binding Buffer}" 
+    <TextBox DataContext="{Binding ElementName=ControlRoot}" Text="{Binding Buffer, BindsDirectlyToSource=True, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" 
              PreviewKeyDown="BufferKeyDown"
              VerticalContentAlignment="Center"/>
 </UserControl>

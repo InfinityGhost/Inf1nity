@@ -173,7 +173,7 @@ namespace Inf1nity_Manager
 
         #region Misc.
 
-        private void CommandProcessor_CommandRun(object sender, string e) => Bot?.ControlMessage(e);
+        private void CommandProcessor_CommandRun(object sender, string e) => Bot?.SendMessage(e);
 
         private void Login(object sender = null, EventArgs e = null)
         {
