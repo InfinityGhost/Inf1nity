@@ -115,9 +115,14 @@ namespace Inf1nity
 
         #region Commands
 
-        public void RunCommand(string command)
+        public void SendMessage(string message, SocketTextChannel channel = null)
         {
-            // TODO: Run command options
+            if (channel == null && LastMessage != null)
+                LastMessage.Channel.SendMessageAsync(message);
+            else if (channel == null && LastMessage == null)
+                HandleOutput("Error: No recent message to reply to.");
+            else
+                channel.SendMessageAsync(message);
         }
 
         private async void RegisterCommands()
@@ -148,6 +153,8 @@ namespace Inf1nity
 
         #region HandleOutput
 
+        public SocketMessage LastMessage { private set; get; }
+
         private void HandleOutput(string text) => Output?.Invoke(this, text);
 
         private Task HandleOutput(LogMessage arg)
@@ -158,10 +165,14 @@ namespace Inf1nity
 
         private Task HandleOutput(SocketMessage arg)
         {
+            LastMessage = arg;
+
             if (arg.Channel is SocketGuildChannel guildChannel)
                 HandleOutput($"{guildChannel.Guild.Name}/#{arg.Channel}/@{arg.Author}/{arg.Content}");
             else if (arg.Channel is SocketGroupChannel groupChannel)
                 HandleOutput($"{groupChannel.Name}/{arg.Author}/{arg.Content}");
+            else if (arg.Channel is SocketDMChannel dMChannel)
+                HandleOutput($"{dMChannel.Users}/{arg.Author}/{arg.Content}");
             else
             {
                 HandleOutput($"{arg.Author}/{arg.Content}");
