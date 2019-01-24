@@ -226,6 +226,7 @@ namespace Inf1nity
 
             var crashDump = new List<string>
             {
+                $"-------",
                 $"Exception occured at {DateTime.Now}",
                 $"Source: {ex.Source}",
                 $"Message: {ex.Message}",
@@ -235,7 +236,7 @@ namespace Inf1nity
                 $"HResult: {ex.HResult}",
             };
 
-            System.IO.File.WriteAllLines(System.IO.Directory.GetCurrentDirectory() + "\\crashlog" + ".log", crashDump);
+            System.IO.File.AppendAllLines(System.IO.Directory.GetCurrentDirectory() + "\\crashlog" + ".log", crashDump);
         }
 
         #endregion
