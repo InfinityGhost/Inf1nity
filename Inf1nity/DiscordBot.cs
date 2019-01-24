@@ -64,7 +64,17 @@ namespace Inf1nity
             get => _connected;
         }
 
-
+        private bool _commandsRegistered;
+        public bool CommandsRegistered
+        {
+            private set
+            {
+                _commandsRegistered = value;
+                NotifyPropertyChanged();
+            }
+            get => _commandsRegistered;
+        }
+        
         #endregion
 
         #region Main Methods
@@ -122,8 +132,14 @@ namespace Inf1nity
 
         private async void RegisterCommands()
         {
-            await AdminCommands.AddModuleAsync(typeof(Commands.AdminCommands), Services);
-            Client.MessageReceived += HandleAdminCommand;
+            if (!CommandsRegistered)
+            {
+                await AdminCommands.AddModuleAsync(typeof(Commands.AdminCommands), Services);
+                Client.MessageReceived += HandleAdminCommand;
+                CommandsRegistered = true;
+            }
+            else
+                HandleOutput("Warning: Bot attempted to re-register commands.");
         }
 
         private async Task HandleAdminCommand(SocketMessage arg)
@@ -214,7 +230,7 @@ namespace Inf1nity
                 $"Source: {ex.Source}",
                 $"Message: {ex.Message}",
                 $"HelpLink: {ex.HelpLink}",
-                $"StackTrace ---{Environment.NewLine}{ex.StackTrace}",
+                $"StackTrace: {Environment.NewLine}{ex.StackTrace}",
                 $"TargetSite: {ex.TargetSite.Name}",
                 $"HResult: {ex.HResult}",
             };
