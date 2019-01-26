@@ -71,20 +71,37 @@ namespace Inf1nity.Commands
         public async Task Announce([Remainder, Summary("The text to announce")] string announcement)
         {
             await Context.Message.DeleteAsync();
-            await ReplyAsync("**Announcement** @everyone " + Environment.NewLine + announcement);
+            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
+            if (permissions.Administrator || permissions.MentionEveryone)
+                await ReplyAsync("**Announcement** @everyone " + Environment.NewLine + announcement);
         }
 
         [Command("vote"), Summary("Creates a vote, mentions @everyone.")]
         public async Task Vote([Remainder, Summary("The text to vote on.")] string content)
         {
             await Context.Message.DeleteAsync();
-            var voteMessage = await ReplyAsync("**Vote** @everyone" + Environment.NewLine + content);
-
-            await voteMessage.AddReactionsAsync(new Emoji[]
+            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
+            if (permissions.Administrator || permissions.MentionEveryone)
             {
-                new Emoji("👍"),
-                new Emoji("👎"),
-            });
+                var voteMessage = await ReplyAsync("**Vote** @everyone" + Environment.NewLine + content);
+                await voteMessage.AddReactionsAsync(new Emoji[]
+                {
+                    new Emoji("👍"),
+                    new Emoji("👎"),
+                });
+            }
+        }
+
+        [Command("newrole"), Summary("Allows you to create a new role.")]
+        public async Task NewRole([Remainder, Summary("Role name.")] string roleName)
+        {
+            await Context.Message.DeleteAsync();
+            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
+            if (permissions.Administrator || permissions.ManageRoles)
+            {
+                var role = await Context.Guild.CreateRoleAsync(name: roleName, color: new Color(255, 255, 255));
+                CommandResponse($"Role `{role.Name}` created.");
+            }
         }
     }
 }
