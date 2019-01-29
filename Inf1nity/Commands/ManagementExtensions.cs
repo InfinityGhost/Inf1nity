@@ -15,10 +15,10 @@ namespace Inf1nity.Commands
         /// Deletes messages in a channel.
         /// </summary>
         /// <param name="messages">The messages to delete</param>
-        /// <param name="channel">The channel they are located</param>
-        public static async void DeleteAll(this IEnumerable<IMessage> messages, ICommandContext context)
+        /// <param name="channel">The channel the messages are located</param>
+        public static async void DeleteAll(this IEnumerable<IMessage> messages, IMessageChannel channel)
         {
-            await (context.Channel as SocketTextChannel).DeleteMessagesAsync(messages);
+            await (channel as SocketTextChannel).DeleteMessagesAsync(messages);
         }
     }
 }
