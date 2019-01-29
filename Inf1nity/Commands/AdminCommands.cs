@@ -22,52 +22,45 @@ namespace Inf1nity.Commands
             {
                 var replyMessage = await ReplyAsync(message);
                 await Task.Delay(Delay);
-                await replyMessage.DeleteAsync();
+                try { await replyMessage?.DeleteAsync(); }
+                catch (Exception ex) { Debug.WriteLine(ex); }
             }
         }
 
         #endregion
 
-        [Command("del"), Summary("Deletes messages.")]
+        [Command("del"), Summary("Deletes messages."), 
+            RequireUserPermission(GuildPermission.ManageMessages), 
+            RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Delete([Remainder, Summary("Amount of messages")] int count)
         {
             await Context.Message.DeleteAsync();
-            string response = null;
-
-            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
-            if (permissions.Administrator || permissions.ManageMessages)
-            {
-                var messages = await Context.Channel.GetMessagesAsync(count).FlattenAsync();
-
-                messages.DeleteAll(Context);
-
-                if (messages.Count() > 0)
-                    response = $"Deleted {messages.Count()} messages.";
-            }
+            var messages = await Context.Channel.GetMessagesAsync(count).FlattenAsync();
+            messages.DeleteAll(Context.Channel);
+            if (messages.Count() == 1)
+                CommandResponse($"Deleted 1 message.");
+            if (messages.Count() > 1)
+                CommandResponse($"Deleted {messages.Count()} messages.");
             else
-            {
-                response = "Error: You lack permissions to manage messages.";
-            }
-
-            CommandResponse(response);
+                CommandResponse("Error: No messages were found to delete.");
         }
 
-        [Command("del"), Summary("Deletes messages.")]
+        [Command("del"), Summary("Deletes messages."), 
+            RequireUserPermission(GuildPermission.ManageMessages), 
+            RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Delete()
         {
             await Context.Message.DeleteAsync();
-
-            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
-            if (permissions.Administrator || permissions.ManageMessages)
-            {
-                var message = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
-                await message.First().DeleteAsync();
-            }
+            var messages = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
+            if (messages.ToList().Count == 1)
+                await messages.First().DeleteAsync();
             else
-                CommandResponse("Error: You lack permissions to manage messages.");
+                CommandResponse("Error: No recent message to delete.");
         }
 
-        [Command("announce"), Summary("Announces a string of text, mentions @everyone.")]
+        [Command("announce"), Summary("Announces a string of text, mentions @everyone."),
+            RequireUserPermission(GuildPermission.MentionEveryone), 
+            RequireBotPermission(GuildPermission.MentionEveryone)]
         public async Task Announce([Remainder, Summary("The text to announce")] string announcement)
         {
             await Context.Message.DeleteAsync();
@@ -76,32 +69,27 @@ namespace Inf1nity.Commands
                 await ReplyAsync("**Announcement** @everyone " + Environment.NewLine + announcement);
         }
 
-        [Command("vote"), Summary("Creates a vote, mentions @everyone.")]
+        [Command("vote"), Summary("Creates a vote, mentions @everyone."), 
+            RequireUserPermission(GuildPermission.MentionEveryone), 
+            RequireBotPermission(GuildPermission.AddReactions)]
         public async Task Vote([Remainder, Summary("The text to vote on.")] string content)
         {
-            await Context.Message.DeleteAsync();
-            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
-            if (permissions.Administrator || permissions.MentionEveryone)
+            var voteMessage = await ReplyAsync("**Vote** @everyone" + Environment.NewLine + content);
+            await voteMessage.AddReactionsAsync(new Emoji[]
             {
-                var voteMessage = await ReplyAsync("**Vote** @everyone" + Environment.NewLine + content);
-                await voteMessage.AddReactionsAsync(new Emoji[]
-                {
-                    new Emoji("👍"),
-                    new Emoji("👎"),
-                });
-            }
+                new Emoji("👍"),
+                new Emoji("👎"),
+            });
         }
 
-        [Command("newrole"), Summary("Allows you to create a new role.")]
+        [Command("newrole"), Summary("Allows you to create a new role."), 
+            RequireUserPermission(GuildPermission.ManageRoles),
+            RequireBotPermission(GuildPermission.ManageRoles)]
         public async Task NewRole([Remainder, Summary("Role name.")] string roleName)
         {
             await Context.Message.DeleteAsync();
-            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
-            if (permissions.Administrator || permissions.ManageRoles)
-            {
-                var role = await Context.Guild.CreateRoleAsync(name: roleName, color: new Color(255, 255, 255));
-                CommandResponse($"Role `{role.Name}` created.");
-            }
+            var role = await Context.Guild.CreateRoleAsync(name: roleName, color: new Color(255, 255, 255));
+            CommandResponse($"Role `{role.Name}` created.");
         }
     }
 }
