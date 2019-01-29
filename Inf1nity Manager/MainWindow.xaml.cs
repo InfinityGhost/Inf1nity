@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Inf1nity;
+using Inf1nity_Manager.Controls;
 
 namespace Inf1nity_Manager
 {
@@ -34,19 +36,25 @@ namespace Inf1nity_Manager
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Console.Updated += StatusBar.Update;
+
+            Debug.Listeners.Add(Console.CreateListener());
+            Debug.AutoFlush = true;
+
+            Debug.WriteLine("Console added to trace listeners.");
+
             try
             {
                 Config = new Configuration(DefaultConfigPath);
-                Console.Log("Loaded defaults.");
+                Debug.WriteLine("Loaded defaults.");
             }
             catch
             {
                 Config = new Configuration();
-                System.Diagnostics.Debug.WriteLine("No defaults found, using an empty config file.");
+                Debug.WriteLine("No defaults found, using an empty config file.");
                 Config.Save(DefaultConfigPath);
                 new Windows.ConfigurationManager(Config);
             }
-
+            
             await TrayIcon.Initialize();
             TrayIcon.ShowWindow += TrayIcon_ShowWindow;
 

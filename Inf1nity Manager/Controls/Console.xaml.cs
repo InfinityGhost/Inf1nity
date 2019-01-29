@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Inf1nity_Manager.Controls
 {
@@ -57,7 +46,6 @@ namespace Inf1nity_Manager.Controls
             if (!IsEmpty)
                 Buffer += Environment.NewLine;
             Buffer += Prefix + content;
-            Debug.WriteLine(Prefix + content);
             Updated?.Invoke(this, content.ToString());
         }
 
@@ -80,6 +68,12 @@ namespace Inf1nity_Manager.Controls
             if (PropertyName != null)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
+
+        #endregion
+
+        #region Extensions
+
+        public ConsoleTraceListener CreateListener() => new ConsoleTraceListener(this);
 
         #endregion
     }
