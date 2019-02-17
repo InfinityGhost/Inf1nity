@@ -59,7 +59,10 @@ namespace Inf1nity_Manager
             TrayIcon.ShowWindow += TrayIcon_ShowWindow;
 
             if (Config.RunAtStart)
+            {
                 BotStart();
+                this.WindowState = WindowState.Minimized;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
