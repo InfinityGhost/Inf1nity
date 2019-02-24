@@ -52,9 +52,9 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Save" Click="SaveButton"/>
-            <Button Content="Close" Click="CloseButton"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Name="ButtonsPanel">
+            <Button Content="Save" Click="SaveButton" Name="SaveButtonObj"/>
+            <Button Content="Close" Click="CloseButton" Name="CloseButtonObj"/>
         </StackPanel>
     </Grid>
 </Window>

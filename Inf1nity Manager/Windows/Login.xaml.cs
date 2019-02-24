@@ -28,7 +28,19 @@ namespace Inf1nity_Manager.Windows
         {
             InitializeComponent();
             Config = config;
-            ShowDialog();
+        }
+
+        public ConfigurationManager(Configuration config, bool hideClose) : this(config)
+        {
+            if (hideClose)
+            {
+                this.Loaded += (sender, owo) =>
+                {
+                    ButtonsPanel.Children.Remove(CloseButtonObj);
+                    SaveButtonObj.Click -= SaveButton;
+                    SaveButtonObj.Click += CloseButton;
+                };
+            }
         }
 
         private Configuration _config;
@@ -54,7 +66,8 @@ namespace Inf1nity_Manager.Windows
             }
             catch(Exception)
             {
-                Config.Save(LoadFile(Directory.GetCurrentDirectory()));
+                if (SaveFile(Directory.GetCurrentDirectory(), out string path))
+                    Config.Save(path);
             }
             Close();
         }

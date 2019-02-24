@@ -6,19 +6,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Inf1nity.Tools;
 using static Inf1nity.Tools.ReadWriteHelper;
 
 namespace Inf1nity
 {
+    [XmlRoot("Inf1nity Configuration", IsNullable = true)]
     public class Configuration : INotifyPropertyChanged
     {
         public Configuration() { }
-        public Configuration(string path) : this() => Load(path);
 
         #region Properties
 
-        private string Path { set; get; }
+        [XmlIgnore]
+        public string Path { private set; get; }
         public string Version => "1.1";
 
         #endregion
@@ -51,14 +53,7 @@ namespace Inf1nity
 
         #region Management
 
-        public void Load(string path)
-        {
-            var content = File.ReadAllLines(path);
-            Path = path;
-
-            Token = SafeConverter.String(content.Fetch("token"));
-            RunAtStart = SafeConverter.Boolean(content.Fetch("runAtStart"));
-        }
+        private static XmlSerializer Serializer = new XmlSerializer(typeof(Configuration));
 
         public void Save()
         {
@@ -70,14 +65,21 @@ namespace Inf1nity
 
         public void Save(string path)
         {
-            File.WriteAllLines(path, new List<string>
-            {
-                $"configVer:{Version}",
-                $"token:{Token}",
-                $"runAtStart:{RunAtStart}",
-            });
+            TextWriter tw = new StreamWriter(path);
+            Serializer.Serialize(tw, this);
             Path = path;
         }
+
+        public static Configuration Read(string path)
+        {
+            using (var sr = new StreamReader(path))
+            {
+                var config = (Configuration)Serializer.Deserialize(sr);
+                config.Path = path;
+                return config;
+            }
+        }
+
 
         #endregion
 

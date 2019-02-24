@@ -29,41 +29,44 @@ namespace Inf1nity_Manager
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        #region Window Events
-
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Console.Updated += StatusBar.Update;
-
-            Debug.Listeners.Add(Console.CreateListener());
-            Debug.AutoFlush = true;
-
-            Debug.WriteLine("Console added to trace listeners.");
-
+            this.Loaded += MainWindow_Loaded;
+            
             try
             {
-                Config = new Configuration(DefaultConfigPath);
+                Config = Configuration.Read(DefaultConfigPath);
                 Debug.WriteLine("Loaded defaults.");
             }
             catch
             {
                 Config = new Configuration();
                 Debug.WriteLine("No defaults found, using an empty config file.");
+                var cfgMgr = new Windows.ConfigurationManager(Config, true);
+                cfgMgr.Closed += (x, y) => Config = (x as Windows.ConfigurationManager).Config ?? Config;
+                cfgMgr.ShowDialog();
                 Config.Save(DefaultConfigPath);
-                new Windows.ConfigurationManager(Config);
             }
             
-            await TrayIcon.Initialize();
+            TrayIcon.Initialize();
             TrayIcon.ShowWindow += TrayIcon_ShowWindow;
 
+            Console.Updated += StatusBar.Update;
+
+            Debug.Listeners.Add(Console.CreateListener());
+            Debug.AutoFlush = true;
+
+            Debug.WriteLine("Console added to trace listeners.");
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
             if (Config.RunAtStart)
             {
                 BotStart();
                 this.WindowState = WindowState.Minimized;
             }
         }
+
+        #region Window Events
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
@@ -161,11 +164,13 @@ namespace Inf1nity_Manager
         {
             var loginWindow = new Windows.ConfigurationManager(Config);
             loginWindow.Closed += HandleLoginClose;
+            loginWindow.ShowDialog();
         }
 
         private void HandleLoginClose(object sender, EventArgs e)
         {
-            Config = (sender as Windows.ConfigurationManager).Config;
+            var cfg = (sender as Windows.ConfigurationManager).Config;
+            Config = cfg ?? Config;
         }
 
         #endregion

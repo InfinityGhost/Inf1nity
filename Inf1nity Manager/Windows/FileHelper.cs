@@ -8,7 +8,7 @@ namespace Inf1nity_Manager.Windows
 {
     public static class FileHelper
     {
-        public static string LoadFile(string startLocation = @"C:\")
+        public static bool LoadFile(string startLocation, out string path)
         {
             var dialog = new System.Windows.Forms.OpenFileDialog
             {
@@ -18,15 +18,17 @@ namespace Inf1nity_Manager.Windows
             };
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                return dialog.FileName;
+                path = dialog.FileName;
+                return true;
             }
             else
             {
-                throw new Exception("Operation cancelled.");
+                path = null;
+                return false;
             }
         }
 
-        public static string SaveFile(string startLocation = @"C:\")
+        public static bool SaveFile(string startLocation, out string path)
         {
             var dialog = new System.Windows.Forms.SaveFileDialog
             {
@@ -36,11 +38,13 @@ namespace Inf1nity_Manager.Windows
             };
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                return dialog.FileName;
+                path = dialog.FileName;
+                return true;
             }
             else
             {
-                throw new Exception("Operation cancelled.");
+                path = null;
+                return false;
             }
         }
     }
