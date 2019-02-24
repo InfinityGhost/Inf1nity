@@ -73,8 +73,8 @@
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\FileHelper.cs" />
-    <Compile Include="Windows\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Include="Windows\ConfigurationManager.xaml.cs">
+      <DependentUpon>ConfigurationManager.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\BotStatus.xaml">
       <SubType>Designer</SubType>
@@ -117,7 +117,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\Login.xaml">
+    <Page Include="Windows\ConfigurationManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
