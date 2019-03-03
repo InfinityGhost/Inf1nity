@@ -59,14 +59,19 @@ namespace Inf1nity.Commands
         }
 
         [Command("announce"), Summary("Announces a string of text, mentions @everyone."),
-            RequireUserPermission(GuildPermission.MentionEveryone), 
+            RequireUserPermission(GuildPermission.MentionEveryone),
             RequireBotPermission(GuildPermission.MentionEveryone)]
         public async Task Announce([Remainder, Summary("The text to announce")] string announcement)
         {
-            await Context.Message.DeleteAsync();
-            var permissions = (Context.User as SocketGuildUser).GuildPermissions;
-            if (permissions.Administrator || permissions.MentionEveryone)
+            if (Context.Message.Attachments.FirstOrDefault() is Attachment attachment)
+            {
+                dynamic embed = new EmbedBuilder { ImageUrl = attachment.Url };
+                embed = embed.Build();
+                await ReplyAsync("**Announcement** @everyone " + Environment.NewLine + announcement, embed: embed);
+            }
+            else
                 await ReplyAsync("**Announcement** @everyone " + Environment.NewLine + announcement);
+            await Context.Message.DeleteAsync();
         }
 
         [Command("vote"), Summary("Creates a vote, mentions @everyone."), 
