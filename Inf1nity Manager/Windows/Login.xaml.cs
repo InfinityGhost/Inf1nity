@@ -54,7 +54,7 @@ namespace Inf1nity_Manager.Windows
             }
             catch(Exception)
             {
-                Config.Save(LoadFile(Directory.GetCurrentDirectory()));
+                Config.Write(LoadFile(Directory.GetCurrentDirectory()));
             }
             Close();
         }
