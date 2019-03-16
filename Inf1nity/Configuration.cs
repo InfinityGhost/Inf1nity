@@ -42,6 +42,8 @@ namespace Inf1nity
             set
             {
                 _runatstart = value;
+                if (!value)
+                    HideAtStart = value;
                 NotifyPropertyChanged();
             }
             get => _runatstart;
