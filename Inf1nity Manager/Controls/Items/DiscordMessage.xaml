@@ -77,7 +77,7 @@
         <Image Grid.RowSpan="2" Name="Image" Width="40" Height="40"/>
 
         <Label Name="Header" Content="Header"
-               Grid.Column="1"/>
+               Grid.Column="1" FontFamily="Segoe UI Semibold"/>
         <TextBlock Name="MessageContent" Text="Content" TextWrapping="WrapWithOverflow"
                    Grid.Row="1" Grid.Column="1"/>
 
