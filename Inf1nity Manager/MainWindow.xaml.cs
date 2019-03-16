@@ -190,6 +190,18 @@ namespace Inf1nity_Manager
         {
             Bot = new DiscordBot(Config.Token);
             Bot.Output += Console.Log;
+            Bot.MessageReceived += Bot_MessageReceived;
+            Bot.MessageDeleted += Bot_MessageDeleted;
+        }
+
+        private void Bot_MessageReceived(object sender, Discord.WebSocket.SocketMessage e)
+        {
+            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
+        }
+
+        private void Bot_MessageDeleted(object sender, ulong e)
+        {
+            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.RemoveMessage(e));
         }
 
         #endregion

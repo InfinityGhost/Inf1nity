@@ -28,6 +28,9 @@ namespace Inf1nity
 
         #region Properties & Events
 
+        public event EventHandler<SocketMessage> MessageReceived;
+        public event EventHandler<ulong> MessageDeleted;
+
         public DiscordSocketClient Client { private set; get; } = new DiscordSocketClient();
         public DiscordSocketConfig Configuration { set; get; } = new DiscordSocketConfig();
 
@@ -85,6 +88,7 @@ namespace Inf1nity
 
             Client.Log += HandleOutput;
             Client.MessageReceived += HandleOutput;
+            Client.MessageDeleted += Client_MessageDeleted;
             Client.Ready += Client_Ready;
             Client.Connected += Client_Connected;
             Client.Disconnected += Client_Disconnected;
@@ -105,6 +109,12 @@ namespace Inf1nity
                 Output?.Invoke(this, ex.ToString());
                 Stop();
             }
+        }
+
+        private Task Client_MessageDeleted(Cacheable<IMessage, ulong> arg1, ISocketMessageChannel arg2)
+        {
+            MessageDeleted?.Invoke(this, arg1.Id);
+            return Task.CompletedTask;
         }
 
         public async void Stop()
@@ -182,6 +192,7 @@ namespace Inf1nity
         private Task HandleOutput(SocketMessage arg)
         {
             LastMessage = arg;
+            MessageReceived?.Invoke(this, arg);
 
             if (arg.Channel is SocketGuildChannel guildChannel)
                 HandleOutput($"{guildChannel.Guild.Name}/#{arg.Channel}/@{arg.Author}/{arg.Content}");
