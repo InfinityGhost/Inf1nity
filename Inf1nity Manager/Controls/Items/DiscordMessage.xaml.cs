@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Discord;
 using Discord.WebSocket;
+using Inf1nity_Manager.Tools;
+using Inf1nity_Manager.Windows;
 
 namespace Inf1nity_Manager.Controls.Items
 {
@@ -71,7 +73,33 @@ namespace Inf1nity_Manager.Controls.Items
             Header.Content = header;
             MessageContent.Text = Message.Content;
 
-            Image.Source = ImageSourceConverter.ConvertFromString(Message.Author.GetAvatarUrl()) as ImageSource;
+            Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
+
+            foreach (var attachment in Message.Attachments)
+            {
+                if (attachment.Width != null && attachment.Height != null) // Attachment is an image
+                {
+                    var image = ImageTool.CreateImage(attachment.Url);
+                    image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
+                    AttachmentsPanel.Children.Add(image);
+                }
+            }
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var image = sender as System.Windows.Controls.Image;
+
+            image.MouseLeftButtonDown -= Image_MouseLeftButtonDown;
+            AttachmentsPanel.Children.Remove(image);
+
+            var popout = new ImagePopoutWindow(image);
+            popout.Closing += (win, args) => popout.Content = null;
+            popout.Closed += (win, args) =>
+            {
+                AttachmentsPanel.Children.Add(image);
+                image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
+            };
         }
 
         #region Properties & Events
@@ -103,8 +131,8 @@ namespace Inf1nity_Manager.Controls.Items
         #endregion
 
         #region Tools
+        
 
-        private static ImageSourceConverter ImageSourceConverter = new ImageSourceConverter();
 
         #endregion
 
