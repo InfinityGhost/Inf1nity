@@ -15,7 +15,6 @@ namespace Inf1nity
     public class Configuration : INotifyPropertyChanged
     {
         public Configuration() { }
-        public Configuration(string path) => Read(path);
 
         #region Properties
 
