@@ -28,7 +28,7 @@
                 <Setter Property="Margin" Value="0,1"/>
             </Style>
             <Style TargetType="Border">
-                <Setter Property="Margin" Value="3,0"/>
+                <Setter Property="Margin" Value="3,2.5"/>
                 <Setter Property="Padding" Value="3"/>
                 <Setter Property="BorderBrush" Value="#FFD5DFE5"/>
                 <Setter Property="BorderThickness" Value="1"/>
@@ -49,6 +49,9 @@
             </GroupBox>
             <Border>
                 <CheckBox Content="Run at startup" IsChecked="{Binding Path=Config.RunAtStart, Mode=TwoWay}"/>
+            </Border>
+            <Border>
+                <CheckBox Content="Hide on startup" IsChecked="{Binding Path=Config.HideAtStart, Mode=TwoWay}"/>
             </Border>
         </StackPanel>
 
