@@ -63,7 +63,7 @@ namespace Inf1nity_Manager
             {
                 BotStart();
                 if (Config.HideAtStart)
-                    this.Hide();
+                    this.WindowState = WindowState.Minimized;
             }
         }
 
