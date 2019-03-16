@@ -80,6 +80,8 @@ namespace Inf1nity_Manager.Controls.Items
                 if (attachment.Width != null && attachment.Height != null) // Attachment is an image
                 {
                     var image = ImageTool.CreateImage(attachment.Url);
+                    image.AttachContextMenu();
+
                     image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
                     AttachmentsPanel.Children.Add(image);
                 }
@@ -129,17 +131,44 @@ namespace Inf1nity_Manager.Controls.Items
             Clipboard.SetText(Message.Id.ToString());
         }
 
+        private void CopyUserID_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(Message.Author.Id.ToString());
+        }
+
+        private void KickUser_Click(object sender, RoutedEventArgs e)
+        {
+            var guild = (Message.Author as SocketGuildUser).Guild;
+
+            string msg = $"Are you sure you want to kick {Message.Author.Username} from {guild.Name}?";
+            string title = "Kick User";
+            var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
+                (Message.Author as SocketGuildUser).KickAsync();
+        }
+
+        private void BanUser_Click(object sender, RoutedEventArgs e)
+        {
+            var guild = (Message.Author as SocketGuildUser).Guild;
+
+            string msg = $"Are you sure you want to ban {Message.Author.Username} from {guild.Name}?";
+            string title = "Ban User";
+            var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
+                (Message.Author as SocketGuildUser).BanAsync();
+        }
+
         #endregion
 
         #region Tools
-        
+
 
 
         #endregion
 
         #region Animation
 
-        
+
 
         #endregion
 
@@ -153,6 +182,5 @@ namespace Inf1nity_Manager.Controls.Items
         }
 
         #endregion
-
     }
 }
