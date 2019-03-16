@@ -40,6 +40,8 @@
     <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Discord.Net.Core, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="Discord.Net.Rest, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Discord.Net.WebSocket, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -66,8 +68,19 @@
     <Compile Include="Controls\BotStatus.xaml.cs">
       <DependentUpon>BotStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChannelPicker.xaml.cs">
+      <DependentUpon>ChannelPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConsoleTraceListener.cs" />
+    <Compile Include="Controls\Items\DiscordMessage.xaml.cs">
+      <DependentUpon>DiscordMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DiscordMessagePanel.xaml.cs">
+      <DependentUpon>DiscordMessagePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Converters\NegateBool.cs" />
+    <Compile Include="Tools\ImageTool.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Windows\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
@@ -75,8 +88,15 @@
     <Compile Include="Windows\FileHelper.cs" />
     <Compile Include="Windows\ConfigurationManager.xaml.cs">
       <DependentUpon>ConfigurationManager.xaml</DependentUpon>
+    <Compile Include="Windows\ImagePopoutWindow.xaml.cs">
+      <DependentUpon>ImagePopoutWindow.xaml</DependentUpon>
+    </Compile>
     </Compile>
     <Page Include="Controls\BotStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ChannelPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -85,6 +105,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Console.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Items\DiscordMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DiscordMessagePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,6 +146,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ConfigurationManager.xaml">
+      <Page Include="Windows\ImagePopoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,5 +190,6 @@
     <EmbeddedResource Include="Assets\Icon.ico" />
     <Resource Include="Assets\Icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Discord.WebSocket;
 using Inf1nity;
 using Inf1nity_Manager.Controls;
 
@@ -30,6 +31,18 @@ namespace Inf1nity_Manager
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+        }
+
+        #region Window Events
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Console.Updated += StatusBar.Update;
+
+            Debug.Listeners.Add(Console.CreateListener());
+            Debug.AutoFlush = true;
+            
+            Debug.WriteLine("Console added to trace listeners.");
             
             try
             {
@@ -195,8 +208,33 @@ namespace Inf1nity_Manager
         {
             Bot = new DiscordBot(Config.Token);
             Bot.Output += Console.Log;
+            Bot.MessageReceived += Bot_MessageReceived;
+            Bot.MessageDeleted += Bot_MessageDeleted;
+        }
+
+        private void Bot_MessageReceived(object sender, Discord.WebSocket.SocketMessage e)
+        {
+            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
+        }
+
+        private void Bot_MessageDeleted(object sender, ulong e)
+        {
+            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.RemoveMessage(e));
         }
 
         #endregion
+
+        private void CommandProcessor_MessageSend(object sender, string e)
+        {
+            if (ChannelPicker.SelectedChannel != null)
+            {
+                var id = ChannelPicker.SelectedChannel.Value.Value;
+                var channel = Bot.Client.GetChannel(id);
+                if (channel is SocketTextChannel textChannel)
+                    Bot?.SendMessage(e, textChannel);
+            }
+            else
+                Bot?.SendMessage(e);
+        }
     }
 }
