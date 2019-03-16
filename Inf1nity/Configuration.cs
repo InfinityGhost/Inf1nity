@@ -67,7 +67,11 @@ namespace Inf1nity
         public static Configuration Read(string path)
         {
             using (var sr = new StreamReader(path))
-                return (Configuration)Serializer.Deserialize(sr);
+            {
+                var config = (Configuration)Serializer.Deserialize(sr);
+                config.Path = path;
+                return config;
+            }
         }
 
         public void Write()
