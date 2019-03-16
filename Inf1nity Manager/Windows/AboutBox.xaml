@@ -71,14 +71,18 @@
                     </Label>
                 </GroupBox>
 
-                <GroupBox Header="Version">
-                    <Label x:Name="Version">
+                <GroupBox Header="Discord Bot Version">
+                    <Label x:Name="DiscordBotVersion">
                         <Label.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Open changelog" Click="ChangeLogButton"/>
                             </ContextMenu>
                         </Label.ContextMenu>
                     </Label>
+                </GroupBox>
+
+                <GroupBox Header="UI Version">
+                    <Label x:Name="UserInterfaceVersion"/>
                 </GroupBox>
 
                 <GroupBox Header="Website">
