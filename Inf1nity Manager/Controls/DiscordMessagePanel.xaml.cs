@@ -48,15 +48,7 @@ namespace Inf1nity_Manager.Controls
 
         public void RemoveMessage(ulong id)
         {
-            var msgCtrls = MessagePanel.Children.Cast<DiscordMessageControl>();
-            //foreach (var msg in msgCtrls)
-            //    if (msg.Message.Id == id)
-            //        MessagePanel.Children.Remove(msg);
-        }
-
-        internal void AddMessage(object args)
-        {
-            throw new NotImplementedException();
+            // TODO: add message auto removal.
         }
 
         #endregion
