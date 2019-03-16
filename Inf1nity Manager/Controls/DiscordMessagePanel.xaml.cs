@@ -36,21 +36,27 @@ namespace Inf1nity_Manager.Controls
             MessagePanel.Children.Add(msgCtrl);
             ScrollViewer.ScrollToBottom();
 
-            msgCtrl.MessageDeleted += MessageDeleted_Handler;
+            msgCtrl.MessageDeleted += (msg, args) => RemoveMessage(msgCtrl);
         }
-
-        private void MessageDeleted_Handler(object sender, EventArgs e)
-        {
-            var ctrl = sender as DiscordMessage;
-            if (MessagePanel.Children.Contains(ctrl))
-                MessagePanel.Children.Remove(ctrl);
-            else
-                Debug.WriteLine("Message removed that doesn't exist!");
-        }
-
+        
         public void RemoveMessage(ulong id)
         {
-            // TODO: add message auto removal.
+            foreach (var child in MessagePanel.Children)
+            {
+                if (child is DiscordMessage message && message.Message.Id == id)
+                {
+                    RemoveMessage(message);
+                    break;
+                }
+            }
+        }
+
+        public void RemoveMessage(DiscordMessage message)
+        {
+            if (MessagePanel.Children.Contains(message))
+                MessagePanel.Children.Remove(message);
+            else
+                Debug.WriteLine("Message removed that doesn't exist!");
         }
 
         #endregion
