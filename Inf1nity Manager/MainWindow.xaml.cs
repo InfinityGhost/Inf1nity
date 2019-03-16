@@ -188,26 +188,12 @@ namespace Inf1nity_Manager
 
         #region Misc.
 
-        private void CommandProcessor_CommandRun(object sender, string e) => Bot?.SendMessage(e);
-
         private void Login(object sender = null, EventArgs e = null)
         {
             Bot = new DiscordBot(Config.Token);
             Bot.Output += Console.Log;
             Bot.MessageReceived += Bot_MessageReceived;
             Bot.MessageDeleted += Bot_MessageDeleted;
-        }
-
-        private void CommandProcessor_MessageSend(object sender, string e)
-        {
-            if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
-            {
-                    var channel = Bot.Client.GetChannel(id);
-                    if (channel is SocketTextChannel textChannel)
-                        Bot?.SendMessage(e, textChannel);
-            }
-            else
-                Bot?.SendMessage(e);
         }
 
         private void Bot_MessageReceived(object sender, SocketMessage e)
@@ -221,6 +207,37 @@ namespace Inf1nity_Manager
         private void Bot_MessageDeleted(object sender, ulong e)
         {
             Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.RemoveMessage(e));
+        }
+
+        #endregion
+
+        #region CommandProcessor
+
+        private void CommandProcessor_CommandRun(object sender, string e) => Bot?.SendMessage(e);
+
+        private void CommandProcessor_MessageSend(object sender, string e)
+        {
+            if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
+            {
+                var channel = Bot.Client.GetChannel(id);
+                if (channel is SocketTextChannel textChannel)
+                    Bot?.SendMessage(e, textChannel);
+            }
+            else
+                Bot?.SendMessage(e);
+        }
+
+        private void CommandProcessor_KeyPress(object sender, Key e)
+        {
+            switch (e)
+            {
+                case Key.Up:
+                    ChannelPicker.MoveUp();
+                    break;
+                case Key.Down:
+                    ChannelPicker.MoveDown();
+                    break;
+            }
         }
 
         #endregion

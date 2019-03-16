@@ -92,7 +92,8 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Controls:CommandProcessor CommandRun="CommandProcessor_MessageSend" Height="24"/>
+                        <Controls:CommandProcessor CommandRun="CommandProcessor_MessageSend" KeyPress="CommandProcessor_KeyPress"
+                                                   Height="24"/>
                         <Controls:ChannelPicker Grid.Column="1" Margin="2.5,0" VerticalAlignment="Center" x:Name="ChannelPicker"
                                                 Height="24" MinWidth="150"/>
                     </Grid>

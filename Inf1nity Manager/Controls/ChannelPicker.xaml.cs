@@ -64,6 +64,17 @@ namespace Inf1nity_Manager.Controls
 
         #region Selection
 
+        public void MoveUp() => SelectIndex(ChannelsBox.SelectedIndex - 1);
+        public void MoveDown() => SelectIndex(ChannelsBox.SelectedIndex + 1);
+
+        public bool SelectIndex(int index)
+        {
+            bool isValid = index <= Channels.Count && index >= 0;
+            if (isValid)
+                ChannelsBox.SelectedIndex = index;
+            return isValid;
+        }
+
         private void ChannelsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ChannelsBox.SelectedItem is KeyValuePair<string, ulong> item)
