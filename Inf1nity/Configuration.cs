@@ -59,7 +59,7 @@ namespace Inf1nity
             }
             get => _hideAtStart;
         }
-
+        
         #endregion
 
         #region Management

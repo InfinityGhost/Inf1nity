@@ -119,7 +119,7 @@ namespace Inf1nity_Manager
             }
             get => _config;
         }
-
+        
         private string DefaultConfigPath = Directory.GetCurrentDirectory() + "\\default.cfg";
 
         #endregion
@@ -207,6 +207,9 @@ namespace Inf1nity_Manager
         private void Bot_MessageReceived(object sender, SocketMessage e)
         {
             Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
+
+            if (!ChannelPicker.Channels.Values.Contains(e.Channel.Id))
+                ChannelPicker.Channels.Add(e.Channel as SocketTextChannel);
         }
 
         private void Bot_MessageDeleted(object sender, ulong e)
