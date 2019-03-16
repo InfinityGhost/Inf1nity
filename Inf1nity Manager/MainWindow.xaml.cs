@@ -52,7 +52,7 @@ namespace Inf1nity_Manager
             {
                 Config = new Configuration();
                 Debug.WriteLine("No defaults found, using an empty config file.");
-                Config.Save(DefaultConfigPath);
+                Config.Write(DefaultConfigPath);
                 new Windows.ConfigurationManager(Config);
             }
             

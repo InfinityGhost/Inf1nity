@@ -66,15 +66,10 @@ namespace Inf1nity
                 Serializer.Serialize(tw, this);
         }
 
-        public void Save(string path)
+        public void Write(string path)
         {
-            File.WriteAllLines(path, new List<string>
-            {
-                $"configVer:{Version}",
-                $"token:{Token}",
-                $"runAtStart:{RunAtStart}",
-            });
             Path = path;
+            Write();
         }
 
         #endregion
