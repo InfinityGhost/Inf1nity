@@ -73,6 +73,17 @@
         </Menu>
 
         <TabControl Grid.Row="1">
+            <TabItem Header="Messages">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Controls:DiscordMessagePanel x:Name="DiscordMessagePanel"/>
+                    <Controls:CommandProcessor CommandRun="CommandProcessor_CommandRun" Height="24"
+                                               Grid.Row="1"/>
+                </Grid>
+            </TabItem>
             <TabItem Header="Console">
                 <Grid>
                     <Grid.RowDefinitions>

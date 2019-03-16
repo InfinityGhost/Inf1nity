@@ -40,6 +40,7 @@
     <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Discord.Net.Core, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Discord.Net.WebSocket, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -66,7 +67,17 @@
     <Compile Include="Controls\BotStatus.xaml.cs">
       <DependentUpon>BotStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChannelPicker.xaml.cs">
+      <DependentUpon>ChannelPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConsoleTraceListener.cs" />
+    <Compile Include="Controls\DiscordMessageControl.xaml.cs">
+      <DependentUpon>DiscordMessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DiscordMessagePanel.xaml.cs">
+      <DependentUpon>DiscordMessagePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Converters\NegateBool.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Windows\AboutBox.xaml.cs">
@@ -80,11 +91,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ChannelPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\CommandProcessor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Console.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DiscordMessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DiscordMessagePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,6 +180,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\Icon.ico" />
     <Resource Include="Assets\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\Items\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
