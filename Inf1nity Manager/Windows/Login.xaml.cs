@@ -50,7 +50,7 @@ namespace Inf1nity_Manager.Windows
         {
             try
             {
-                Config.Save();
+                Config.Write();
             }
             catch(Exception)
             {
