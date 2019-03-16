@@ -45,7 +45,7 @@ namespace Inf1nity_Manager
 
             try
             {
-                Config = new Configuration(DefaultConfigPath);
+                Config = Configuration.Read(DefaultConfigPath);
                 Debug.WriteLine("Loaded defaults.");
             }
             catch
