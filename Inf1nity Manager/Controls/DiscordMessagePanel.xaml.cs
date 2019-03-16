@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using Inf1nity_Manager.Controls.Items;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,7 +32,7 @@ namespace Inf1nity_Manager.Controls
 
         public void AddMessage(SocketMessage message)
         {
-            var msgCtrl = new DiscordMessageControl(message);
+            var msgCtrl = new DiscordMessage(message);
             MessagePanel.Children.Add(msgCtrl);
 
             msgCtrl.MessageDeleted += MessageDeleted_Handler;
@@ -39,7 +40,7 @@ namespace Inf1nity_Manager.Controls
 
         private void MessageDeleted_Handler(object sender, EventArgs e)
         {
-            var ctrl = sender as DiscordMessageControl;
+            var ctrl = sender as DiscordMessage;
             if (MessagePanel.Children.Contains(ctrl))
                 MessagePanel.Children.Remove(ctrl);
             else

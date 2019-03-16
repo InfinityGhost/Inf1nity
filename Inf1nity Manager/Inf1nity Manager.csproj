@@ -72,8 +72,8 @@
       <DependentUpon>ChannelPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConsoleTraceListener.cs" />
-    <Compile Include="Controls\DiscordMessageControl.xaml.cs">
-      <DependentUpon>DiscordMessageControl.xaml</DependentUpon>
+    <Compile Include="Controls\Items\DiscordMessage.xaml.cs">
+      <DependentUpon>DiscordMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DiscordMessagePanel.xaml.cs">
       <DependentUpon>DiscordMessagePanel.xaml</DependentUpon>
@@ -104,7 +104,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DiscordMessageControl.xaml">
+    <Page Include="Controls\Items\DiscordMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,8 +182,6 @@
     <EmbeddedResource Include="Assets\Icon.ico" />
     <Resource Include="Assets\Icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\Items\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
