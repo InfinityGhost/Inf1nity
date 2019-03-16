@@ -8,6 +8,6 @@
              d:DesignHeight="18" d:DesignWidth="400"
              DataContext="{Binding ElementName=Control}">
     <ComboBox Name="ChannelsBox" ItemsSource="{Binding Path=Channels}"
-              SelectionChanged="ChannelsBox_SelectionChanged" MouseWheel="ChannelsBox_MouseWheel"
+              SelectionChanged="ChannelsBox_SelectionChanged" MouseWheel="ChannelsBox_MouseWheel" SelectedIndex="0"
               DisplayMemberPath="Key" SelectedValuePath="Value"/>
 </UserControl>

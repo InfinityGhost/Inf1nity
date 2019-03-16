@@ -17,7 +17,7 @@ namespace Inf1nity_Manager
         {
             AppDomain.CurrentDomain.UnhandledException += GlobalUnhandledException;
         }
-
+        
         private void GlobalUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = default;

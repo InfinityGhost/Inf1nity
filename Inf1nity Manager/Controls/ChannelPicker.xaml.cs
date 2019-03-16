@@ -4,6 +4,7 @@ using Inf1nity_Manager.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 
 namespace Inf1nity_Manager.Controls
 {
@@ -29,6 +31,10 @@ namespace Inf1nity_Manager.Controls
             InitializeComponent();
         }
 
+        #region Channels
+
+        private static XmlSerializer ChannelSerializer = new XmlSerializer(typeof(ChannelDictionary));
+
         private ChannelDictionary _channelDictionary = new ChannelDictionary();
         public ChannelDictionary Channels
         {
@@ -39,15 +45,22 @@ namespace Inf1nity_Manager.Controls
             }
             get => _channelDictionary;
         }
-        
-        public void AddChannels(object sender, List<SocketTextChannel> channels)
-        {
-            var keys = channels.ConvertAll(e => e.Name);
-            var values = channels.ConvertAll(e => e.Id);
-            Channels.AddRange(keys, values);
-        }
 
         public ulong? SelectedChannelID { private set; get; }
+
+        public void LoadChannels(string path)
+        {
+            using (var sr = new StreamReader(path))
+                Channels = (ChannelDictionary)ChannelSerializer.Deserialize(sr);
+        }
+
+        public void SaveChannels(string path)
+        {
+            using (var sw = new StreamWriter(path))
+                ChannelSerializer.Serialize(sw, Channels);
+        }
+
+        #endregion
 
         #region Selection
 
@@ -63,7 +76,7 @@ namespace Inf1nity_Manager.Controls
         {
             var change = -e.Delta / 120;
             var newIndex = ChannelsBox.SelectedIndex + change;
-            if (newIndex <= Channels.Count && newIndex >= -1)
+            if (newIndex <= Channels.Count && newIndex >= 0)
                 ChannelsBox.SelectedIndex = newIndex;
         }
 
