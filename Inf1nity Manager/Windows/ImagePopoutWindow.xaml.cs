@@ -23,12 +23,21 @@ namespace Inf1nity_Manager.Windows
         {
             InitializeComponent();
             this.Content = image;
-            this.Show();
+            Title = image.Source.ToString();
+
+            image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
         }
 
-        private void Window_LostFocus(object sender, RoutedEventArgs e)
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            (sender as Image).MouseLeftButtonDown -= Image_MouseLeftButtonDown;
+            this.Hide();
+        }
+
+        private void DeactivateWin(object sender, EventArgs e)
+        {
+            if (this.Visibility == Visibility.Hidden)
+                this.Close();
         }
     }
 }

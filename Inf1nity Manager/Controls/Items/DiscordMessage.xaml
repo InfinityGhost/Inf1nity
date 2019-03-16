@@ -76,14 +76,17 @@
         <TextBlock Name="MessageContent" Text="Content" TextWrapping="WrapWithOverflow"
                    Grid.Row="1" Grid.Column="1"/>
 
-        <StackPanel Name="AttachmentsPanel" Grid.Row="2" Grid.Column="1" 
-                        MaxWidth="400" MaxHeight="225">
-            <StackPanel.Resources>
-                <Style TargetType="Image">
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Top"/>
-                </Style>
-            </StackPanel.Resources>
-        </StackPanel>
+        <Viewbox Grid.Row="2" Grid.Column="1">
+            <StackPanel Name="AttachmentsPanel">
+                <StackPanel.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="MaxWidth" Value="400"/>
+                        <Setter Property="MaxHeight" Value="225"/>
+                    </Style>
+                </StackPanel.Resources>
+            </StackPanel>
+        </Viewbox>
     </Grid>
 </UserControl>

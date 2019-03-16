@@ -100,6 +100,7 @@ namespace Inf1nity_Manager.Controls.Items
                 AttachmentsPanel.Children.Add(image);
                 image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
             };
+            popout.ShowDialog();
         }
 
         #region Properties & Events
