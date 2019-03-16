@@ -133,17 +133,35 @@ namespace Inf1nity
 
         #endregion
 
-        #region Commands
+        #region User Interface Interaction
 
-        public void SendMessage(string message, SocketTextChannel channel = null)
+        public async void SendMessage(string message, SocketTextChannel channel = null, string imageUrl = null)
+        {
+            Embed embed = null;
+            if (imageUrl != null)
+                embed = new EmbedBuilder { ImageUrl = imageUrl }.Build();
+
+            if (channel == null && LastMessage != null)
+                await LastMessage.Channel.SendMessageAsync(message, embed: embed);
+            else if (channel != null)
+                await channel.SendMessageAsync(message, embed: embed);
+            else
+                HandleOutput("Error: No recent message to reply to.");
+        }
+        
+        public async void SendImage(string imageUrl, SocketTextChannel channel = null)
         {
             if (channel == null && LastMessage != null)
-                LastMessage.Channel.SendMessageAsync(message);
-            else if (channel == null && LastMessage == null)
-                HandleOutput("Error: No recent message to reply to.");
+                await LastMessage.Channel.SendFileAsync(imageUrl);
+            else if (channel != null)
+                await channel.SendFileAsync(imageUrl, null);
             else
-                channel.SendMessageAsync(message);
+                HandleOutput("Error: No recent message to reply to.");
         }
+
+        #endregion
+
+        #region Commands
 
         private async void RegisterCommands()
         {

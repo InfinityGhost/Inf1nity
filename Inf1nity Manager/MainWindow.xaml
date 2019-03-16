@@ -73,7 +73,7 @@
         </Menu>
 
         <TabControl Grid.Row="1">
-            <TabItem Header="Messages">
+            <TabItem Header="Messages" DragDrop.Drop="DropItem_Event" AllowDrop="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>

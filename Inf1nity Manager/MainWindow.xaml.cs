@@ -227,6 +227,11 @@ namespace Inf1nity_Manager
                 Bot?.SendMessage(e);
         }
 
+        private void DropItem_Event(object sender, DragEventArgs e)
+        {
+            // Image must be uploaded
+        }
+
         private void CommandProcessor_KeyPress(object sender, Key e)
         {
             switch (e)
@@ -241,5 +246,7 @@ namespace Inf1nity_Manager
         }
 
         #endregion
+
+        
     }
 }
