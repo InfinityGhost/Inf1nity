@@ -54,9 +54,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{Binding ElementName=Control, Path=ActualHeight}"/>
+            <ColumnDefinition Width="42"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -72,8 +73,17 @@
 
         <Label Name="Header" Content="Header"
                Grid.Column="1"/>
-        <TextBlock Name="MessageContent" Text="Content"
+        <TextBlock Name="MessageContent" Text="Content" TextWrapping="WrapWithOverflow"
                    Grid.Row="1" Grid.Column="1"/>
-        
+
+        <StackPanel Name="AttachmentsPanel" Grid.Row="2" Grid.Column="1" 
+                        MaxWidth="400" MaxHeight="225">
+            <StackPanel.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                </Style>
+            </StackPanel.Resources>
+        </StackPanel>
     </Grid>
 </UserControl>

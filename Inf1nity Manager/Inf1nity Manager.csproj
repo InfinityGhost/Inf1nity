@@ -80,11 +80,15 @@
     </Compile>
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Converters\NegateBool.cs" />
+    <Compile Include="Tools\ImageTool.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Windows\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\FileHelper.cs" />
+    <Compile Include="Windows\ImagePopoutWindow.xaml.cs">
+      <DependentUpon>ImagePopoutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -140,6 +144,10 @@
     <Page Include="Windows\AboutBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ImagePopoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Login.xaml">
       <SubType>Designer</SubType>
