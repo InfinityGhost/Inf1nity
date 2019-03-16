@@ -190,6 +190,19 @@ namespace Inf1nity_Manager
             Bot.MessageDeleted += Bot_MessageDeleted;
         }
 
+        private void CommandProcessor_MessageSend(object sender, string e)
+        {
+            if (ChannelPicker.SelectedChannelID != null)
+            {
+                var id = ChannelPicker.SelectedChannelID.Value;
+                var channel = Bot.Client.GetChannel(id);
+                if (channel is SocketTextChannel textChannel)
+                    Bot?.SendMessage(e, textChannel);
+            }
+            else
+                Bot?.SendMessage(e);
+        }
+
         private void Bot_MessageReceived(object sender, SocketMessage e)
         {
             Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
@@ -201,18 +214,5 @@ namespace Inf1nity_Manager
         }
 
         #endregion
-
-        private void CommandProcessor_MessageSend(object sender, string e)
-        {
-            if (ChannelPicker.SelectedChannel != null)
-            {
-                var id = ChannelPicker.SelectedChannel.Value.Value;
-                var channel = Bot.Client.GetChannel(id);
-                if (channel is SocketTextChannel textChannel)
-                    Bot?.SendMessage(e, textChannel);
-            }
-            else
-                Bot?.SendMessage(e);
-        }
     }
 }

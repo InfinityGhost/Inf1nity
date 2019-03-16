@@ -28,7 +28,10 @@ namespace Inf1nity_Manager.Controls
             InitializeComponent();
         }
 
-        private Dictionary<string, ulong> _channels;
+        private Dictionary<string, ulong> _channels = new Dictionary<string, ulong>
+        {
+            { @"{Reply}", 0 }
+        };
         public Dictionary<string, ulong> Channels
         {
             set
@@ -46,7 +49,7 @@ namespace Inf1nity_Manager.Controls
             Channels.AddRange(keys, values);
         }
 
-        public KeyValuePair<string, ulong>? SelectedChannel { private set; get; }
+        public ulong? SelectedChannelID { private set; get; }
 
         #region INotifyPropertyChanged
 
@@ -62,9 +65,17 @@ namespace Inf1nity_Manager.Controls
         private void ChannelsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ChannelsBox.SelectedItem is KeyValuePair<string, ulong> item)
-                SelectedChannel = item;
+                SelectedChannelID = item.Value;
             else
-                SelectedChannel = null;
+                SelectedChannelID = null;
+        }
+
+        private void ChannelsBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var change = -e.Delta / 120;
+            var newIndex = ChannelsBox.SelectedIndex + change;
+            if (newIndex <= Channels.Count && newIndex >= -1)
+                ChannelsBox.SelectedIndex = newIndex;
         }
     }
 }
