@@ -7,7 +7,12 @@
              xmlns:items="clr-namespace:Inf1nity_Manager.Controls.Items"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Clear messages" Click="ClearMessages_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+    <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
         <StackPanel Name="MessagePanel">
             <StackPanel.Resources>
                 <Style TargetType="items:DiscordMessage">

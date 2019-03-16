@@ -54,5 +54,14 @@ namespace Inf1nity_Manager.Controls
         }
 
         #endregion
+
+        #region Context Menu
+
+        private void ClearMessages_Click(object sender, RoutedEventArgs e)
+        {
+            MessagePanel.Children.Clear();
+        }
+
+        #endregion
     }
 }
