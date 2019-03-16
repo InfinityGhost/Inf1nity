@@ -30,6 +30,7 @@ namespace Inf1nity_Manager.Controls
         #region Properties & Events
 
         public event EventHandler<string> CommandRun;
+        public event EventHandler<Key> KeyPress;
 
         private string _buffer;
         public string Buffer
@@ -59,7 +60,8 @@ namespace Inf1nity_Manager.Controls
 
         private void BufferKeyDown(object sender, KeyEventArgs e)
         {
-            switch(e.Key)
+            KeyPress?.Invoke(this, e.Key);
+            switch (e.Key)
             {
                 case Key.Enter:
                     {
