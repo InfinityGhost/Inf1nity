@@ -65,13 +65,19 @@ namespace Inf1nity_Manager
                 if (Config.HideAtStart)
                     this.WindowState = WindowState.Minimized;
             }
+
+            if (File.Exists(DefaultChannelsPath))
+                ChannelPicker.LoadChannels(DefaultChannelsPath);
+            else
+                ChannelPicker.SaveChannels(DefaultChannelsPath);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             Bot?.Stop();
             Hide();
-            Environment.Exit(0x0);
+
+            ChannelPicker.SaveChannels(DefaultChannelsPath);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -120,7 +126,8 @@ namespace Inf1nity_Manager
             get => _config;
         }
         
-        private string DefaultConfigPath = Directory.GetCurrentDirectory() + "\\default.cfg";
+        private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
+        private static string DefaultChannelsPath => Directory.GetCurrentDirectory() + "\\channels.xml";
 
         #endregion
         
@@ -193,12 +200,11 @@ namespace Inf1nity_Manager
 
         private void CommandProcessor_MessageSend(object sender, string e)
         {
-            if (ChannelPicker.SelectedChannelID != null)
+            if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
             {
-                var id = ChannelPicker.SelectedChannelID.Value;
-                var channel = Bot.Client.GetChannel(id);
-                if (channel is SocketTextChannel textChannel)
-                    Bot?.SendMessage(e, textChannel);
+                    var channel = Bot.Client.GetChannel(id);
+                    if (channel is SocketTextChannel textChannel)
+                        Bot?.SendMessage(e, textChannel);
             }
             else
                 Bot?.SendMessage(e);
