@@ -34,6 +34,7 @@ namespace Inf1nity_Manager.Controls
         {
             var msgCtrl = new DiscordMessage(message);
             MessagePanel.Children.Add(msgCtrl);
+            ScrollViewer.ScrollToBottom();
 
             msgCtrl.MessageDeleted += MessageDeleted_Handler;
         }
