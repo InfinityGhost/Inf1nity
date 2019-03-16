@@ -161,12 +161,7 @@ namespace Inf1nity_Manager
         private void ConfigButton(object sender, RoutedEventArgs e)
         {
             var loginWindow = new Windows.ConfigurationManager(Config);
-            loginWindow.Closed += HandleLoginClose;
-        }
-
-        private void HandleLoginClose(object sender, EventArgs e)
-        {
-            Config = (sender as Windows.ConfigurationManager).Config;
+            loginWindow.Closed += (win, args) => Config = loginWindow.Config;
         }
 
         #endregion
