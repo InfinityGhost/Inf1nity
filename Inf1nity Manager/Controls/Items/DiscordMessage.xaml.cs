@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 using Discord;
 using Discord.WebSocket;
 
-namespace Inf1nity_Manager.Controls
+namespace Inf1nity_Manager.Controls.Items
 {
     /// <summary>
     /// Interaction logic for DiscordMessageControl.xaml
     /// </summary>
-    public partial class DiscordMessageControl : UserControl, INotifyPropertyChanged
+    public partial class DiscordMessage : UserControl, INotifyPropertyChanged
     {    
-        public DiscordMessageControl(SocketMessage msg)
+        public DiscordMessage(SocketMessage msg)
         {
             InitializeComponent();
             Message = msg;
