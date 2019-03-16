@@ -77,7 +77,7 @@
     <Compile Include="Controls\DiscordMessagePanel.xaml.cs">
       <DependentUpon>DiscordMessagePanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Converters\NegateBool.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Windows\AboutBox.xaml.cs">
