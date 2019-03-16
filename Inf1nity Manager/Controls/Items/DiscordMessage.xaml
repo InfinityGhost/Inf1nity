@@ -66,6 +66,11 @@
                 <MenuItem Header="Delete" Click="Delete_Click"/>
                 <MenuItem Header="Copy message" Click="Copy_Click"/>
                 <MenuItem Header="Copy ID" Click="CopyMessageID_Click"/>
+                <MenuItem Header="User">
+                    <MenuItem Header="Copy ID" Click="CopyUserID_Click"/>
+                    <MenuItem Header="Kick user" Click="KickUser_Click"/>
+                    <MenuItem Header="Ban user" Click="BanUser_Click"/>
+                </MenuItem>
             </ContextMenu>
         </Grid.ContextMenu>
 
