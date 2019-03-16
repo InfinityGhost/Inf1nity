@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Discord.WebSocket;
 using Inf1nity;
 using Inf1nity_Manager.Controls;
 
@@ -39,7 +40,7 @@ namespace Inf1nity_Manager
 
             Debug.Listeners.Add(Console.CreateListener());
             Debug.AutoFlush = true;
-
+            
             Debug.WriteLine("Console added to trace listeners.");
 
             try
@@ -205,5 +206,18 @@ namespace Inf1nity_Manager
         }
 
         #endregion
+
+        private void CommandProcessor_MessageSend(object sender, string e)
+        {
+            if (ChannelPicker.SelectedChannel != null)
+            {
+                var id = ChannelPicker.SelectedChannel.Value.Value;
+                var channel = Bot.Client.GetChannel(id);
+                if (channel is SocketTextChannel textChannel)
+                    Bot?.SendMessage(e, textChannel);
+            }
+            else
+                Bot?.SendMessage(e);
+        }
     }
 }
