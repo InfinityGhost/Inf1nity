@@ -80,8 +80,22 @@
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
                     <Controls:DiscordMessagePanel x:Name="DiscordMessagePanel"/>
-                    <Controls:CommandProcessor CommandRun="CommandProcessor_CommandRun" Height="24"
-                                               Grid.Row="1"/>
+                    <Grid Grid.Row="1" Margin="5,0">
+                        <Grid.Resources>
+                            <Style x:Key="defaultObj" TargetType="{x:Type FrameworkElement}">
+                                <Setter Property="Margin" Value="2.5,0"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:CommandProcessor CommandRun="CommandProcessor_MessageSend" Height="24"/>
+                        <Controls:ChannelPicker Grid.Column="1" Margin="2.5,0" VerticalAlignment="Center" x:Name="ChannelPicker"
+                                                Height="24" MinWidth="150"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Console">

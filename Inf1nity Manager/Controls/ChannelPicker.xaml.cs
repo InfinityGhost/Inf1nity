@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using Inf1nity_Manager.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,10 +41,12 @@ namespace Inf1nity_Manager.Controls
         
         public void AddChannels(object sender, List<SocketTextChannel> channels)
         {
-            var channelIds = channels.ConvertAll(e => e.Id);
-            var channelNames = channels.ConvertAll(e => e.Name);
-            
+            var keys = channels.ConvertAll(e => e.Name);
+            var values = channels.ConvertAll(e => e.Id);
+            Channels.AddRange(keys, values);
         }
+
+        public KeyValuePair<string, ulong>? SelectedChannel { private set; get; }
 
         #region INotifyPropertyChanged
 
@@ -56,5 +59,12 @@ namespace Inf1nity_Manager.Controls
 
         #endregion
 
+        private void ChannelsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ChannelsBox.SelectedItem is KeyValuePair<string, ulong> item)
+                SelectedChannel = item;
+            else
+                SelectedChannel = null;
+        }
     }
 }

@@ -7,5 +7,5 @@
              mc:Ignorable="d" 
              d:DesignHeight="18" d:DesignWidth="400"
              DataContext="{Binding ElementName=Control}">
-    <ComboBox Name="ChannelsBox" ItemsSource="{Binding Path=Channels}"/>
+    <ComboBox Name="ChannelsBox" ItemsSource="{Binding Path=Channels}" SelectionChanged="ChannelsBox_SelectionChanged"/>
 </UserControl>
