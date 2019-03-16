@@ -16,5 +16,10 @@ namespace Inf1nity_Manager.Extensions
             for (int i = 0; i < keys.Count(); i++)
                 dictionary.Add(keys[i], values[i]);
         }
+
+        public static void Add<T1, T2> (this Dictionary<T1, T2> dictionary, KeyValuePair<T1, T2> keyPair)
+        {
+            dictionary.Add(keyPair.Key, keyPair.Value);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using Inf1nity_Manager.Controls.Items;
 using Inf1nity_Manager.Extensions;
 using System;
 using System.Collections.Generic;
@@ -28,18 +29,15 @@ namespace Inf1nity_Manager.Controls
             InitializeComponent();
         }
 
-        private Dictionary<string, ulong> _channels = new Dictionary<string, ulong>
-        {
-            { @"{Reply}", 0 }
-        };
-        public Dictionary<string, ulong> Channels
+        private ChannelDictionary _channelDictionary = new ChannelDictionary();
+        public ChannelDictionary Channels
         {
             set
             {
-                _channels = value;
+                _channelDictionary = value;
                 NotifyPropertyChanged();
             }
-            get => _channels;
+            get => _channelDictionary;
         }
         
         public void AddChannels(object sender, List<SocketTextChannel> channels)
@@ -51,16 +49,7 @@ namespace Inf1nity_Manager.Controls
 
         public ulong? SelectedChannelID { private set; get; }
 
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string PropertyName = "")
-        {
-            if (PropertyName != null)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
-        }
-
-        #endregion
+        #region Selection
 
         private void ChannelsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -77,5 +66,18 @@ namespace Inf1nity_Manager.Controls
             if (newIndex <= Channels.Count && newIndex >= -1)
                 ChannelsBox.SelectedIndex = newIndex;
         }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string PropertyName = "")
+        {
+            if (PropertyName != null)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        #endregion
     }
 }
