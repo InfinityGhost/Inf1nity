@@ -77,7 +77,7 @@ namespace Inf1nity
             }
             get => _commandsRegistered;
         }
-        
+
         #endregion
 
         #region Main Methods
@@ -98,13 +98,13 @@ namespace Inf1nity
                 await Client.LoginAsync(TokenType.Bot, Token);
                 await Client.StartAsync();
             }
-            catch(Discord.Net.HttpException httpex)
+            catch (Discord.Net.HttpException httpex)
             {
                 Output?.Invoke(this, "Exception Occured: " + httpex.Message);
                 Output?.Invoke(this, "Make sure your token is valid!");
                 Stop();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Output?.Invoke(this, ex.ToString());
                 Stop();
@@ -235,6 +235,85 @@ namespace Inf1nity
         {
             if (PropertyName != null)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        #endregion
+
+        #region Channels
+
+        public SocketTextChannel GetTextChannel(ulong id)
+        {
+            if (Running)
+            {
+                var channel = Client.GetChannel(id);
+                if (channel is SocketTextChannel textChannel)
+                    return textChannel;
+                else
+                    throw new ArgumentException("Invalid text channel ID.");
+            }
+            else
+                throw new InvalidOperationException("Bot is not running.");
+        }
+
+        public List<SocketTextChannel> GetGuildTextChannels(ulong id)
+        {
+            if (Running)
+            {
+                var guild = Client.GetGuild(id);
+                if (guild != null)
+                {
+                    var channels = new List<SocketTextChannel>();
+
+                    foreach (SocketTextChannel textChannel in guild.Channels)
+                        channels.Add(textChannel);
+
+                    return channels;
+                }
+                else
+                    throw new ArgumentException("Invalid guild ID.");
+            }
+            else
+                throw new InvalidOperationException("Bot is not running.");
+        }
+
+        public SocketTextChannel FindTextChannel(string guildName, string channelName)
+        {
+            if (Running)
+            {
+                var matchingGuilds = Client.Guilds.Where(g => g.Name == guildName);
+                if (matchingGuilds.Count() == 1)
+                {
+                    var guild = matchingGuilds.First();
+                    var matchingChannels = guild.TextChannels.Where(ch => ch.Name == channelName);
+                    if (matchingChannels.Count() == 1)
+                        return matchingChannels.First();
+                    else if (matchingChannels.Count() == 0)
+                        throw new ArgumentException($"No channel found by the name of \"{channelName}\".");
+                    else
+                        throw new ArgumentException($"More than one channel in the guild \"{guild.Name}\" with the name \"{channelName}\".");
+                }
+                else if (matchingGuilds.Count() == 0)
+                    throw new ArgumentException($"No guild found by the name of \"{guildName}\".");
+                else
+                    throw new ArgumentException($"More than one guild with the name \"{guildName}\".");
+                
+            }
+            else
+                throw new InvalidOperationException("Bot is not running.");
+        }
+
+        public List<SocketTextChannel> GetAllTextChannels()
+        {
+            if (Running)
+            {
+                var textChannels = new List<SocketTextChannel>();
+                foreach (var guild in Client.Guilds)
+                    foreach (var textChannel in guild.TextChannels)
+                        textChannels.Add(textChannel);
+                return textChannels;
+            }
+            else
+                throw new InvalidOperationException("Bot is not running.");
         }
 
         #endregion
