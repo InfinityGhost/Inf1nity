@@ -195,7 +195,7 @@ namespace Inf1nity_Manager
             Bot.MessageDeleted += Bot_MessageDeleted;
         }
 
-        private void Bot_MessageReceived(object sender, Discord.WebSocket.SocketMessage e)
+        private void Bot_MessageReceived(object sender, SocketMessage e)
         {
             Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
         }

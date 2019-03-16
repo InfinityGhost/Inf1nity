@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Inf1nity.Tools;
 using static Inf1nity.Tools.ReadWriteHelper;
 
@@ -14,12 +15,12 @@ namespace Inf1nity
     public class Configuration : INotifyPropertyChanged
     {
         public Configuration() { }
-        public Configuration(string path) : this() => Load(path);
+        public Configuration(string path) => Read(path);
 
         #region Properties
 
         private string Path { set; get; }
-        public string Version => "1.1";
+        public string Version => "2.0";
 
         #endregion
 
@@ -51,21 +52,18 @@ namespace Inf1nity
 
         #region Management
 
-        public void Load(string path)
-        {
-            var content = File.ReadAllLines(path);
-            Path = path;
+        private static XmlSerializer Serializer = new XmlSerializer(typeof(Configuration));
 
-            Token = SafeConverter.String(content.Fetch("token"));
-            RunAtStart = SafeConverter.Boolean(content.Fetch("runAtStart"));
+        public static Configuration Read(string path)
+        {
+            using (var sr = new StreamReader(path))
+                return (Configuration)Serializer.Deserialize(sr);
         }
 
-        public void Save()
+        public void Write()
         {
-            if (!string.IsNullOrWhiteSpace(Path))
-                Save(Path);
-            else
-                throw new Exception("No default path.");
+            using (TextWriter tw = new StreamWriter(Path))
+                Serializer.Serialize(tw, this);
         }
 
         public void Save(string path)
