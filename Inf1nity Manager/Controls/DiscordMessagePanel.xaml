@@ -12,11 +12,11 @@
             <MenuItem Header="Clear messages" Click="ClearMessages_Click"/>
         </ContextMenu>
     </UserControl.ContextMenu>
-    <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel Name="MessagePanel">
             <StackPanel.Resources>
                 <Style TargetType="items:DiscordMessage">
-                    <Setter Property="Margin" Value="0,2"/>
+                    <Setter Property="Margin" Value="2,2"/>
                 </Style>
             </StackPanel.Resources>
         </StackPanel>
