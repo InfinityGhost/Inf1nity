@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Diagnostics;
 using Inf1nity;
+using Inf1nity_Manager;
 
 namespace Inf1nity_Manager.Windows
 {
@@ -15,8 +16,9 @@ namespace Inf1nity_Manager.Windows
             InitializeComponent();
 
             DiscordTag.Content = Information.Discord.Tag;
-            Version.Content = Information.AssemblyVersion;
+            DiscordBotVersion.Content = Information.AssemblyVersion;
             Website.Content = Information.GitHub;
+            UserInterfaceVersion.Content = ManagerInformation.AssemblyVersion;
         }
 
         #region Menu Buttons
@@ -34,7 +36,7 @@ namespace Inf1nity_Manager.Windows
 
         #region Version Context Menu
 
-        void ChangeLogButton(object sender, RoutedEventArgs e) => Process.Start(Information.GitHub + "/releases/tag/v" + Version.Content);
+        void ChangeLogButton(object sender, RoutedEventArgs e) => Process.Start(Information.GitHub + "/releases/tag/v" + DiscordBotVersion.Content);
 
         #endregion
 
