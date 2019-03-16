@@ -47,6 +47,17 @@ namespace Inf1nity
             get => _runatstart;
         }
 
+        private bool _hideAtStart = false;
+        public bool HideAtStart
+        {
+            set
+            {
+                _hideAtStart = value;
+                NotifyPropertyChanged();
+            }
+            get => _hideAtStart;
+        }
+
         #endregion
 
         #region Management
