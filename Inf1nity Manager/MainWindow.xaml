@@ -81,12 +81,6 @@
                     </Grid.RowDefinitions>
                     <Controls:DiscordMessagePanel x:Name="DiscordMessagePanel"/>
                     <Grid Grid.Row="1" Margin="5,0">
-                        <Grid.Resources>
-                            <Style x:Key="defaultObj" TargetType="{x:Type FrameworkElement}">
-                                <Setter Property="Margin" Value="2.5,0"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="auto"/>
