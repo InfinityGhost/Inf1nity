@@ -56,7 +56,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0"/> <!--Add user image-->
+            <ColumnDefinition Width="{Binding ElementName=Control, Path=ActualHeight}"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -67,6 +67,8 @@
                 <MenuItem Header="Copy ID" Click="CopyMessageID_Click"/>
             </ContextMenu>
         </Grid.ContextMenu>
+
+        <Image Grid.RowSpan="2" Name="Image" Width="40" Height="40"/>
 
         <Label Name="Header" Content="Header"
                Grid.Column="1"/>

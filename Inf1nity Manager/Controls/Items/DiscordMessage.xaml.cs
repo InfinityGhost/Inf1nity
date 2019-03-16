@@ -69,7 +69,9 @@ namespace Inf1nity_Manager.Controls.Items
                 header += $@"@{author}";
 
             Header.Content = header;
-            MessageContent.Text = Message.Content;            
+            MessageContent.Text = Message.Content;
+
+            Image.Source = ImageSourceConverter.ConvertFromString(Message.Author.GetAvatarUrl()) as ImageSource;
         }
 
         #region Properties & Events
@@ -102,7 +104,7 @@ namespace Inf1nity_Manager.Controls.Items
 
         #region Tools
 
-
+        private static ImageSourceConverter ImageSourceConverter = new ImageSourceConverter();
 
         #endregion
 
