@@ -217,14 +217,17 @@ namespace Inf1nity_Manager
 
         private void CommandProcessor_MessageSend(object sender, string e)
         {
-            if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
+            if (!string.IsNullOrWhiteSpace(e))
             {
-                var channel = Bot.Client.GetChannel(id);
-                if (channel is SocketTextChannel textChannel)
-                    Bot?.SendMessage(e, textChannel);
+                if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
+                {
+                    var channel = Bot.Client.GetChannel(id);
+                    if (channel is SocketTextChannel textChannel)
+                        Bot?.SendMessage(e, textChannel);
+                }
+                else
+                    Bot?.SendMessage(e);
             }
-            else
-                Bot?.SendMessage(e);
         }
 
         private void DropItem_Event(object sender, DragEventArgs e)
