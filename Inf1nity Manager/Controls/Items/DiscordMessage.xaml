@@ -63,13 +63,19 @@
 
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Delete" Click="Delete_Click"/>
-                <MenuItem Header="Copy message" Click="Copy_Click"/>
-                <MenuItem Header="Copy ID" Click="CopyMessageID_Click"/>
+                <MenuItem Header="Message">
+                    <MenuItem Header="Copy ID" Click="CopyMessageID_Click"/>
+                    <MenuItem Header="Copy message" Click="Copy_Click"/>
+                    <MenuItem Header="Delete" Click="Delete_Click"/>
+                </MenuItem>
                 <MenuItem Header="User">
                     <MenuItem Header="Copy ID" Click="CopyUserID_Click"/>
-                    <MenuItem Header="Kick user" Click="KickUser_Click"/>
-                    <MenuItem Header="Ban user" Click="BanUser_Click"/>
+                    <MenuItem Header="Kick user from guild" Click="KickUser_Click"/>
+                    <MenuItem Header="Ban user from guild" Click="BanUser_Click"/>
+                </MenuItem>
+                <MenuItem Header="Guild">
+                    <MenuItem Header="Copy ID" Click="CopyGuildID_Click"/>
+                    <MenuItem Header="Get invites" Click="GetInvites_Click"/>
                 </MenuItem>
             </ContextMenu>
         </Grid.ContextMenu>
