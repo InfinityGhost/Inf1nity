@@ -158,6 +158,25 @@ namespace Inf1nity_Manager.Controls.Items
                 (Message.Author as SocketGuildUser).BanAsync();
         }
 
+        private void CopyGuildID_Click(object sender, RoutedEventArgs e)
+        {
+            var guild = (Message.Author as SocketGuildUser).Guild;
+            Clipboard.SetText(guild.Id.ToString());
+        }
+
+        private async void GetInvites_Click(object sender, RoutedEventArgs e)
+        {
+            var guild = (Message.Author as SocketGuildUser).Guild;
+            var allInvites = await guild.GetInvitesAsync();
+            var invites = allInvites.Where(inv => !inv.IsTemporary && !inv.IsRevoked).ToList();
+
+            var urls = invites.ConvertAll(invite => invite.Url);
+
+            var win = new ItemsPopoutWindow(urls);
+            win.Title = "Invites";
+            win.ShowDialog();
+        }
+
         #endregion
 
         #region INotifyPropertyChanged
