@@ -37,7 +37,7 @@ namespace Inf1nity_Manager.Controls.Items
 
         private void InitMessage()
         {
-            string author = Message.Author.Username;
+            string author = Message.Author.Username + '#' + Message.Author.DiscriminatorValue;
             string guild = null;
             string channel = null;
 
@@ -157,18 +157,6 @@ namespace Inf1nity_Manager.Controls.Items
             if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
                 (Message.Author as SocketGuildUser).BanAsync();
         }
-
-        #endregion
-
-        #region Tools
-
-
-
-        #endregion
-
-        #region Animation
-
-
 
         #endregion
 
