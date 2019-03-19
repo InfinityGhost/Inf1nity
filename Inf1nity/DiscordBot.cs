@@ -18,11 +18,6 @@ namespace Inf1nity
         public DiscordBot(string token)
         {
             Token = token;
-
-            AppDomain currentDomain = default;
-            currentDomain = AppDomain.CurrentDomain;
-            // Handler for unhandled exceptions.
-            currentDomain.UnhandledException += GlobalUnhandledExceptionHandler;
         }
 
         #region Properties & Events
@@ -36,11 +31,6 @@ namespace Inf1nity
         public CommandService AdminCommands = new CommandService();
         public CommandService UserCommands = new CommandService();
         IServiceProvider Services = new ServiceCollection().BuildServiceProvider();
-
-        public System.Reflection.Assembly GetAssembly()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly();
-        }
 
         public string Token { private set; get; }
 
