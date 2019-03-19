@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Inf1nity
 {
-    public class DiscordBot : IHasOutput, INotifyPropertyChanged
+    public class DiscordBot : INotifyPropertyChanged
     {
         public DiscordBot(string token)
         {
