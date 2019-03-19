@@ -22,9 +22,6 @@ namespace Inf1nity
 
         #region Properties & Events
 
-        public DiscordSocketClient Client { private set; get; } = new DiscordSocketClient();
-        public DiscordSocketConfig Configuration { set; get; } = new DiscordSocketConfig();
-
         public CommandService AdminCommands = new CommandService();
         public CommandService UserCommands = new CommandService();
         IServiceProvider Services = new ServiceCollection().BuildServiceProvider();
@@ -39,17 +36,12 @@ namespace Inf1nity
         {
             Running = true;
 
-            Client.Log += HandleOutput;
-            Client.MessageReceived += HandleOutput;
-            Client.MessageDeleted += Client_MessageDeleted;
-            Client.Ready += Client_Ready;
-            Client.Connected += Client_Connected;
-            Client.Disconnected += Client_Disconnected;
+            await RegisterEvents().ConfigureAwait(false);
 
             try
             {
                 await Client.LoginAsync(TokenType.Bot, Token);
-                await Client.StartAsync();
+                await Client.StartAsync().ConfigureAwait(false);
             }
             catch (Discord.Net.HttpException httpex)
             {
@@ -64,23 +56,15 @@ namespace Inf1nity
             }
         }
 
-        private Task Client_MessageDeleted(Cacheable<IMessage, ulong> arg1, ISocketMessageChannel arg2)
-        {
-            MessageDeleted?.Invoke(this, arg1.Id);
-            return Task.CompletedTask;
-        }
-
         public async void Stop()
         {
             await Client.StopAsync();
-
             Running = false;
         }
 
         private Task Client_Ready()
         {
             RegisterCommands();
-
             return Task.CompletedTask;
         }
 

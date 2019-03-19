@@ -192,22 +192,5 @@ namespace Inf1nity
 
         #endregion
 
-        #region Connection Notification Event
-
-        private Task Client_Connected()
-        {
-            Connected = true;
-            return Task.CompletedTask;
-        }
-
-        private Task Client_Disconnected(Exception arg)
-        {
-            Connected = false;
-            return Task.CompletedTask;
-        }
-
-        #endregion
-
-
     }
 }
