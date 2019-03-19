@@ -203,6 +203,7 @@
     <Compile Include="Commands\ManagementExtensions.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="DiscordBot.Client.cs" />
+    <Compile Include="DiscordBot.Commands.cs" />
     <Compile Include="DiscordBot.cs" />
     <Compile Include="DiscordBot.IO.cs" />
     <Compile Include="Tools\ReadWrite.cs" />
