@@ -325,29 +325,5 @@ namespace Inf1nity
 
         #endregion
 
-        #region Unhandled Exception Handling
-
-        private void GlobalUnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
-        {
-            Exception ex = default;
-            ex = (Exception)e.ExceptionObject;
-
-            var crashDump = new List<string>
-            {
-                $"-------",
-                $"Exception occured at {DateTime.Now}",
-                $"Source: {ex.Source}",
-                $"Message: {ex.Message}",
-                $"HelpLink: {ex.HelpLink}",
-                $"StackTrace: {Environment.NewLine}{ex.StackTrace}",
-                $"TargetSite: {ex.TargetSite.Name}",
-                $"HResult: {ex.HResult}",
-            };
-
-            System.IO.File.AppendAllLines(System.IO.Directory.GetCurrentDirectory() + "\\crashlog" + ".log", crashDump);
-        }
-
-        #endregion
-
     }
 }
