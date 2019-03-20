@@ -30,10 +30,18 @@ namespace Inf1nity_Manager.Controls.Items
         {
             InitializeComponent();
             Message = msg;
-            InitMessage();
         }
 
-        public SocketMessage Message { private set; get; }
+        private SocketMessage _msg;
+        public SocketMessage Message
+        {
+            set
+            {
+                _msg = value;
+                InitMessage();
+            }
+            get => _msg;
+        }
 
         private void InitMessage()
         {
@@ -70,8 +78,13 @@ namespace Inf1nity_Manager.Controls.Items
             if (author != null)
                 header += $@"@{author}";
 
+            if (Message.EditedTimestamp is DateTimeOffset editedTime)
+                header += ' ' + $"[Edited at {editedTime.ToLocalTime()}]";
+
             Header.Content = header;
             MessageContent.Text = Message.Content;
+
+            Time.Content = Message.Timestamp.ToLocalTime();
 
             Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
 

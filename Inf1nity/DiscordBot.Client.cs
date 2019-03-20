@@ -18,13 +18,20 @@ namespace Inf1nity
             Client.Log += HandleOutput;
             Client.MessageReceived += HandleOutput;
             Client.MessageDeleted += Client_MessageDeleted;
+            Client.MessageUpdated += Client_MessageUpdated;
             Client.Ready += Client_Ready;
             Client.Connected += Client_Connected;
             Client.Disconnected += Client_Disconnected;
 
             return Task.CompletedTask;
         }
-        
+
+        private Task Client_MessageUpdated(Cacheable<IMessage, ulong> arg1, SocketMessage arg2, ISocketMessageChannel arg3)
+        {
+            MessageUpdated?.Invoke(this, new Tuple<SocketMessage, ulong>(arg2, arg1.Id));
+            return Task.CompletedTask;
+        }
+
         private Task Client_Ready()
         {
             RegisterCommands();

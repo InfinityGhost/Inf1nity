@@ -11,6 +11,7 @@
         <Style TargetType="Label">
             <Setter Property="Margin" Value="-1,-5"/>
             <Setter Property="FontSize" Value="12"/>
+            <Setter Property="MinHeight" Value="18"/>
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="10,0,0,0"/>
@@ -82,8 +83,11 @@
 
         <Image Grid.RowSpan="2" Name="Image" Width="40" Height="40"/>
 
-        <Label Name="Header" Content="Header"
+        <Label Name="Header" Content="Header" 
                Grid.Column="1" FontFamily="Segoe UI Semibold"/>
+        <Label Name="Time" Content="Time" Padding="3,4,2,0" Margin="0,-6"
+               Grid.Column="1" HorizontalAlignment="Right"
+               FontFamily="Segoe UI Light" FontSize="10" FontStyle="Italic"/>
         <TextBlock Name="MessageContent" Text="Content" TextWrapping="WrapWithOverflow"
                    Grid.Row="1" Grid.Column="1"/>
 

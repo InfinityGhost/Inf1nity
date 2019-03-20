@@ -194,6 +194,12 @@ namespace Inf1nity_Manager
             Bot.Output += Console.Log;
             Bot.MessageReceived += Bot_MessageReceived;
             Bot.MessageDeleted += Bot_MessageDeleted;
+            Bot.MessageUpdated += Bot_MessageUpdated;
+        }
+
+        private void Bot_MessageUpdated(object sender, Tuple<SocketMessage, ulong> data)
+        {
+            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.UpdateMessage(data.Item2, data.Item1));
         }
 
         private void Bot_MessageReceived(object sender, SocketMessage e)

@@ -12,6 +12,7 @@ namespace Inf1nity
         public event EventHandler<string> Output;
         public event EventHandler<SocketMessage> MessageReceived;
         public event EventHandler<ulong> MessageDeleted;
+        public event EventHandler<Tuple<SocketMessage, ulong>> MessageUpdated;
 
         private bool _running;
         public bool Running

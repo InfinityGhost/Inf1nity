@@ -38,6 +38,20 @@ namespace Inf1nity_Manager.Controls
 
             msgCtrl.MessageDeleted += (msg, args) => RemoveMessage(msgCtrl);
         }
+
+        public void UpdateMessage(ulong id, SocketMessage newMessage)
+        {
+            
+            foreach (var child in MessagePanel.Children)
+            {
+                if (child is DiscordMessage message && message.Message.Id == id)
+                {
+                    RemoveMessage(id);
+                    AddMessage(newMessage);
+                    break;
+                }
+            }
+        }
         
         public void RemoveMessage(ulong id)
         {
