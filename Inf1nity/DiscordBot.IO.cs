@@ -13,6 +13,8 @@ namespace Inf1nity
         public event EventHandler<SocketMessage> MessageReceived;
         public event EventHandler<ulong> MessageDeleted;
         public event EventHandler<Tuple<SocketMessage, ulong>> MessageUpdated;
+        public event EventHandler<SocketMessage> BotMentioned;
+
 
         private bool _running;
         public bool Running
@@ -103,6 +105,10 @@ namespace Inf1nity
                 HandleOutput($"{arg.Author}/{arg.Content}");
                 System.Diagnostics.Debug.WriteLine("Warning: Message lacks a source!");
             }
+
+            var containsBot = arg.MentionedUsers.Where(msg => msg.Id == Client.CurrentUser.Id).ToList();
+            if (containsBot.Count == 1)
+                BotMentioned?.Invoke(this, arg);
             return Task.CompletedTask;
         }
 

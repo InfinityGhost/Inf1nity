@@ -18,7 +18,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Discord.WebSocket;
 using Inf1nity;
+using Inf1nity.Tools;
 using Inf1nity_Manager.Controls;
+using Inf1nity_Manager.Models;
+using Inf1nity_Manager.Tools;
 
 namespace Inf1nity_Manager
 {
@@ -70,6 +73,13 @@ namespace Inf1nity_Manager
                 ChannelPicker.LoadChannels(DefaultChannelsPath);
             else
                 ChannelPicker.SaveChannels(DefaultChannelsPath);
+
+            switch(WindowsVersionTool.GetWindowsVersion())
+            { 
+                default:
+                    Notifier = new NotifyWinDefault(TrayIcon);
+                    break;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -125,6 +135,8 @@ namespace Inf1nity_Manager
             }
             get => _config;
         }
+
+        private INotifier Notifier;
         
         private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
         private static string DefaultChannelsPath => Directory.GetCurrentDirectory() + "\\channels.xml";
@@ -195,6 +207,12 @@ namespace Inf1nity_Manager
             Bot.MessageReceived += Bot_MessageReceived;
             Bot.MessageDeleted += Bot_MessageDeleted;
             Bot.MessageUpdated += Bot_MessageUpdated;
+            Bot.BotMentioned += Bot_BotMentioned;
+        }
+
+        private void Bot_BotMentioned(object sender, SocketMessage e)
+        {
+            Notifier.Show(e.Author.Username + '#' + e.Author.Discriminator, MessageTools.CleanseMentions(e));
         }
 
         private void Bot_MessageUpdated(object sender, Tuple<SocketMessage, ulong> data)

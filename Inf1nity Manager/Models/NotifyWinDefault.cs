@@ -14,23 +14,13 @@ namespace Inf1nity_Manager.Models
         }
 
         private TrayIcon TrayIcon;
-
-        public string Text { set; get; }
-        public string Title { set; get; }
-
-        public void Show()
-        {
-            if (Text != null && Title != null)
-                TrayIcon.ShowBalloon(Text, Title);
-            else
-                throw new ArgumentNullException();
-        }
-
+       
         public void Show(string text, string title)
         {
-            Text = text;
-            Title = title;
-            Show();
+            if (text != null && title != null)
+                TrayIcon.ShowBalloon(text, title);
+            else
+                throw new ArgumentNullException();
         }
     }
 }

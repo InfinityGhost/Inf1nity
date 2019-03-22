@@ -206,6 +206,7 @@
     <Compile Include="DiscordBot.Commands.cs" />
     <Compile Include="DiscordBot.cs" />
     <Compile Include="DiscordBot.IO.cs" />
+    <Compile Include="Tools\MessageTools.cs" />
     <Compile Include="Tools\ReadWrite.cs" />
     <Compile Include="Tools\SafeConverter.cs" />
     <Compile Include="Information.cs" />
