@@ -82,6 +82,8 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Converters\NegateBool.cs" />
     <Compile Include="ManagerInformation.cs" />
+    <Compile Include="Models\INotifier.cs" />
+    <Compile Include="Models\NotifyWinDefault.cs" />
     <Compile Include="Tools\ImageTool.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Windows\AboutBox.xaml.cs">

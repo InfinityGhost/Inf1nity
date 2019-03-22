@@ -30,6 +30,16 @@ namespace Inf1nity_Manager
             get => NotifyIcon.Visible;
         }
 
+        internal int BalloonTipTimeout { set; get; } = 2500;
+
         private void NotifyIcon_Click(object sender, MouseEventArgs e) => ShowWindow?.Invoke(this, null);
+
+        public void ShowBalloon(string text, string title)
+        {
+            if (text != null && title != null)
+                NotifyIcon.ShowBalloonTip(BalloonTipTimeout, title, text, ToolTipIcon.Info);
+            else
+                throw new ArgumentNullException();
+        }
     }
 }
