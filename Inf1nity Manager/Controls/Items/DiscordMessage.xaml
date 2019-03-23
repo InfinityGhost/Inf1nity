@@ -92,7 +92,7 @@
                    Grid.Row="1" Grid.Column="1"/>
 
         <Viewbox Grid.Row="2" Grid.Column="1">
-            <StackPanel Name="AttachmentsPanel">
+            <StackPanel Name="AttachmentsPanel" Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="Image">
                         <Setter Property="HorizontalAlignment" Value="Left"/>
