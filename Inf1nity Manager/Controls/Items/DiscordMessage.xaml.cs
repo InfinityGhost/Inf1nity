@@ -45,7 +45,7 @@ namespace Inf1nity_Manager.Controls.Items
 
         private void InitMessage()
         {
-            string author = Message.Author.Username + '#' + Message.Author.DiscriminatorValue;
+            string author = GetUsernameString(Message.Author);
             string guild = null;
             string channel = null;
 
@@ -85,6 +85,15 @@ namespace Inf1nity_Manager.Controls.Items
             MessageContent.Text = Message.Content;
 
             Time.Content = Message.Timestamp.ToLocalTime();
+
+            var clientUser = (Application.Current.MainWindow as MainWindow).Bot.Client.CurrentUser;
+            if (author == GetUsernameString(clientUser))
+                EditButton.IsEnabled = true;
+            else
+                EditButton.IsEnabled = false;
+
+            System.Diagnostics.Debug.WriteLine(Message.Author, "AuthorOfMessageRecieved");
+            System.Diagnostics.Debug.WriteLine((Application.Current.MainWindow as MainWindow).Bot.Client.CurrentUser, "ClientUser");
 
             Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
 
@@ -190,6 +199,11 @@ namespace Inf1nity_Manager.Controls.Items
             win.ShowDialog();
         }
 
+        private void EditMessage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region INotifyPropertyChanged
@@ -199,6 +213,15 @@ namespace Inf1nity_Manager.Controls.Items
         {
             if (PropertyName != null)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        #endregion
+
+        #region Tools
+
+        private static string GetUsernameString(SocketUser user)
+        {
+            return user.Username + '#' + user.DiscriminatorValue;
         }
 
         #endregion
