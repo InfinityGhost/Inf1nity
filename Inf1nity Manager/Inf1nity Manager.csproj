@@ -85,8 +85,6 @@
     <Compile Include="Models\INotifier.cs" />
     <Compile Include="Models\NotifyWinDefault.cs" />
     <Compile Include="Tools\ImageTool.cs" />
-    <Compile Include="Tools\WindowsVersion.cs" />
-    <Compile Include="Tools\WindowsVersionTool.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Windows\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
