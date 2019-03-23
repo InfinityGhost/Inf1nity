@@ -130,6 +130,7 @@ namespace Inf1nity_Manager.Controls.Items
         #region Properties & Events
 
         public event EventHandler MessageDeleted;
+        public event EventHandler<Tuple<SocketMessage, string>> MessageUpdated;
 
         #endregion
 
@@ -201,7 +202,25 @@ namespace Inf1nity_Manager.Controls.Items
 
         private void EditMessage_Click(object sender, RoutedEventArgs e)
         {
+            var box = new TextBox
+            {
+                Text = Message.Content,
+                Margin = new Thickness(5),
+            };
+            var popoutWindow = new ItemsPopoutWindow(box);
 
+            box.KeyDown += (tb, args) =>
+            {
+                if (args.Key == Key.Enter)
+                    popoutWindow.Close();
+            };
+
+            popoutWindow.MinWidth = 200;
+            popoutWindow.MinHeight = 18;
+            popoutWindow.Title = "Editing message...";
+            popoutWindow.Closed += (win, args) => MessageUpdated?.Invoke(
+                this, new Tuple<SocketMessage, string>(Message, (popoutWindow.Content as TextBox).Text));
+            popoutWindow.ShowDialog();
         }
 
         #endregion

@@ -75,6 +75,14 @@ namespace Inf1nity
                 HandleOutput("Error: No recent message to reply to.");
         }
 
+        public async void UpdateMessage(SocketMessage message, string newContent)
+        {
+            if (message is SocketUserMessage userMessage)
+                await userMessage.ModifyAsync(msg => msg.Content = newContent);
+            else
+                HandleOutput("Warning: Attempted to modify non-user message.");
+        }
+
         #endregion
 
         #region Output

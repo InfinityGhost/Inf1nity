@@ -37,6 +37,7 @@ namespace Inf1nity_Manager.Controls
             ScrollViewer.ScrollToBottom();
 
             msgCtrl.MessageDeleted += (msg, args) => RemoveMessage(msgCtrl);
+            msgCtrl.MessageUpdated += MessageUpdated_Invoked;
         }
 
         public void UpdateMessage(ulong id, SocketMessage newMessage)
@@ -71,6 +72,12 @@ namespace Inf1nity_Manager.Controls
                 MessagePanel.Children.Remove(message);
             else
                 Debug.WriteLine("Message removed that doesn't exist!");
+        }
+
+        private void MessageUpdated_Invoked(object sender, Tuple<SocketMessage, string> args)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Bot.UpdateMessage(args.Item1, args.Item2);
         }
 
         #endregion

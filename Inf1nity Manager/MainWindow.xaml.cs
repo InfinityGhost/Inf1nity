@@ -74,12 +74,7 @@ namespace Inf1nity_Manager
             else
                 ChannelPicker.SaveChannels(DefaultChannelsPath);
 
-            switch(WindowsVersionTool.GetWindowsVersion())
-            { 
-                default:
-                    Notifier = new NotifyWinDefault(TrayIcon);
-                    break;
-            }
+            Notifier = new NotifyWinDefault(TrayIcon);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
