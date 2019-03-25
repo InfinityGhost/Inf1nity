@@ -21,7 +21,10 @@ namespace Inf1nity_Manager.Tools
 
         public static ImageSource GetImageSource(string path)
         {
-            return ImageSourceConverter.ConvertFromString(path) as ImageSource;
+            if (path != null)
+                return ImageSourceConverter.ConvertFromString(path) as ImageSource;
+            else
+                return null;
         }
 
         public static void AttachContextMenu(this Image image)

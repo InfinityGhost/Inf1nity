@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord.Commands;
 using Microsoft.Extensions.DependencyInjection;
+using Inf1nity.Commands;
 
 namespace Inf1nity
 {
@@ -16,9 +17,13 @@ namespace Inf1nity
         {
             if (!CommandsRegistered)
             {
-                // Register Admin Commands
-                await AdminCommands.AddModuleAsync(typeof(Commands.AdminCommands), Services);
+                // Register Admin commands
+                await AdminCommands.AddModuleAsync(typeof(AdminCommands), Services);
                 Client.MessageReceived += HandleAdminCommand;
+                
+                // Register help modules
+                await AdminCommands.AddModuleAsync(typeof(HelpModule), Services);
+                
                 // All commands registered, disallows re-registering commands
                 CommandsRegistered = true;
             }

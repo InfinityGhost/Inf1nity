@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AdminCommands.cs" />
+    <Compile Include="Commands\HelpModule.cs" />
     <Compile Include="Commands\ManagementExtensions.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="DiscordBot.Client.cs" />

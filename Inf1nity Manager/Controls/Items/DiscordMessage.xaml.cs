@@ -97,16 +97,23 @@ namespace Inf1nity_Manager.Controls.Items
 
             Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
 
-            foreach (var attachment in Message.Attachments)
+            try // Soon to be fixed so this issue never happens
             {
-                if (attachment.Width != null && attachment.Height != null) // Attachment is an image
+                foreach (var attachment in Message.Attachments)
                 {
-                    var image = ImageTool.CreateImage(attachment.Url);
-                    image.AttachContextMenu();
+                    if (attachment.Width != null && attachment.Height != null) // Attachment is an image
+                    {
+                        var image = ImageTool.CreateImage(attachment.Url);
+                        image.AttachContextMenu();
 
-                    image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
-                    AttachmentsPanel.Children.Add(image);
+                        image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
+                        AttachmentsPanel.Children.Add(image);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
