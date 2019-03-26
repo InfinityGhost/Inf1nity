@@ -96,6 +96,7 @@ namespace Inf1nity_Manager
                         Hide();
                         break;
                     }
+                case WindowState.Maximized:
                 case WindowState.Normal:
                     {
                         ShowInTaskbar = true;
