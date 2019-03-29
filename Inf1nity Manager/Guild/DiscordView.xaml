@@ -12,6 +12,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ListView Name="GuildsPanel" MinWidth="100" SelectionChanged="GuildsPanel_SelectionChanged" ScrollViewer.CanContentScroll="True"/>
-        <Border Grid.Column="1" Name="GuildFrame"/>
+        <Border Grid.Column="1" Name="GuildFrame" Margin="1,0,0,0"/>
     </Grid>
 </UserControl>

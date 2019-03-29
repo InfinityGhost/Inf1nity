@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Inf1nity Manager" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" Closing="Window_Closing" StateChanged="Window_StateChanged"
-        Width="800" Height="600">
+        Width="1280" Height="720">
     <Window.Resources>
         <convert:NegateBool x:Key="NegateBool"/>
     </Window.Resources>
