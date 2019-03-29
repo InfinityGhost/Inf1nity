@@ -92,6 +92,8 @@
     <Compile Include="Guild\DiscordView.xaml.cs">
       <DependentUpon>DiscordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.Bot.cs" />
+    <Compile Include="MainWindow.Interaction.cs" />
     <Compile Include="ManagerInformation.cs" />
     <Compile Include="Models\INotifier.cs" />
     <Compile Include="Models\NotifyWinDefault.cs" />

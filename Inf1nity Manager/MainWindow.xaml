@@ -81,7 +81,7 @@
             <TabItem Header="Browse">
                 <Frame Name="BrowseFrame" NavigationUIVisibility="Hidden"/>
             </TabItem>
-            <TabItem Header="Messages" DragDrop.Drop="DropItem_Event" AllowDrop="True">
+            <TabItem Header="Messages" DragDrop.Drop="Window_DropEvent" AllowDrop="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>

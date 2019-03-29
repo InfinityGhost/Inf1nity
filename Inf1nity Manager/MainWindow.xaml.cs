@@ -36,6 +36,37 @@ namespace Inf1nity_Manager
             InitializeComponent();
         }
 
+        #region Properties
+
+        private DiscordBot _bot;
+        public DiscordBot Bot
+        {
+            set
+            {
+                _bot = value;
+                NotifyPropertyChanged();
+            }
+            get => _bot;
+        }
+
+        private Configuration _config;
+        public Configuration Config
+        {
+            set
+            {
+                _config = value;
+                NotifyPropertyChanged();
+            }
+            get => _config;
+        }
+
+        private INotifier Notifier;
+        
+        private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
+        private static string DefaultChannelsPath => Directory.GetCurrentDirectory() + "\\channels.xml";
+
+        #endregion
+
         #region Window Events
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -44,7 +75,7 @@ namespace Inf1nity_Manager
 
             Debug.Listeners.Add(Console.CreateListener());
             Debug.AutoFlush = true;
-            
+
             Debug.WriteLine("Console added to trace listeners.");
 
             try
@@ -59,7 +90,7 @@ namespace Inf1nity_Manager
                 Config.Write(DefaultConfigPath);
                 new Windows.ConfigurationManager(Config);
             }
-            
+
             await TrayIcon.Initialize();
             TrayIcon.ShowWindow += TrayIcon_ShowWindow;
 
@@ -107,39 +138,13 @@ namespace Inf1nity_Manager
             }
         }
 
-        #endregion
-
-        #region Properties
-
-        private DiscordBot _bot;
-        public DiscordBot Bot
+        private void Window_DropEvent(object sender, DragEventArgs e)
         {
-            set
-            {
-                _bot = value;
-                NotifyPropertyChanged();
-            }
-            get => _bot;
+            // Image must be uploaded
         }
 
-        private Configuration _config;
-        public Configuration Config
-        {
-            set
-            {
-                _config = value;
-                NotifyPropertyChanged();
-            }
-            get => _config;
-        }
-
-        private INotifier Notifier;
-        
-        private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
-        private static string DefaultChannelsPath => Directory.GetCurrentDirectory() + "\\channels.xml";
-
         #endregion
-        
+
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -148,145 +153,6 @@ namespace Inf1nity_Manager
             if (PropertyName != null)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
-
-        #endregion
-
-        #region File MenuItem
-
-        private void AboutButton(object sender, RoutedEventArgs e)
-        {
-            new Windows.AboutBox().ShowDialog();
-        }
-
-        private void OpenCrashLogs(object sender, RoutedEventArgs e)
-        {
-            var dir = Directory.GetCurrentDirectory() + @"\crashlog.log";
-            Process.Start(dir);
-        }
-
-        private void Close(object sender, RoutedEventArgs e) => Close();
-
-        #endregion
-
-        #region Bot MenuItem
-
-        private void BotStart(object sender = null, RoutedEventArgs e = null)
-        {
-            if (!Bot?.Running ?? true)
-            {
-                Login();
-                Bot?.Start();
-            }
-            else
-                Bot?.Stop();
-        }
-
-        private void ConfigButton(object sender, RoutedEventArgs e)
-        {
-            var loginWindow = new Windows.ConfigurationManager(Config);
-            loginWindow.Closed += (win, args) => Config = loginWindow.Config;
-        }
-
-        #endregion
-
-        #region Tray Icon
-
-        private void TrayIcon_ShowWindow(object sender, EventArgs e)
-        {
-            Show();
-            WindowState = WindowState.Normal;
-        }
-
-        private TrayIcon TrayIcon = new TrayIcon();
-
-        #endregion
-
-        #region Misc.
-
-        private void Login(object sender = null, EventArgs e = null)
-        {
-            Bot = new DiscordBot(Config.Token);
-            Bot.Output += Console.Log;
-            Bot.MessageReceived += Bot_MessageReceived;
-            Bot.MessageDeleted += Bot_MessageDeleted;
-            Bot.MessageUpdated += Bot_MessageUpdated;
-            Bot.BotMentioned += Bot_BotMentioned;
-            Bot.Ready += Bot_Ready;
-        }
-
-        private void Bot_Ready(object sender, DateTime e)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var dV = new DiscordView(Bot.Client.Guilds.ToList());
-                Bot.MessageReceived += (bot, msg) => Application.Current.Dispatcher.Invoke(() => dV.NotifyMessage(msg));
-                Bot.MessageDeleted += (bot, id) => Application.Current.Dispatcher.Invoke(() => dV.NotifyDeleted(id));
-                BrowseFrame.Content = dV;
-            });
-        }
-
-        private void Bot_BotMentioned(object sender, SocketMessage e)
-        {
-            Notifier.Show(e.Author.Username + '#' + e.Author.Discriminator, MessageTools.CleanseMentions(e));
-        }
-
-        private void Bot_MessageUpdated(object sender, Tuple<SocketMessage, ulong> data)
-        {
-            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.UpdateMessage(data.Item2, data.Item1));
-        }
-
-        private void Bot_MessageReceived(object sender, SocketMessage e)
-        {
-            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
-
-            if (!ChannelPicker.Channels.Values.Contains(e.Channel.Id))
-                ChannelPicker.Channels.Add(e.Channel as SocketTextChannel);
-        }
-
-        private void Bot_MessageDeleted(object sender, ulong e)
-        {
-            Application.Current.Dispatcher.Invoke(() => DiscordMessagePanel.RemoveMessage(e));
-        }
-
-        #endregion
-
-        #region CommandProcessor
-
-        private void CommandProcessor_CommandRun(object sender, string e) => Bot?.SendMessage(e);
-
-        private void CommandProcessor_MessageSend(object sender, string e)
-        {
-            if (!string.IsNullOrWhiteSpace(e))
-            {
-                if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
-                {
-                    var channel = Bot.Client.GetChannel(id);
-                    if (channel is SocketTextChannel textChannel)
-                        Bot?.SendMessage(e, textChannel);
-                }
-                else
-                    Bot?.SendMessage(e);
-            }
-        }
-
-        private void DropItem_Event(object sender, DragEventArgs e)
-        {
-            // Image must be uploaded
-        }
-
-        private void CommandProcessor_KeyPress(object sender, Key e)
-        {
-            switch (e)
-            {
-                case Key.Up:
-                    ChannelPicker.MoveUp();
-                    break;
-                case Key.Down:
-                    ChannelPicker.MoveDown();
-                    break;
-            }
-        }
-
 
         #endregion
     }
