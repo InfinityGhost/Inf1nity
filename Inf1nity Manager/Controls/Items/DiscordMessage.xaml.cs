@@ -26,14 +26,14 @@ namespace Inf1nity_Manager.Controls.Items
     /// </summary>
     public partial class DiscordMessage : UserControl, INotifyPropertyChanged
     {    
-        public DiscordMessage(SocketMessage msg)
+        public DiscordMessage(IMessage msg)
         {
             InitializeComponent();
             Message = msg;
         }
 
-        private SocketMessage _msg;
-        public SocketMessage Message
+        private IMessage _msg;
+        public IMessage Message
         {
             set
             {
@@ -92,8 +92,8 @@ namespace Inf1nity_Manager.Controls.Items
             else
                 EditButton.IsEnabled = false;
 
-            System.Diagnostics.Debug.WriteLine(Message.Author, "AuthorOfMessageRecieved");
-            System.Diagnostics.Debug.WriteLine((Application.Current.MainWindow as MainWindow).Bot.Client.CurrentUser, "ClientUser");
+            //System.Diagnostics.Debug.WriteLine(Message.Author, "AuthorOfMessageRecieved");
+            //System.Diagnostics.Debug.WriteLine((Application.Current.MainWindow as MainWindow).Bot.Client.CurrentUser, "ClientUser");
 
             Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
 
@@ -226,7 +226,7 @@ namespace Inf1nity_Manager.Controls.Items
             popoutWindow.MinHeight = 18;
             popoutWindow.Title = "Editing message...";
             popoutWindow.Closed += (win, args) => MessageUpdated?.Invoke(
-                this, new Tuple<SocketMessage, string>(Message, (popoutWindow.Content as TextBox).Text));
+                this, new Tuple<SocketMessage, string>(Message as SocketMessage, (popoutWindow.Content as TextBox).Text));
             popoutWindow.ShowDialog();
         }
 
@@ -245,7 +245,7 @@ namespace Inf1nity_Manager.Controls.Items
 
         #region Tools
 
-        private static string GetUsernameString(SocketUser user)
+        private static string GetUsernameString(IUser user)
         {
             return user.Username + '#' + user.DiscriminatorValue;
         }

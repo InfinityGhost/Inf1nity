@@ -14,7 +14,7 @@ namespace Inf1nity
         public event EventHandler<ulong> MessageDeleted;
         public event EventHandler<Tuple<SocketMessage, ulong>> MessageUpdated;
         public event EventHandler<SocketMessage> BotMentioned;
-
+        public event EventHandler<DateTime> Ready;
 
         private bool _running;
         public bool Running

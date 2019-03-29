@@ -20,6 +20,7 @@ using Discord.WebSocket;
 using Inf1nity;
 using Inf1nity.Tools;
 using Inf1nity_Manager.Controls;
+using Inf1nity_Manager.Guild;
 using Inf1nity_Manager.Models;
 using Inf1nity_Manager.Tools;
 
@@ -163,7 +164,7 @@ namespace Inf1nity_Manager
 
         #region Bot MenuItem
 
-        private void BotStart(object sender = null, RoutedEventArgs e = null)
+        private async void BotStart(object sender = null, RoutedEventArgs e = null)
         {
             if (!Bot?.Running ?? true)
             {
@@ -204,6 +205,18 @@ namespace Inf1nity_Manager
             Bot.MessageDeleted += Bot_MessageDeleted;
             Bot.MessageUpdated += Bot_MessageUpdated;
             Bot.BotMentioned += Bot_BotMentioned;
+            Bot.Ready += Bot_Ready;
+        }
+
+        private void Bot_Ready(object sender, DateTime e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var dV = new DiscordView(Bot.Client.Guilds.ToList());
+                Bot.MessageReceived += (bot, msg) => Application.Current.Dispatcher.Invoke(() => dV.NotifyMessage(msg));
+                Bot.MessageDeleted += (bot, id) => Application.Current.Dispatcher.Invoke(() => dV.NotifyDeleted(id));
+                TestingGrid.Children.Add(dV);
+            });
         }
 
         private void Bot_BotMentioned(object sender, SocketMessage e)

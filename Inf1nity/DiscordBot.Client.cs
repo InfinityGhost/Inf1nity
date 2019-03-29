@@ -35,6 +35,7 @@ namespace Inf1nity
         private Task Client_Ready()
         {
             RegisterCommands();
+            Ready?.Invoke(this, DateTime.Now);
             return Task.CompletedTask;
         }
 

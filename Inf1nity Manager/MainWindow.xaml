@@ -93,6 +93,9 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Testing">
+                <Grid Name="TestingGrid"/>
+            </TabItem>
             <TabItem Header="Console">
                 <Grid>
                     <Grid.RowDefinitions>

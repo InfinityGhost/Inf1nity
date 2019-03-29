@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using Inf1nity_Manager.Controls.Items;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Inf1nity_Manager.Controls
 
         #region Public Methods
 
-        public void AddMessage(SocketMessage message)
+        public void AddMessage(IMessage message)
         {
             var msgCtrl = new DiscordMessage(message);
             MessagePanel.Children.Add(msgCtrl);
