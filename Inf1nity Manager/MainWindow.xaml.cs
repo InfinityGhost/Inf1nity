@@ -170,7 +170,7 @@ namespace Inf1nity_Manager
 
         #region Bot MenuItem
 
-        private async void BotStart(object sender = null, RoutedEventArgs e = null)
+        private void BotStart(object sender = null, RoutedEventArgs e = null)
         {
             if (!Bot?.Running ?? true)
             {
@@ -221,7 +221,7 @@ namespace Inf1nity_Manager
                 var dV = new DiscordView(Bot.Client.Guilds.ToList());
                 Bot.MessageReceived += (bot, msg) => Application.Current.Dispatcher.Invoke(() => dV.NotifyMessage(msg));
                 Bot.MessageDeleted += (bot, id) => Application.Current.Dispatcher.Invoke(() => dV.NotifyDeleted(id));
-                TestingGrid.Children.Add(dV);
+                BrowseFrame.Content = dV;
             });
         }
 

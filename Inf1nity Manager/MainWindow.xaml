@@ -78,6 +78,9 @@
         </Menu>
 
         <TabControl Grid.Row="1">
+            <TabItem Header="Browse">
+                <Frame Name="BrowseFrame" NavigationUIVisibility="Hidden"/>
+            </TabItem>
             <TabItem Header="Messages" DragDrop.Drop="DropItem_Event" AllowDrop="True">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -97,9 +100,6 @@
                                                 Height="24" MinWidth="150"/>
                     </Grid>
                 </Grid>
-            </TabItem>
-            <TabItem Header="Testing">
-                <Grid Name="TestingGrid"/>
             </TabItem>
             <TabItem Header="Console">
                 <Grid>
