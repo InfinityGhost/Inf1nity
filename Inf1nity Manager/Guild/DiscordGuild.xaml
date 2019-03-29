@@ -22,6 +22,6 @@
         </ScrollViewer>
         <!--COLUMN 1-->
         <Label Grid.Column="1" Name="ChannelName" Content="#ChannelName"/>
-        <Frame Grid.Column="1" Grid.Row="1" Name="ChannelFrame" NavigationUIVisibility="Hidden"/>
+        <Border Grid.Column="1" Grid.Row="1" Name="ChannelFrame"/>
     </Grid>
 </UserControl>

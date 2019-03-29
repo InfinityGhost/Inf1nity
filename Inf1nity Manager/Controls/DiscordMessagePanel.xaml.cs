@@ -40,6 +40,13 @@ namespace Inf1nity_Manager.Controls
             msgCtrl.MessageDeleted += (msg, args) => RemoveMessage(msgCtrl);
             msgCtrl.MessageUpdated += MessageUpdated_Invoked;
 
+            if (MessagePanel.Children.Count > 100)
+            {
+                var oldestMessage = MessagePanel.Children[0];
+                MessagePanel.Children.Remove(oldestMessage);
+                //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
+            }
+
             return Task.CompletedTask;
         }
 

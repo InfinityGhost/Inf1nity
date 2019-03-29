@@ -12,6 +12,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ListView Name="GuildsPanel" MinWidth="40" SelectionChanged="GuildsPanel_SelectionChanged"/>
-        <Frame Grid.Column="1" Name="GuildFrame" NavigationUIVisibility="Hidden"/>
+        <Border Grid.Column="1" Name="GuildFrame"/>
     </Grid>
 </UserControl>
