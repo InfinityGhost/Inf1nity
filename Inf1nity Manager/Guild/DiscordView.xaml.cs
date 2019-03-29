@@ -19,7 +19,6 @@ namespace Inf1nity_Manager.Guild
         public DiscordView(List<SocketGuild> guilds) : this()
         {
             Guilds = guilds;
-            TextInit();
         }
 
         List<SocketGuild> _guilds;
