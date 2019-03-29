@@ -12,7 +12,7 @@
             <MenuItem Header="Clear messages" Click="ClearMessages_Click"/>
         </ContextMenu>
     </UserControl.ContextMenu>
-    <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Name="MessagePanel">
             <StackPanel.Resources>
                 <Style TargetType="items:DiscordMessage">
