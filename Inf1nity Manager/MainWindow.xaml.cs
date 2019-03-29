@@ -158,6 +158,12 @@ namespace Inf1nity_Manager
             new Windows.AboutBox().ShowDialog();
         }
 
+        private void OpenCrashLogs(object sender, RoutedEventArgs e)
+        {
+            var dir = Directory.GetCurrentDirectory() + @"\crashlog.log";
+            Process.Start(dir);
+        }
+
         private void Close(object sender, RoutedEventArgs e) => Close();
 
         #endregion
@@ -281,8 +287,7 @@ namespace Inf1nity_Manager
             }
         }
 
-        #endregion
 
-        
+        #endregion
     }
 }
