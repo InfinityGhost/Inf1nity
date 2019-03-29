@@ -37,7 +37,7 @@ namespace Inf1nity_Manager.Guild
             {
                 var msgs = await Channel.GetMessagesAsync().FlattenAsync();
                 foreach (var msg in msgs.Reverse())
-                    MessagePanel.AddMessage(msg);
+                    await MessagePanel.AddMessage(msg).ConfigureAwait(false);
             }
             catch(Exception ex)
             {

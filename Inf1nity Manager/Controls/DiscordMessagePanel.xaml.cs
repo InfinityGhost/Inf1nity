@@ -31,7 +31,7 @@ namespace Inf1nity_Manager.Controls
 
         #region Public Methods
 
-        public void AddMessage(IMessage message)
+        public Task AddMessage(IMessage message)
         {
             var msgCtrl = new DiscordMessage(message);
             MessagePanel.Children.Add(msgCtrl);
@@ -39,9 +39,11 @@ namespace Inf1nity_Manager.Controls
 
             msgCtrl.MessageDeleted += (msg, args) => RemoveMessage(msgCtrl);
             msgCtrl.MessageUpdated += MessageUpdated_Invoked;
+
+            return Task.CompletedTask;
         }
 
-        public void UpdateMessage(ulong id, SocketMessage newMessage)
+        public Task UpdateMessage(ulong id, SocketMessage newMessage)
         {
             
             foreach (var child in MessagePanel.Children)
@@ -53,9 +55,11 @@ namespace Inf1nity_Manager.Controls
                     break;
                 }
             }
+
+            return Task.CompletedTask;
         }
         
-        public void RemoveMessage(ulong id)
+        public Task RemoveMessage(ulong id)
         {
             foreach (var child in MessagePanel.Children)
             {
@@ -65,6 +69,8 @@ namespace Inf1nity_Manager.Controls
                     break;
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         public void RemoveMessage(DiscordMessage message)
