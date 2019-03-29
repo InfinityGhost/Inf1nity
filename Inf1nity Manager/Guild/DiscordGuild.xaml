@@ -17,9 +17,7 @@
         </Grid.RowDefinitions>
         <!--COLUMN 0-->
         <Label Content="Channels" Grid.Column="0" FontWeight="Bold" HorizontalContentAlignment="Center"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-            <ListView MinWidth="100" Name="ChannelsPanel" DisplayMemberPath="Name"/>
-        </ScrollViewer>
+        <ListView Grid.Row="1" MinWidth="100" Name="ChannelsPanel" DisplayMemberPath="Name" ScrollViewer.CanContentScroll="True"/>
         <!--COLUMN 1-->
         <Label Grid.Column="1" Name="ChannelName" Content="#ChannelName"/>
         <Border Grid.Column="1" Grid.Row="1" Name="ChannelFrame"/>
