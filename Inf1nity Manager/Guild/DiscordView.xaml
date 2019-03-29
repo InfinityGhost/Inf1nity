@@ -11,7 +11,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListView Name="GuildsPanel" MinWidth="40" SelectionChanged="GuildsPanel_SelectionChanged"/>
+        <ListView Name="GuildsPanel" MinWidth="100" SelectionChanged="GuildsPanel_SelectionChanged" ScrollViewer.CanContentScroll="True"/>
         <Border Grid.Column="1" Name="GuildFrame"/>
     </Grid>
 </UserControl>
