@@ -42,11 +42,18 @@ namespace Inf1nity_Manager.Guild
             ChannelsPanel.SelectionChanged += ChannelsPanel_SelectionChanged;
         }
 
-        private void ChannelsPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ChannelsPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var channel = (ChannelsPanel.SelectedItem as SocketTextChannel);
-            ChannelFrame.Content = new DiscordChannel(channel);
+            await Navigate(channel);
+        }
+
+        public async Task Navigate(SocketTextChannel channel)
+        {
+            var dC = new DiscordChannel(channel);
+            ChannelFrame.Content = dC;
             ChannelName.Content = '#' + channel.Name;
+            await dC.Init().ConfigureAwait(false);
         }
 
         public void NotifyMessage(IMessage message)

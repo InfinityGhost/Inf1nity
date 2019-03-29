@@ -29,7 +29,7 @@ namespace Inf1nity_Manager.Guild
         public DiscordView(List<SocketGuild> guilds) : this()
         {
             Guilds = guilds;
-            DebugInit();
+            TextInit();
         }
 
         List<SocketGuild> _guilds;
@@ -38,18 +38,18 @@ namespace Inf1nity_Manager.Guild
             set
             {
                 _guilds = value;
-                Init();
+                TextInit();
             }
             get => _guilds;
         }
 
-        public void DebugInit()
+        public void TextInit()
         {
             GuildsPanel.DisplayMemberPath = "Name";
             GuildsPanel.ItemsSource = Guilds;
         }
 
-        public void Init()
+        public void ImageInit()
         {
             var icons = new List<Image>();
             foreach(var guild in Guilds)
@@ -66,21 +66,18 @@ namespace Inf1nity_Manager.Guild
             GuildsPanel.ItemsSource = icons;
         }
 
-        private void GuildsPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void GuildsPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (GuildsPanel.SelectedItem is Image image)
-            {
-                Navigate(image.Tag as SocketGuild);
-            }
+                await Navigate(image.Tag as SocketGuild).ConfigureAwait(false);
             if (GuildsPanel.SelectedItem is SocketGuild guild)
-            {
-                Navigate(guild);
-            }
+                await Navigate(guild).ConfigureAwait(false);
         }
 
-        public void Navigate(SocketGuild guild)
+        public Task Navigate(SocketGuild guild)
         {
             GuildFrame.Content = new DiscordGuild(guild);
+            return Task.CompletedTask;
         }
 
         public void NotifyMessage(Discord.IMessage message)

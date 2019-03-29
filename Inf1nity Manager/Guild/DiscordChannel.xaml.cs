@@ -27,12 +27,11 @@ namespace Inf1nity_Manager.Guild
         {
             InitializeComponent();
             Channel = textChannel;
-            Init();
         }
 
         public SocketTextChannel Channel { private set; get; }
 
-        public async void Init()
+        public async Task Init()
         {
             try
             {
