@@ -10,11 +10,17 @@ namespace Inf1nity
     public partial class DiscordBot
     {
         public event EventHandler<string> Output;
+        public event EventHandler<DateTime> Ready;
+
         public event EventHandler<SocketMessage> MessageReceived;
+        public event EventHandler<SocketMessage> PrivateMessageRecieved;
         public event EventHandler<ulong> MessageDeleted;
         public event EventHandler<Tuple<SocketMessage, ulong>> MessageUpdated;
         public event EventHandler<SocketMessage> BotMentioned;
-        public event EventHandler<DateTime> Ready;
+
+        public event EventHandler<SocketChannel> ChannelCreated;
+        public event EventHandler<SocketChannel> ChannelDeleted;
+        public event EventHandler<Tuple<SocketChannel, SocketChannel>> ChannelUpdated;
 
         private bool _running;
         public bool Running
@@ -93,7 +99,7 @@ namespace Inf1nity
 
         private Task HandleOutput(LogMessage arg)
         {
-            HandleOutput($"{arg.Source}/{arg.Severity}|{arg.Message}");
+            HandleOutput($"{arg.Source}[{arg.Severity}]:{arg.Message}");
             return Task.CompletedTask;
         }
 
@@ -107,7 +113,10 @@ namespace Inf1nity
             else if (arg.Channel is SocketGroupChannel groupChannel)
                 HandleOutput($"{groupChannel.Name}/{arg.Author}/{arg.Content}");
             else if (arg.Channel is SocketDMChannel dMChannel)
+            {
                 HandleOutput($"{dMChannel.Users}/{arg.Author}/{arg.Content}");
+                PrivateMessageRecieved?.Invoke(this, arg);
+            }
             else
             {
                 HandleOutput($"{arg.Author}/{arg.Content}");

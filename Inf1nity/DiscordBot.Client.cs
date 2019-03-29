@@ -22,6 +22,9 @@ namespace Inf1nity
             Client.Ready += Client_Ready;
             Client.Connected += Client_Connected;
             Client.Disconnected += Client_Disconnected;
+            Client.ChannelCreated += Client_ChannelCreated;
+            Client.ChannelUpdated += Client_ChannelUpdated;
+            Client.ChannelDestroyed += Client_ChannelDestroyed;
 
             return Task.CompletedTask;
         }
@@ -54,6 +57,24 @@ namespace Inf1nity
         private Task Client_Disconnected(Exception arg)
         {
             Connected = false;
+            return Task.CompletedTask;
+        }
+
+        private Task Client_ChannelDestroyed(SocketChannel arg)
+        {
+            ChannelDeleted?.Invoke(this, arg);
+            return Task.CompletedTask;
+        }
+
+        private Task Client_ChannelUpdated(SocketChannel arg1, SocketChannel arg2)
+        {
+            ChannelUpdated?.Invoke(this, new Tuple<SocketChannel, SocketChannel>(arg1, arg2));
+            return Task.CompletedTask;
+        }
+
+        private Task Client_ChannelCreated(SocketChannel arg)
+        {
+            ChannelCreated?.Invoke(this, arg);
             return Task.CompletedTask;
         }
 
