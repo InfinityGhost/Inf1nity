@@ -79,7 +79,7 @@
 
         <TabControl Grid.Row="1">
             <TabItem Header="Browse">
-                <Frame Name="BrowseFrame" NavigationUIVisibility="Hidden"/>
+                <Border Name="BrowseFrame"/>
             </TabItem>
             <TabItem Header="Messages" DragDrop.Drop="Window_DropEvent" AllowDrop="True">
                 <Grid>
