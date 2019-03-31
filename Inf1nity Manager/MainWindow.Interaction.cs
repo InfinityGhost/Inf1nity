@@ -22,6 +22,8 @@ namespace Inf1nity_Manager
             var dir = Directory.GetCurrentDirectory() + @"\crashlog.log";
             if (File.Exists(dir))
                 Process.Start(dir);
+            else
+                MessageBox.Show("No crash logs available", "Information" , MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Close(object sender, RoutedEventArgs e) => Close();
