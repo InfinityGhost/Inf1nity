@@ -20,7 +20,7 @@ using Discord.WebSocket;
 using Inf1nity;
 using Inf1nity.Tools;
 using Inf1nity_Manager.Controls;
-using Inf1nity_Manager.Guild;
+using Inf1nity_Manager.Browse;
 using Inf1nity_Manager.Models;
 using Inf1nity_Manager.Tools;
 

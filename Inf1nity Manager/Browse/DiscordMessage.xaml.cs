@@ -19,7 +19,7 @@ using Discord.WebSocket;
 using Inf1nity_Manager.Tools;
 using Inf1nity_Manager.Windows;
 
-namespace Inf1nity_Manager.Controls.Items
+namespace Inf1nity_Manager.Browse
 {
     /// <summary>
     /// Interaction logic for DiscordMessageControl.xaml

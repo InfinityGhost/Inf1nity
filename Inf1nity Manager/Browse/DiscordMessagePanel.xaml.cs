@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using Inf1nity_Manager.Controls.Items;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Inf1nity_Manager.Controls
+namespace Inf1nity_Manager.Browse
 {
     /// <summary>
     /// Interaction logic for DiscordMessagePanel.xaml

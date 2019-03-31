@@ -1,7 +1,7 @@
 ﻿using Discord.WebSocket;
 using Inf1nity;
 using Inf1nity.Tools;
-using Inf1nity_Manager.Guild;
+using Inf1nity_Manager.Browse;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -71,20 +71,20 @@
       <DependentUpon>BotStatus.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConsoleTraceListener.cs" />
-    <Compile Include="Controls\Items\DiscordMessage.xaml.cs">
+    <Compile Include="Browse\DiscordMessage.xaml.cs">
       <DependentUpon>DiscordMessage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DiscordMessagePanel.xaml.cs">
+    <Compile Include="Browse\DiscordMessagePanel.xaml.cs">
       <DependentUpon>DiscordMessagePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NegateBool.cs" />
-    <Compile Include="Guild\DiscordChannel.xaml.cs">
+    <Compile Include="Browse\DiscordChannel.xaml.cs">
       <DependentUpon>DiscordChannel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Guild\DiscordGuild.xaml.cs">
+    <Compile Include="Browse\DiscordGuild.xaml.cs">
       <DependentUpon>DiscordGuild.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Guild\DiscordView.xaml.cs">
+    <Compile Include="Browse\DiscordView.xaml.cs">
       <DependentUpon>DiscordView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.Bot.cs" />
@@ -119,11 +119,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Items\DiscordMessage.xaml">
+    <Page Include="Browse\DiscordMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DiscordMessagePanel.xaml">
+    <Page Include="Browse\DiscordMessagePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,15 +131,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Guild\DiscordChannel.xaml">
+    <Page Include="Browse\DiscordChannel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Guild\DiscordGuild.xaml">
+    <Page Include="Browse\DiscordGuild.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Guild\DiscordView.xaml">
+    <Page Include="Browse\DiscordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,6 +218,7 @@
     <Resource Include="Assets\Icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controls\Items\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

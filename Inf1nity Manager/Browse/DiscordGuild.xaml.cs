@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Inf1nity_Manager.Guild
+namespace Inf1nity_Manager.Browse
 {
     /// <summary>
     /// Interaction logic for DiscordGuild.xaml
