@@ -97,7 +97,7 @@ namespace Inf1nity_Manager.Browse
 
             Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
 
-            try // Soon to be fixed so this issue never happens
+            try // Fixed in dev build
             {
                 foreach (var attachment in Message.Attachments)
                 {

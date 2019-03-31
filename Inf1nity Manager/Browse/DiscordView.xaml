@@ -11,7 +11,18 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListView Name="GuildsPanel" MinWidth="100" SelectionChanged="GuildsPanel_SelectionChanged" ScrollViewer.CanContentScroll="True"/>
-        <Border Grid.Column="1" Name="GuildFrame" Margin="1,0,0,0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--ROW 1-->
+        <Label Content="Guilds" Grid.Column="0" FontWeight="Bold" HorizontalContentAlignment="Center"/>
+        <!--ROW 2-->
+        <ListView Grid.Row="1" Name="GuildsPanel" MinWidth="103" SelectionChanged="GuildsPanel_SelectionChanged" ScrollViewer.CanContentScroll="True"
+                  Background="Transparent" BorderBrush="Transparent" Margin="0,0,1,0"/>
+        <!--FULL SPAN-->
+        <Border Grid.RowSpan="2" Grid.Column="1" Name="GuildFrame" VerticalAlignment="Stretch"/>
+        <Rectangle Grid.RowSpan="2" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                   HorizontalAlignment="Right" Width="1" />
     </Grid>
 </UserControl>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Inf1nity_Manager.Browse
 {
@@ -32,8 +33,13 @@ namespace Inf1nity_Manager.Browse
             }
             catch(Exception ex)
             {
-                MessagePanel.Content = ex.Message;
-                MessagePanel.HorizontalAlignment = HorizontalAlignment.Center;
+                MessagePanel.Content = new TextBlock
+                {
+                    Text = ex.Message,
+                    TextAlignment = TextAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                };
+                MessagePanel.Background = (Brush)new BrushConverter().ConvertFromString("#FFF0F0");
             }
         }
 

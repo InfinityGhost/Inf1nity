@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inf1nity_Manager.Browse"
-             mc:Ignorable="d" Background="White"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,9 +17,12 @@
         </Grid.RowDefinitions>
         <!--COLUMN 0-->
         <Label Content="Channels" Grid.Column="0" FontWeight="Bold" HorizontalContentAlignment="Center"/>
-        <ListView Grid.Row="1" MinWidth="100" Name="ChannelsPanel" DisplayMemberPath="Name" ScrollViewer.CanContentScroll="True"/>
+        <ListView Grid.Row="1" MinWidth="100" Name="ChannelsPanel" DisplayMemberPath="Name" ScrollViewer.CanContentScroll="True"
+                  Background="Transparent" BorderBrush="Transparent" Margin="0,0,1,0"/>
         <!--COLUMN 1-->
         <Label Grid.Column="1" Name="ChannelName" Content="#ChannelName"/>
         <Border Grid.Column="1" Grid.Row="1" Name="ChannelFrame"/>
+        <Rectangle Grid.RowSpan="2" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                   HorizontalAlignment="Right" Width="1" />
     </Grid>
 </UserControl>
