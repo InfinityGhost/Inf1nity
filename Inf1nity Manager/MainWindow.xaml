@@ -81,26 +81,6 @@
             <TabItem Header="Browse">
                 <Border Name="BrowseFrame"/>
             </TabItem>
-            <TabItem Header="Messages" DragDrop.Drop="Window_DropEvent" AllowDrop="True">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <Controls:DiscordMessagePanel x:Name="DiscordMessagePanel"/>
-                    <Grid Grid.Row="1" Margin="5,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Controls:CommandProcessor CommandRun="CommandProcessor_MessageSend" KeyPress="CommandProcessor_KeyPress"
-                                                   Height="24"/>
-                        <Controls:ChannelPicker Grid.Column="1" Margin="2.5,0,0,0" VerticalAlignment="Center" x:Name="ChannelPicker"
-                                                Height="24" MinWidth="150"/>
-                    </Grid>
-                </Grid>
-            </TabItem>
             <TabItem Header="Console">
                 <Grid>
                     <Grid.RowDefinitions>

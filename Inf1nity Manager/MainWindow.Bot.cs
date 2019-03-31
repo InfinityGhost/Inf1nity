@@ -18,9 +18,6 @@ namespace Inf1nity_Manager
         {
             Bot = new DiscordBot(Config.Token);
             Bot.Output += Console.Log;
-            Bot.MessageReceived += Bot_MessageReceived;
-            Bot.MessageDeleted += Bot_MessageDeleted;
-            Bot.MessageUpdated += Bot_MessageUpdated;
             Bot.BotMentioned += Bot_BotMentioned;
             Bot.Ready += Bot_Ready;
         }
@@ -41,24 +38,6 @@ namespace Inf1nity_Manager
         private void Bot_BotMentioned(object sender, SocketMessage e)
         {
             Notifier.Show(e.Author.Username + '#' + e.Author.Discriminator, MessageTools.CleanseMentions(e));
-        }
-
-        private void Bot_MessageUpdated(object sender, Tuple<SocketMessage, ulong> data)
-        {
-            AppDispatcher.Invoke(() => DiscordMessagePanel.UpdateMessage(data.Item2, data.Item1));
-        }
-
-        private void Bot_MessageReceived(object sender, SocketMessage e)
-        {
-            AppDispatcher.Invoke(() => DiscordMessagePanel.AddMessage(e));
-
-            if (!ChannelPicker.Channels.Values.Contains(e.Channel.Id))
-                ChannelPicker.Channels.Add(e.Channel as SocketTextChannel);
-        }
-
-        private void Bot_MessageDeleted(object sender, ulong e)
-        {
-            AppDispatcher.Invoke(() => DiscordMessagePanel.RemoveMessage(e));
         }
     }
 }

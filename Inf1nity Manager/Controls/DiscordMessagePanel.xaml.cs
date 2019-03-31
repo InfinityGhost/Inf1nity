@@ -47,7 +47,6 @@ namespace Inf1nity_Manager.Controls
             {
                 var oldestMessage = MessagePanel.Children[0];
                 MessagePanel.Children.Remove(oldestMessage);
-                //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
             }
             return Task.CompletedTask;
         }

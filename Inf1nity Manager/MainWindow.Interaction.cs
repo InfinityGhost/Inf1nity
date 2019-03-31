@@ -49,50 +49,6 @@ namespace Inf1nity_Manager
 
         #endregion
 
-        #region Tray Icon
-
-        private void TrayIcon_ShowWindow(object sender, EventArgs e)
-        {
-            Show();
-            WindowState = WindowState.Normal;
-        }
-
-        private TrayIcon TrayIcon = new TrayIcon();
-
-        #endregion
-
-        #region CommandProcessor
-
         private void CommandProcessor_CommandRun(object sender, string e) => Bot?.SendMessage(e);
-
-        private void CommandProcessor_MessageSend(object sender, string e)
-        {
-            if (!string.IsNullOrWhiteSpace(e))
-            {
-                if (ChannelPicker.SelectedChannelID is ulong id && id != 0)
-                {
-                    var channel = Bot.Client.GetChannel(id);
-                    if (channel is SocketTextChannel textChannel)
-                        Bot?.SendMessage(e, textChannel);
-                }
-                else
-                    Bot?.SendMessage(e);
-            }
-        }
-
-        private void CommandProcessor_KeyPress(object sender, Key e)
-        {
-            switch (e)
-            {
-                case Key.Up:
-                    ChannelPicker.MoveUp();
-                    break;
-                case Key.Down:
-                    ChannelPicker.MoveDown();
-                    break;
-            }
-        }
-
-        #endregion
     }
 }

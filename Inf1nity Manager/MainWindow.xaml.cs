@@ -61,9 +61,9 @@ namespace Inf1nity_Manager
         }
 
         private INotifier Notifier;
-        
+        private TrayIcon TrayIcon = new TrayIcon();
+
         private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
-        private static string DefaultChannelsPath => Directory.GetCurrentDirectory() + "\\channels.xml";
 
         #endregion
 
@@ -71,13 +71,15 @@ namespace Inf1nity_Manager
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Update statusbar on console update
             Console.Updated += StatusBar.Update;
-
+            // Hook debug listeners
             Debug.Listeners.Add(Console.CreateListener());
             Debug.AutoFlush = true;
 
             Debug.WriteLine("Console added to trace listeners.");
 
+            // Load default configuration
             try
             {
                 Config = Configuration.Read(DefaultConfigPath);
@@ -91,20 +93,21 @@ namespace Inf1nity_Manager
                 new Windows.ConfigurationManager(Config);
             }
 
+            // Tray Icon
             await TrayIcon.Initialize();
-            TrayIcon.ShowWindow += TrayIcon_ShowWindow;
+            TrayIcon.ShowWindow += (icon, args) =>
+            {
+                Show();
+                WindowState = WindowState.Normal;
+            };
 
+            // Run at start if configured
             if (Config.RunAtStart)
             {
                 BotStart();
                 if (Config.HideAtStart)
                     this.WindowState = WindowState.Minimized;
             }
-
-            if (File.Exists(DefaultChannelsPath))
-                ChannelPicker.LoadChannels(DefaultChannelsPath);
-            else
-                ChannelPicker.SaveChannels(DefaultChannelsPath);
 
             Notifier = new NotifyWinDefault(TrayIcon);
         }
@@ -113,8 +116,6 @@ namespace Inf1nity_Manager
         {
             Bot?.Stop();
             Hide();
-
-            ChannelPicker.SaveChannels(DefaultChannelsPath);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
