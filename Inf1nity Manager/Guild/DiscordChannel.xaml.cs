@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Inf1nity_Manager.Controls.Items;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Inf1nity_Manager.Guild
         {
             InitializeComponent();
             Channel = textChannel;
+            MessagePanel.RequestAddContent += (panel, text) => AddToInputBox(text);
         }
 
         public SocketTextChannel Channel { private set; get; }
@@ -40,6 +42,17 @@ namespace Inf1nity_Manager.Guild
         {
             if (!string.IsNullOrWhiteSpace(e))
                 await Channel.SendMessageAsync(e);
+        }
+
+        public void AddMessage(IMessage msg)
+        {
+            MessagePanel.AddMessage(msg);
+        }
+
+        public void AddToInputBox(string text)
+        {
+            Input.Buffer += text;
+            Input.Focus();
         }
     }
 }

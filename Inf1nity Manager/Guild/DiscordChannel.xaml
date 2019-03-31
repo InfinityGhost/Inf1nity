@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Controls:DiscordMessagePanel x:Name="MessagePanel"/>
-        <Controls:CommandProcessor Grid.Row="1" CommandRun="CommandProcessor_CommandRun" Margin="2,1,0,0"/>
+        <Controls:CommandProcessor Grid.Row="1" CommandRun="CommandProcessor_CommandRun" Margin="2,1,0,0"
+                                   x:Name="Input"/>
     </Grid>
 </UserControl>

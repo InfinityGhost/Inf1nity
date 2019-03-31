@@ -138,6 +138,7 @@ namespace Inf1nity_Manager.Controls.Items
 
         public event EventHandler MessageDeleted;
         public event EventHandler<Tuple<SocketMessage, string>> MessageUpdated;
+        public event EventHandler<string> RequestAddContent;
 
         #endregion
 
@@ -164,6 +165,16 @@ namespace Inf1nity_Manager.Controls.Items
         private void CopyUserID_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(Message.Author.Id.ToString());
+        }
+
+        private void CopyMention_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(Message.Author.Mention);
+        }
+
+        private void Mention_Click(object sender, RoutedEventArgs e)
+        {
+            RequestAddContent?.Invoke(this, Message.Author.Mention);
         }
 
         private void KickUser_Click(object sender, RoutedEventArgs e)
@@ -251,5 +262,6 @@ namespace Inf1nity_Manager.Controls.Items
         }
 
         #endregion
+
     }
 }

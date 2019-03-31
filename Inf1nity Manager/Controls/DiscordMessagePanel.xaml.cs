@@ -29,6 +29,8 @@ namespace Inf1nity_Manager.Controls
             InitializeComponent();
         }
 
+        public event EventHandler<string> RequestAddContent;
+
         #region Public Methods
 
         public Task AddMessage(IMessage message)
@@ -39,6 +41,7 @@ namespace Inf1nity_Manager.Controls
 
             msgCtrl.MessageDeleted += (msg, args) => RemoveMessage(msgCtrl);
             msgCtrl.MessageUpdated += MessageUpdated_Invoked;
+            msgCtrl.RequestAddContent += (msg, text) => RequestAddContent?.Invoke(msg, text);
 
             if (MessagePanel.Children.Count > 100)
             {
@@ -46,7 +49,6 @@ namespace Inf1nity_Manager.Controls
                 MessagePanel.Children.Remove(oldestMessage);
                 //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
             }
-
             return Task.CompletedTask;
         }
 
