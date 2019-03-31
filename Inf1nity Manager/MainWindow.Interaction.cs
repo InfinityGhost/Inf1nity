@@ -20,7 +20,8 @@ namespace Inf1nity_Manager
         private void OpenCrashLogs(object sender, RoutedEventArgs e)
         {
             var dir = Directory.GetCurrentDirectory() + @"\crashlog.log";
-            Process.Start(dir);
+            if (File.Exists(dir))
+                Process.Start(dir);
         }
 
         private void Close(object sender, RoutedEventArgs e) => Close();
