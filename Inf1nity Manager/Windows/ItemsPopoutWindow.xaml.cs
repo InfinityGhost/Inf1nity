@@ -10,21 +10,20 @@ namespace Inf1nity_Manager.Windows
     /// </summary>
     public partial class ItemsPopoutWindow : Window
     {
-        public ItemsPopoutWindow(UIElement content)
+        public ItemsPopoutWindow() => InitializeComponent();
+
+        public ItemsPopoutWindow(UIElement content) : this()
         {
-            InitializeComponent();
             this.Content = content;
         }
 
-        public ItemsPopoutWindow(IEnumerable<UIElement> items)
+        public ItemsPopoutWindow(IEnumerable<UIElement> items) : this()
         {
-            InitializeComponent();
             this.Content = new ItemsControl { ItemsSource = items };
         }
 
-        public ItemsPopoutWindow(IEnumerable<string> lines)
+        public ItemsPopoutWindow(IEnumerable<string> lines) : this()
         {
-            InitializeComponent();
             var items = lines.ToList().ConvertAll(line =>
             {
                 var menuItem = new MenuItem { Header = line };
@@ -32,6 +31,21 @@ namespace Inf1nity_Manager.Windows
                 return menuItem;
             });
             this.Content = new ItemsControl { ItemsSource = items };
+        }
+
+        public ItemsPopoutWindow(UIElement content, string title) : this(content)
+        {
+            this.Title = title;
+        }
+
+        public ItemsPopoutWindow(IEnumerable<UIElement> items, string title) : this(items)
+        {
+            this.Title = title;
+        }
+
+        public ItemsPopoutWindow(IEnumerable<string> items, string title) : this(items)
+        {
+            this.Title = title;
         }
     }
 }

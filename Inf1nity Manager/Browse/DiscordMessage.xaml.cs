@@ -79,10 +79,16 @@ namespace Inf1nity_Manager.Browse
                 header += $@"@{author}";
 
             if (Message.EditedTimestamp is DateTimeOffset editedTime)
-                header += ' ' + $"[Edited at {editedTime.ToLocalTime()}]";
+                EditedTime.Content = $"[Edited at {editedTime.ToLocalTime()}]";
+            else
+                EditedTime.SetValue(VisibilityProperty, Visibility.Hidden);
 
             Header.Content = header;
             MessageContent.Text = Message.Content;
+            EditBox.Text = Message.Content;
+            EditBox.GotFocus += EditBox_GotFocus;
+            EditBox.LostFocus += EditBox_LostFocus;
+            EditBox.KeyDown += EditBox_KeyDown;
 
             Time.Content = Message.Timestamp.ToLocalTime();
 
@@ -91,9 +97,6 @@ namespace Inf1nity_Manager.Browse
                 EditButton.IsEnabled = true;
             else
                 EditButton.IsEnabled = false;
-
-            //System.Diagnostics.Debug.WriteLine(Message.Author, "AuthorOfMessageRecieved");
-            //System.Diagnostics.Debug.WriteLine((Application.Current.MainWindow as MainWindow).Bot.Client.CurrentUser, "ClientUser");
 
             Image.Source = ImageTool.GetImageSource(Message.Author.GetAvatarUrl());
 
@@ -117,6 +120,38 @@ namespace Inf1nity_Manager.Browse
             }
         }
 
+        private void EditBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    {
+                        if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                        {
+                            EditBox.Text += Environment.NewLine;
+                            EditBox.CaretIndex = EditBox.Text.Length;
+                        }
+                        else
+                            EditBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                        break;
+                    }
+            }
+        }
+
+        private void EditBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            EditBox.Text = Message.Content;
+            MessageContent.SetValue(VisibilityProperty, Visibility.Hidden);
+        }
+
+
+        private void EditBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Edit(EditBox.Text);
+            EditBox.SetValue(VisibilityProperty, Visibility.Hidden);
+            MessageContent.SetValue(VisibilityProperty, Visibility.Visible);
+        }
+
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var image = sender as System.Windows.Controls.Image;
@@ -136,40 +171,35 @@ namespace Inf1nity_Manager.Browse
 
         #region Properties & Events
 
-        public event EventHandler MessageDeleted;
-        public event EventHandler<Tuple<IMessage, string>> MessageUpdated;
         public event EventHandler<string> RequestAddContent;
 
         #endregion
 
         #region Actions
 
-        private async void Delete_Click(object sender, EventArgs e)
+        private void Delete_Click(object sender, EventArgs e)
         {
-            try { await Message.DeleteAsync(); }
-            catch(Exception ex) { System.Diagnostics.Debug.WriteLine(ex); }
-                
-            MessageDeleted?.Invoke(this, new EventArgs());
+            Message.Delete();
         }
 
         private void Copy_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Message.Content);
+            Message.Content.Copy();
         }
 
         private void CopyMessageID_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Message.Id.ToString());
+            Message.CopyID();
         }
 
         private void CopyUserID_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(Message.Author.Id.ToString());
+            Message.Author.CopyID();
         }
 
         private void CopyMention_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(Message.Author.Mention);
+            Message.Author.CopyMention();
         }
 
         private void Mention_Click(object sender, RoutedEventArgs e)
@@ -179,66 +209,39 @@ namespace Inf1nity_Manager.Browse
 
         private void KickUser_Click(object sender, RoutedEventArgs e)
         {
-            var guild = (Message.Author as SocketGuildUser).Guild;
-
-            string msg = $"Are you sure you want to kick {Message.Author.Username} from {guild.Name}?";
-            string title = "Kick User";
-            var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
-                (Message.Author as SocketGuildUser).KickAsync();
+            Message.KickAuthorDialog();
         }
 
         private void BanUser_Click(object sender, RoutedEventArgs e)
         {
-            var guild = (Message.Author as SocketGuildUser).Guild;
-
-            string msg = $"Are you sure you want to ban {Message.Author.Username} from {guild.Name}?";
-            string title = "Ban User";
-            var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
-                (Message.Author as SocketGuildUser).BanAsync();
+            Message.BanAuthorDialog();
         }
 
         private void CopyGuildID_Click(object sender, RoutedEventArgs e)
         {
-            var guild = (Message.Author as SocketGuildUser).Guild;
-            Clipboard.SetText(guild.Id.ToString());
+            (Message.Author as IGuildUser).Guild.CopyID();
         }
 
-        private async void GetInvites_Click(object sender, RoutedEventArgs e)
+        private void GetGuildInvites_Click(object sender, RoutedEventArgs e)
         {
             var guild = (Message.Author as SocketGuildUser).Guild;
-            var allInvites = await guild.GetInvitesAsync();
-            var invites = allInvites.Where(inv => !inv.IsTemporary && !inv.IsRevoked).ToList();
-
-            var urls = invites.ConvertAll(invite => invite.Url);
-
-            var win = new ItemsPopoutWindow(urls);
-            win.Title = "Invites";
-            win.ShowDialog();
+            guild.ShowInvites();
         }
 
         private void EditMessage_Click(object sender, RoutedEventArgs e)
         {
-            var box = new TextBox
-            {
-                Text = Message.Content,
-                Margin = new Thickness(5),
-            };
-            var popoutWindow = new ItemsPopoutWindow(box);
+            EditBox.SetValue(VisibilityProperty, Visibility.Visible);
+            EditBox.Focus();
+            EditBox.CaretIndex = EditBox.Text.Length;
+        }
 
-            box.KeyDown += (tb, args) =>
+        public void Edit(string text)
+        {
+            if (Message.Content != text)
             {
-                if (args.Key == Key.Enter)
-                    popoutWindow.Close();
-            };
-
-            popoutWindow.MinWidth = 200;
-            popoutWindow.MinHeight = 18;
-            popoutWindow.Title = "Editing message...";
-            popoutWindow.Closed += (win, args) => MessageUpdated?.Invoke(
-                this, new Tuple<IMessage, string>(Message, (popoutWindow.Content as TextBox).Text));
-            popoutWindow.ShowDialog();
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow.Bot.UpdateMessage(Message, text);
+            }
         }
 
         #endregion
