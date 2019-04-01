@@ -6,11 +6,6 @@
              xmlns:local="clr-namespace:Inf1nity_Manager.Browse"
              mc:Ignorable="d" Background="AliceBlue"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.ContextMenu>
-        <ContextMenu>
-            <MenuItem Header="Clear messages" Click="ClearMessages_Click"/>
-        </ContextMenu>
-    </UserControl.ContextMenu>
     <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Name="MessagePanel">
             <StackPanel.Resources>

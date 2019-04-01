@@ -71,16 +71,10 @@ namespace Inf1nity_Manager.Browse
             return Task.CompletedTask;
         }
 
-        public void NotifyMessage(Discord.IMessage message)
-        {
-            if (GuildFrame.Child is DiscordGuild guild)
-                guild.NotifyMessage(message);
-        }
+        private DiscordGuild SelectedGuild => GuildFrame.Child as DiscordGuild;
 
-        public void NotifyDeleted(ulong id)
-        {
-            if (GuildFrame.Child is DiscordGuild guild)
-                guild.NotifyDeleted(id);
-        }
+        public void NotifyMessage(Discord.IMessage message) => SelectedGuild.NotifyMessage(message);
+        public void NotifyDeleted(ulong id) => SelectedGuild.NotifyDeleted(id);
+        public void NotifyUpdated(ulong id, Discord.IMessage updatedMessage) => SelectedGuild.NotifyUpdated(id, updatedMessage);
     }
 }

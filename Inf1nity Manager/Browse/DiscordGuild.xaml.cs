@@ -44,7 +44,6 @@ namespace Inf1nity_Manager.Browse
             ChannelFrame.Child = dC;
             ChannelName.Content = '#' + channel.Name;
             await dC.Init().ConfigureAwait(false);
-            //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
         }
 
         public void NotifyMessage(IMessage message)
@@ -62,6 +61,15 @@ namespace Inf1nity_Manager.Browse
             {
                 var dChannel = ChannelFrame.Child as DiscordChannel;
                 dChannel.MessagePanel.RemoveMessage(id);
+            }
+        }
+
+        public void NotifyUpdated(ulong id, IMessage updatedMessage)
+        {
+            if (ChannelsPanel.SelectedItem is SocketTextChannel ch)
+            {
+                var dChannel = ChannelFrame.Child as DiscordChannel;
+                dChannel.MessagePanel.UpdateMessage(id, updatedMessage);
             }
         }
     }

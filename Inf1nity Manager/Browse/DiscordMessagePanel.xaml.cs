@@ -50,19 +50,16 @@ namespace Inf1nity_Manager.Browse
             return Task.CompletedTask;
         }
 
-        public Task UpdateMessage(ulong id, SocketMessage newMessage)
+        public Task UpdateMessage(ulong id, IMessage newMessage)
         {
-            
             foreach (var child in MessagePanel.Children)
             {
                 if (child is DiscordMessage message && message.Message.Id == id)
                 {
-                    RemoveMessage(id);
-                    AddMessage(newMessage);
+                    message.Message = newMessage;
                     break;
                 }
             }
-
             return Task.CompletedTask;
         }
         
@@ -88,7 +85,7 @@ namespace Inf1nity_Manager.Browse
                 Debug.WriteLine("Message removed that doesn't exist!");
         }
 
-        private void MessageUpdated_Invoked(object sender, Tuple<SocketMessage, string> args)
+        private void MessageUpdated_Invoked(object sender, Tuple<IMessage, string> args)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.Bot.UpdateMessage(args.Item1, args.Item2);

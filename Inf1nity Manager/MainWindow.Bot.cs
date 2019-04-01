@@ -31,6 +31,7 @@ namespace Inf1nity_Manager
                 var dV = new DiscordView(Bot.Client.Guilds.ToList());
                 Bot.MessageReceived += (bot, msg) => AppDispatcher.Invoke(() => dV.NotifyMessage(msg));
                 Bot.MessageDeleted += (bot, id) => AppDispatcher.Invoke(() => dV.NotifyDeleted(id));
+                Bot.MessageUpdated += (bot, args) => AppDispatcher.Invoke(() => dV.NotifyUpdated(args.Item2, args.Item1));
                 BrowseFrame.Child = dV;
             });
         }

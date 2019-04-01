@@ -137,7 +137,7 @@ namespace Inf1nity_Manager.Browse
         #region Properties & Events
 
         public event EventHandler MessageDeleted;
-        public event EventHandler<Tuple<SocketMessage, string>> MessageUpdated;
+        public event EventHandler<Tuple<IMessage, string>> MessageUpdated;
         public event EventHandler<string> RequestAddContent;
 
         #endregion
@@ -237,7 +237,7 @@ namespace Inf1nity_Manager.Browse
             popoutWindow.MinHeight = 18;
             popoutWindow.Title = "Editing message...";
             popoutWindow.Closed += (win, args) => MessageUpdated?.Invoke(
-                this, new Tuple<SocketMessage, string>(Message as SocketMessage, (popoutWindow.Content as TextBox).Text));
+                this, new Tuple<IMessage, string>(Message, (popoutWindow.Content as TextBox).Text));
             popoutWindow.ShowDialog();
         }
 

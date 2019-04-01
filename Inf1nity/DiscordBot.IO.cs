@@ -81,12 +81,15 @@ namespace Inf1nity
                 HandleOutput("Error: No recent message to reply to.");
         }
 
-        public async void UpdateMessage(SocketMessage message, string newContent)
+        public async void UpdateMessage(IMessage message, string newContent)
         {
-            if (message is SocketUserMessage userMessage)
+            if (message is IUserMessage userMessage)
                 await userMessage.ModifyAsync(msg => msg.Content = newContent);
             else
+            {
                 HandleOutput("Warning: Attempted to modify non-user message.");
+                System.Diagnostics.Debug.WriteLine(message.GetType(), "Message type");
+            }
         }
 
         #endregion
