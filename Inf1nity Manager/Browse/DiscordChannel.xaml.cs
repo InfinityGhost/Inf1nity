@@ -54,7 +54,7 @@ namespace Inf1nity_Manager.Browse
                         canMessage = true;
                     else if (userP.SendMessages.HasFlag(PermValue.Deny) && rolesP.SendMessages.HasFlag(PermValue.Inherit)) // User deny, role inherit
                         canMessage = false;
-                    else if (rolesP.SendMessages.HasFlag(PermValue.Allow) && userP.SendMessages.HasFlag(PermValue.Inherit)) // Role allow, user inhrit
+                    else if (rolesP.SendMessages.HasFlag(PermValue.Allow) && userP.SendMessages.HasFlag(PermValue.Inherit)) // Role allow, user inherit
                         canMessage = true;
                     else if (rolesP.SendMessages.HasFlag(PermValue.Deny) && userP.SendMessages.HasFlag(PermValue.Inherit)) // Role deny, user inherit
                         canMessage = false;
