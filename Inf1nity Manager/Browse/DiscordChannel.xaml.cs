@@ -32,53 +32,77 @@ namespace Inf1nity_Manager.Browse
                 foreach (var msg in msgs.Reverse())
                     await MessagePanel.AddMessage(msg).ConfigureAwait(false);
 
+                bool canMessage = false;
+
                 var client = (Application.Current.MainWindow as MainWindow).Bot.Client;
                 var guildUser = Channel.Guild.Users.First(e => e.Id == client.CurrentUser.Id);
-                var guildPerms = guildUser.GuildPermissions;
-                var channelUserPerms = Channel.GetPermissionOverwrite(client.CurrentUser);
+                var userRoles = guildUser.Roles;
 
-                if (Channel.PermissionOverwrites.All(e => e.Permissions.SendMessages == PermValue.Allow))
+                List<GuildPermissions> guildPerms = Channel.Guild.Roles.ToList().ConvertAll(role => role.Permissions);
+                List<OverwritePermissions?> rolesPermOw = userRoles.ToList().ConvertAll(role => Channel.GetPermissionOverwrite(role));
+                OverwritePermissions? userPermOw = Channel.GetPermissionOverwrite(guildUser);
+
+                if (userPermOw.HasValue && rolesPermOw.Any(p => p.HasValue)) // User perms & role perms
                 {
-                    Input.IsEnabled = true;
-                    return;
+                    var userP = userPermOw.Value;
+                    var rolesP = userPermOw.Value;
+                    if (userP.SendMessages.HasFlag(PermValue.Allow) && rolesP.SendMessages.HasFlag(PermValue.Allow)) // Both allow
+                        canMessage = true;
+                    else if (userP.SendMessages.HasFlag(PermValue.Deny) && rolesP.SendMessages.HasFlag(PermValue.Deny)) // Both deny
+                        canMessage = false;
+                    else if (userP.SendMessages.HasFlag(PermValue.Allow) && rolesP.SendMessages.HasFlag(PermValue.Inherit)) // User allow, role inherit
+                        canMessage = true;
+                    else if (userP.SendMessages.HasFlag(PermValue.Deny) && rolesP.SendMessages.HasFlag(PermValue.Inherit)) // User deny, role inherit
+                        canMessage = false;
+                    else if (rolesP.SendMessages.HasFlag(PermValue.Allow) && userP.SendMessages.HasFlag(PermValue.Inherit)) // Role allow, user inhrit
+                        canMessage = true;
+                    else if (rolesP.SendMessages.HasFlag(PermValue.Deny) && userP.SendMessages.HasFlag(PermValue.Inherit)) // Role deny, user inherit
+                        canMessage = false;
+                    else if (userP.SendMessages.HasFlag(PermValue.Inherit) && userP.SendMessages.HasFlag(PermValue.Inherit)) // Both inherit
+                        canMessage = guildPerms.Any(p => p.SendMessages);
+                    else
+                        canMessage = false;
                 }
-
-                var rolesPerms = Channel.PermissionOverwrites.Where(r => r.TargetType == PermissionTarget.Role);
-                var botRoles = guildUser.Roles;
-
-                bool? roleCanSendMessage = null;
-                bool userCanSendMessage = false;
-
-                foreach (var r in botRoles)
+                else if (userPermOw.HasValue && rolesPermOw.Any(p => !p.HasValue)) // User perms only
                 {
-                    var ow = Channel.GetPermissionOverwrite(r);
-                    if (ow is OverwritePermissions perm)
+                    var userP = userPermOw.Value;
+                    if (userP.SendMessages == PermValue.Allow) // Allow
+                        canMessage = true;
+                    else if (userP.SendMessages == PermValue.Inherit) // Inherit
+                        canMessage = guildPerms.Any(p => p.SendMessages);
+                    else if (userP.SendMessages == PermValue.Deny) // Deny
+                        canMessage = false;
+                    else
+                        canMessage = false;
+                }
+                else if (!userPermOw.HasValue && rolesPermOw.Any(p => p.HasValue)) // Role perms only
+                {
+                    foreach(var r in rolesPermOw)
                     {
-                        if (perm.SendMessages == PermValue.Allow)
+                        if (r is OverwritePermissions rolesP)
                         {
-                            roleCanSendMessage = true;
-                            break;
+                            if (rolesP.SendMessages == PermValue.Allow) // Allow
+                            {
+                                canMessage = true;
+                                break;
+                            }
+                            else if (rolesP.SendMessages == PermValue.Inherit) // Inherit
+                            {
+                                canMessage = guildPerms.Any(p => p.SendMessages);
+                                if (canMessage)
+                                    break;
+                            }
+                            else if (rolesP.SendMessages == PermValue.Deny) // Deny
+                                canMessage = false;
+                            else
+                                canMessage = false;
                         }
                     }
                 }
+                else // No special perms
+                    canMessage = guildPerms.Any(p => p.SendMessages == true);
 
-                if (roleCanSendMessage == false)
-                {
-                    if (channelUserPerms.HasValue && channelUserPerms.Value.SendMessages.HasFlag(PermValue.Allow))
-                        userCanSendMessage = true;
-                    else if (channelUserPerms.HasValue && channelUserPerms.Value.SendMessages.HasFlag(PermValue.Inherit) && guildPerms.SendMessages)
-                        userCanSendMessage = true;
-                    else if (!channelUserPerms.HasValue && roleCanSendMessage.HasValue)
-                        userCanSendMessage = roleCanSendMessage.Value;
-                    else if (!channelUserPerms.HasValue && !roleCanSendMessage.HasValue)
-                        userCanSendMessage = false;
-                    else
-                        userCanSendMessage = false;
-                }
-                else if (roleCanSendMessage.HasValue)
-                    userCanSendMessage = roleCanSendMessage.Value;
-
-                Input.IsEnabled = userCanSendMessage;
+                Input.IsEnabled = canMessage;
             }
             catch(Exception ex)
             {
