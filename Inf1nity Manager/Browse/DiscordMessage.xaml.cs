@@ -116,7 +116,7 @@ namespace Inf1nity_Manager.Browse
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
+                System.Diagnostics.Debug.WriteLine(ex, "Message.Attachments.get()[Warning]");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Inf1nity_Manager.Browse
                     {
                         if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                         {
-                            EditBox.Text += Environment.NewLine;
+                            EditBox.Text += Environment.NewLine; // TODO: fix duplicate inputs
                             EditBox.CaretIndex = EditBox.Text.Length;
                         }
                         else
