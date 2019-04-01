@@ -65,6 +65,8 @@ namespace Inf1nity_Manager
 
         private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
 
+        private void WriteDebug(string message, string severity) => Debug.WriteLine(message, $"Infinity_Manager[{severity}]");
+
         #endregion
 
         #region Window Events
@@ -77,18 +79,18 @@ namespace Inf1nity_Manager
             Debug.Listeners.Add(Console.CreateListener());
             Debug.AutoFlush = true;
 
-            Debug.WriteLine("Console added to trace listeners.");
+            WriteDebug("Console added to trace listeners.", "Info");
 
             // Load default configuration
             try
             {
                 Config = Configuration.Read(DefaultConfigPath);
-                Debug.WriteLine("Loaded defaults.");
+                WriteDebug("Loaded defaults.", "Info");
             }
             catch
             {
                 Config = new Configuration();
-                Debug.WriteLine("No defaults found, using an empty config file.");
+                WriteDebug("No defaults found, using an empty config file.", "Warning");
                 Config.Write(DefaultConfigPath);
                 new Windows.ConfigurationManager(Config);
             }

@@ -18,7 +18,7 @@ namespace Inf1nity_Manager.Controls
 
         public override void WriteLine(string message)
         {
-            Console?.Log($"Inf1nity/Manager| {message}");
+            Console?.Log(message);
         }
     }
 }

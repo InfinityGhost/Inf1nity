@@ -219,7 +219,6 @@
     <Resource Include="Assets\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\Items\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

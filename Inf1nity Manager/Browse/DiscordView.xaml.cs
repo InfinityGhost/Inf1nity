@@ -73,8 +73,8 @@ namespace Inf1nity_Manager.Browse
 
         private DiscordGuild SelectedGuild => GuildFrame.Child as DiscordGuild;
 
-        public void NotifyMessage(Discord.IMessage message) => SelectedGuild.NotifyMessage(message);
-        public void NotifyDeleted(ulong id) => SelectedGuild.NotifyDeleted(id);
-        public void NotifyUpdated(ulong id, Discord.IMessage updatedMessage) => SelectedGuild.NotifyUpdated(id, updatedMessage);
+        public void NotifyMessage(Discord.IMessage message) => SelectedGuild?.NotifyMessage(message);
+        public void NotifyDeleted(ulong id) => SelectedGuild?.NotifyDeleted(id);
+        public void NotifyUpdated(ulong id, Discord.IMessage updatedMessage) => SelectedGuild?.NotifyUpdated(id, updatedMessage);
     }
 }

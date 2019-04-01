@@ -23,15 +23,14 @@ namespace Inf1nity.Commands
         [Summary("Lists this bot's commands.")]
         public async Task Help(string path = "")
         {
-            EmbedBuilder output = new EmbedBuilder();
+            await Context.Message.DeleteAsync();
+            var output = new EmbedBuilder();
             if (path == "")
             {
-                output.Title = "my bot - help";
+                output.Title = "Inf1nity by `@InfinityGhost#7843`";
 
-                foreach (var mod in _commands.Modules.Where(m => m.Parent == null))
-                {
+                foreach (var mod in _commands.Modules.Where(m => m.Parent == null && m.Name != "HelpModule"))
                     AddHelp(mod, ref output);
-                }
 
                 output.Footer = new EmbedFooterBuilder
                 {
@@ -44,10 +43,10 @@ namespace Inf1nity.Commands
                 if (mod == null) { await ReplyAsync("No module could be found with that name."); return; }
 
                 output.Title = mod.Name;
-                output.Description = $"{mod.Summary}\n" +
-                (!string.IsNullOrEmpty(mod.Remarks) ? $"({mod.Remarks})\n" : "") +
-                (mod.Aliases.Any() ? $"Prefix(es): {string.Join(",", mod.Aliases)}\n" : "") +
-                (mod.Submodules.Any() ? $"Submodules: {mod.Submodules.Select(m => m.Aliases)}\n" : "") + " ";
+                output.Description = $"{mod.Summary}{Environment.NewLine}" +
+                (!string.IsNullOrEmpty(mod.Remarks) ? $"({mod.Remarks}){Environment.NewLine}" : "") +
+                (mod.Aliases.Any() ? $"Prefix(es): {string.Join(",", mod.Aliases)}{Environment.NewLine}" : "") +
+                (mod.Submodules.Any() ? $"Submodules: {mod.Submodules.Select(m => m.Aliases)}{Environment.NewLine}" : "") + " ";
                 AddCommands(mod, ref output);
             }
 
@@ -61,7 +60,7 @@ namespace Inf1nity.Commands
             {
                 f.Name = $"**{module.Name}**";
                 f.Value = $"Submodules: {string.Join(", ", module.Submodules.Select(m => m.Name))}" +
-                $"\n" +
+                $"{Environment.NewLine}" +
                 $"Commands: {string.Join(", ", module.Commands.Select(x => $"`{x.Name}`"))}";
             });
         }
@@ -81,9 +80,9 @@ namespace Inf1nity.Commands
             builder.AddField(f =>
             {
                 f.Name = $"**{command.Name}**";
-                f.Value = $"{command.Summary}\n" +
-                (!string.IsNullOrEmpty(command.Remarks) ? $"({command.Remarks})\n" : "") +
-                (command.Aliases.Any() ? $"**Aliases:** {string.Join(", ", command.Aliases.Select(x => $"`{x}`"))}\n" : "") +
+                f.Value = $"{command.Summary}{Environment.NewLine}" +
+                (!string.IsNullOrEmpty(command.Remarks) ? $"({command.Remarks}){Environment.NewLine}" : "") +
+                (command.Aliases.Any() ? $"**Aliases:** {string.Join(", ", command.Aliases.Select(x => $"`{x}`"))}{Environment.NewLine}" : "") +
                 $"**Usage:** `{GetPrefix(command)} {GetAliases(command)}`";
             });
         }
