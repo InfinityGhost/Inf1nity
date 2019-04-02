@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Inf1nity_Manager.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,12 +43,15 @@ namespace Inf1nity_Manager.Browse
             }
             catch(Exception ex)
             {
-                MessagePanel.Content = new TextBlock
+                var errorInfo = new TextBlock
                 {
                     Text = ex.Message,
                     TextAlignment = TextAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
                 };
+                errorInfo.MouseLeftButtonDown += (r, arg) => new ExceptionPopoutWindow(ex).ShowDialog();
+                
+                MessagePanel.Content = errorInfo;
                 MessagePanel.Background = (Brush)new BrushConverter().ConvertFromString("#FFF0F0");
 
                 Input.IsEnabled = false;

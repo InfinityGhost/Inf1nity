@@ -101,6 +101,7 @@
     <Compile Include="Windows\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ExceptionPopoutWindow.cs" />
     <Compile Include="Windows\FileHelper.cs" />
     <Compile Include="Windows\ImagePopoutWindow.xaml.cs">
       <DependentUpon>ImagePopoutWindow.xaml</DependentUpon>
