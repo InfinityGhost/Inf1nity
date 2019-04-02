@@ -62,7 +62,7 @@ namespace Inf1nity_Manager.Tools
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message, "GetInvites[Critical]");
+                Trace.WriteLine(ex.Message, "GetInvites[Critical]");
             }
         }
 
@@ -74,7 +74,7 @@ namespace Inf1nity_Manager.Tools
             }
             catch(Exception ex)
             {
-                Debug.WriteLine(ex, "Message deletion failed");
+                Trace.WriteLine(ex, "Message deletion failed");
             }
         }
 

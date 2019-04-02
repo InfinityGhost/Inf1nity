@@ -18,7 +18,14 @@ namespace Inf1nity.Commands
         /// <param name="channel">The channel the messages are located</param>
         public static async void DeleteAll(this IEnumerable<IMessage> messages, IMessageChannel channel)
         {
-            await (channel as SocketTextChannel).DeleteMessagesAsync(messages);
+            try
+            {
+                await (channel as SocketTextChannel).DeleteMessagesAsync(messages);
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Failed to delete messages.", "ManagementExtensions[Warning]");
+            }
         }
     }
 }

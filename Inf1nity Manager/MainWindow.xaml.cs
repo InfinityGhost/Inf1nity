@@ -65,7 +65,7 @@ namespace Inf1nity_Manager
 
         private static string DefaultConfigPath => Directory.GetCurrentDirectory() + "\\default.cfg";
 
-        private void WriteDebug(string message, string severity) => Debug.WriteLine(message, $"Infinity_Manager[{severity}]");
+        private void WriteDebug(string message, string severity) => Trace.WriteLine(message, $"Infinity_Manager[{severity}]");
 
         #endregion
 

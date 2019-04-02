@@ -116,7 +116,7 @@ namespace Inf1nity_Manager.Browse
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex, "Message.Attachments.get()[Warning]");
+                System.Diagnostics.Trace.WriteLine(ex, "Message.Attachments.get()[Warning]");
             }
         }
 

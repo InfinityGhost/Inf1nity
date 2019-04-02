@@ -80,7 +80,7 @@ namespace Inf1nity_Manager.Browse
             if (MessagePanel.Children.Contains(message))
                 MessagePanel.Children.Remove(message);
             else
-                Debug.WriteLine("Message removed that doesn't exist!");
+                Trace.WriteLine("Message removed that doesn't exist!", "RemoveMessage()[Warning]");
         }
 
         #endregion
