@@ -19,24 +19,32 @@ namespace Inf1nity_Manager.Tools
 
         public static void KickAuthorDialog(this IMessage message)
         {
-            var guild = (message.Author as SocketGuildUser).Guild;
-
-            string msg = $"Are you sure you want to kick {message.Author.Username} from {guild.Name}?";
-            string title = "Kick User";
-            var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
-                (message.Author as SocketGuildUser).KickAsync();
+            var user = message.Author as IGuildUser;
+            KickUserDialog(user);
         }
 
         public static void BanAuthorDialog(this IMessage message)
         {
-            var guild = (message.Author as SocketGuildUser).Guild;
+            var user = message.Author as IGuildUser;
+            BanUserDialog(user);
+        }
 
-            string msg = $"Are you sure you want to ban {message.Author.Username} from {guild.Name}?";
+        public static async void KickUserDialog(this IGuildUser user)
+        {
+            string msg = $"Are you sure you want to kick {user.Username} from {user.Guild.Name}?";
+            string title = "Kick User";
+            var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
+                await user.KickAsync();
+        }
+
+        public static async void BanUserDialog(this IGuildUser user)
+        {
+            string msg = $"Are you sure you want to ban {user.Username} from {user.Guild.Name}?";
             string title = "Ban User";
             var result = MessageBox.Show(msg, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.OK || result == MessageBoxResult.Yes)
-                (message.Author as SocketGuildUser).BanAsync();
+                await user.BanAsync();
         }
 
         public static async void ShowInvites(this SocketGuild guild)

@@ -46,7 +46,7 @@ namespace Inf1nity_Manager.Browse
 
         public void Init(IUser user)
         {
-            Icon.ImageSource = Tools.ImageTool.GetImageSource(user.GetAvatarUrl());
+            Icon.ImageSource = ImageTool.GetImageSource(user.GetAvatarUrl());
 
             string fullName = user.Username + '#' + user.Discriminator;
             if (user is IGuildUser guildUser && !string.IsNullOrWhiteSpace(guildUser.Nickname))
@@ -60,8 +60,12 @@ namespace Inf1nity_Manager.Browse
                 Nickname.VerticalAlignment = VerticalAlignment.Center;
                 FullName.SetValue(VisibilityProperty, Visibility.Hidden);
             }
-
-
+            // Guild actions
+            foreach (MenuItem item in ContextMenu.Items)
+            {
+                if ((string)item.Tag == "Guild")
+                    item.IsEnabled = user is IGuildUser;
+            }
         }
 
         private void CopyUserID_Click(object sender, RoutedEventArgs e)
@@ -77,6 +81,18 @@ namespace Inf1nity_Manager.Browse
         private void Mention_Click(object sender, RoutedEventArgs e)
         {
             RequestAddContent?.Invoke(this, User.Mention);
+        }
+
+        private void KickUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (User is IGuildUser guildUser)
+                guildUser.KickUserDialog();
+        }
+
+        private void BanUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (User is IGuildUser guildUser)
+                guildUser.BanUserDialog();
         }
     }
 }

@@ -9,16 +9,16 @@
              Background="White"
              BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
              BorderThickness="1">
+    <UserControl.ContextMenu>
+        <ContextMenu Name="ContextMenu">
+            <MenuItem Header="Mention" Click="Mention_Click"/>
+            <MenuItem Header="Copy ID" Click="CopyUserID_Click"/>
+            <MenuItem Header="Copy mention" Click="CopyMention_Click"/>
+            <MenuItem Header="Kick user from guild" Click="KickUser_Click" Tag="Guild"/>
+            <MenuItem Header="Ban user from guild" Click="BanUser_Click" Tag="Guild"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <Grid>
-        <Grid.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Mention" Click="Mention_Click"/>
-                <MenuItem Header="Copy ID" Click="CopyUserID_Click"/>
-                <MenuItem Header="Copy mention" Click="CopyMention_Click"/>
-                <!--<MenuItem Header="Kick user from guild" Click="KickUser_Click"/>
-                <MenuItem Header="Ban user from guild" Click="BanUser_Click"/>-->
-            </ContextMenu>
-        </Grid.ContextMenu>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="40"/>
             <ColumnDefinition/>
