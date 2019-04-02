@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Inf1nity_Manager.Tools;
 
 namespace Inf1nity_Manager.Browse
 {
@@ -34,7 +35,6 @@ namespace Inf1nity_Manager.Browse
 
         public void TextInit()
         {
-            GuildsPanel.DisplayMemberPath = "Name";
             GuildsPanel.ItemsSource = Guilds;
         }
 
@@ -76,5 +76,11 @@ namespace Inf1nity_Manager.Browse
         public void NotifyMessage(Discord.IMessage message) => SelectedGuild?.NotifyMessage(message);
         public void NotifyDeleted(ulong id) => SelectedGuild?.NotifyDeleted(id);
         public void NotifyUpdated(ulong id, Discord.IMessage updatedMessage) => SelectedGuild?.NotifyUpdated(id, updatedMessage);
+
+        private void GetGuildInvites_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var guild = GuildsPanel.SelectedItem as Discord.IGuild;
+            guild.ShowInvites();
+        }
     }
 }

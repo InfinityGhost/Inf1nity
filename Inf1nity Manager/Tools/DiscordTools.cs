@@ -47,7 +47,7 @@ namespace Inf1nity_Manager.Tools
                 await user.BanAsync();
         }
 
-        public static async void ShowInvites(this SocketGuild guild)
+        public static async void ShowInvites(this IGuild guild)
         {
             var allInvites = await guild.GetInvitesAsync();
             var invites = allInvites.Where(inv => !inv.IsTemporary && !inv.IsRevoked).ToList();
