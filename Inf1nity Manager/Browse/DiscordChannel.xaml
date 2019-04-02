@@ -12,8 +12,13 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
         <local:DiscordMessagePanel x:Name="MessagePanel"/>
-        <Controls:CommandProcessor Grid.Row="1" CommandRun="CommandProcessor_CommandRun" Margin="2,1,0,0"
-                                   x:Name="Input"/>
+        <Controls:CommandProcessor Grid.Row="1" Grid.ColumnSpan="2" x:Name="Input"
+                                   CommandRun="CommandProcessor_CommandRun" Margin="2,1,0,0"/>
     </Grid>
 </UserControl>

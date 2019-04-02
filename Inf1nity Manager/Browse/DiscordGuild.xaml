@@ -6,10 +6,11 @@
              xmlns:local="clr-namespace:Inf1nity_Manager.Browse"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Name="ContentGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -21,8 +22,30 @@
                   Background="Transparent" BorderBrush="Transparent" Margin="0,0,1,0"/>
         <!--COLUMN 1-->
         <Label Grid.Column="1" Name="ChannelName" Content="#ChannelName"/>
-        <Border Grid.Column="1" Grid.Row="1" Name="ChannelFrame"/>
+        <Border Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Name="ChannelFrame"/>
         <Rectangle Grid.RowSpan="2" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
-                   HorizontalAlignment="Right" Width="1" />
+                   HorizontalAlignment="Right" Width="1"/>
+        <Expander Name="Expander" Expanded="Expander_Changed" Collapsed="Expander_Changed"
+                  Grid.Column="2" Grid.RowSpan="1" HorizontalAlignment="Right"
+                  ExpandDirection="Left" Background="White">
+            <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0.5,0,0,0"
+                    Margin="5,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Users" Grid.Column="0" HorizontalContentAlignment="Center"/>
+                    <StackPanel Name="Users" MinWidth="100" ScrollViewer.CanContentScroll="True"
+                            Background="Transparent" Margin="5,0" Grid.Row="1">
+                        <StackPanel.Resources>
+                            <Style TargetType="local:DiscordUser">
+                                <Setter Property="Margin" Value="0,2.5,-23,2.5"/>
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Expander>
     </Grid>
 </UserControl>

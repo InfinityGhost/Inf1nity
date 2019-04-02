@@ -3,6 +3,7 @@ using Discord.WebSocket;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Inf1nity_Manager.Browse
@@ -30,6 +31,17 @@ namespace Inf1nity_Manager.Browse
             var sorted = channels.ToList().OrderBy(e => e.Position);
             ChannelsPanel.ItemsSource = sorted;
             ChannelsPanel.SelectionChanged += ChannelsPanel_SelectionChanged;
+
+            foreach (var user in guild.Users)
+            {
+                var dUser = new DiscordUser(user);
+                dUser.RequestAddContent += (u, text) =>
+                {
+                    if (ChannelFrame.Child is DiscordChannel dc)
+                        dc.AddToInputBox(text);
+                };
+                Users.Children.Add(dUser);
+            }
         }
 
         private async void ChannelsPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -70,6 +82,20 @@ namespace Inf1nity_Manager.Browse
             {
                 var dChannel = ChannelFrame.Child as DiscordChannel;
                 dChannel.MessagePanel.UpdateMessage(id, updatedMessage);
+            }
+        }
+
+        private void Expander_Changed(object sender, RoutedEventArgs e)
+        {
+            if (Expander.IsExpanded)
+            {
+                Expander.SetValue(Grid.RowSpanProperty, 2);
+                ChannelFrame.SetValue(Grid.ColumnSpanProperty, 1);
+            }
+            else
+            {
+                Expander.SetValue(Grid.RowSpanProperty, 1);
+                ChannelFrame.SetValue(Grid.ColumnSpanProperty, 2);
             }
         }
     }

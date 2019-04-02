@@ -67,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Browse\DiscordUser.xaml.cs">
+      <DependentUpon>DiscordUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BotStatus.xaml.cs">
       <DependentUpon>BotStatus.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,10 @@
     <Compile Include="Windows\ItemsPopoutWindow.xaml.cs">
       <DependentUpon>ItemsPopoutWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Browse\DiscordUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\BotStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
