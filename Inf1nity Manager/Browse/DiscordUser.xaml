@@ -31,7 +31,7 @@
         <Grid Grid.Column="1" Margin="5">
             <TextBlock Name="Nickname" Text="Nickname"/>
             <TextBlock Name="FullName" Text="FullName#Tag" VerticalAlignment="Bottom"
-                       FontSize="8"/>
+                       FontSize="10"/>
         </Grid>
     </Grid>
 </UserControl>
