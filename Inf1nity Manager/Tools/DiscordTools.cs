@@ -49,14 +49,21 @@ namespace Inf1nity_Manager.Tools
 
         public static async void ShowInvites(this IGuild guild)
         {
-            var allInvites = await guild.GetInvitesAsync();
-            var invites = allInvites.Where(inv => !inv.IsTemporary && !inv.IsRevoked).ToList();
+            try
+            {
+                var allInvites = await guild.GetInvitesAsync();
+                var invites = allInvites.Where(inv => !inv.IsTemporary && !inv.IsRevoked).ToList();
 
-            var urls = invites.ConvertAll(invite => invite.Url);
+                var urls = invites.ConvertAll(invite => invite.Url);
 
-            var win = new ItemsPopoutWindow(urls);
-            win.Title = "Invites";
-            win.ShowDialog();
+                var win = new ItemsPopoutWindow(urls);
+                win.Title = "Invites";
+                win.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message, "GetInvites[Critical]");
+            }
         }
 
         public static async void Delete(this IMessage message)
