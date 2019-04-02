@@ -35,7 +35,7 @@ namespace Inf1nity_Manager
                 $"HResult: {ex.HResult}",
             };
 
-            System.IO.File.AppendAllLines(System.IO.Directory.GetCurrentDirectory() + "\\dump" + ".log", crashDump);
+            System.IO.File.AppendAllLines(System.IO.Directory.GetCurrentDirectory() + "\\crashlog" + ".log", crashDump);
         }
     }
 }

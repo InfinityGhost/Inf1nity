@@ -43,7 +43,7 @@ namespace Inf1nity_Manager.Browse
             var icons = new List<Image>();
             foreach(var guild in Guilds)
             {
-                var source = Tools.ImageTool.GetImageSource(guild.IconUrl);
+                var source = ImageTool.GetImageSource(guild.IconUrl);
                 var image = new Image
                 {
                     Source = source,
