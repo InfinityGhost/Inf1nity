@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Inf1nity_Manager.Tools;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows;
 
 namespace Inf1nity_Manager.Browse
 {
     /// <summary>
     /// Interaction logic for DiscordView.xaml
     /// </summary>
-    public partial class DiscordView : UserControl
+    public partial class DiscordView : UserControl, INotifyPropertyChanged
     {
         public DiscordView()
         {
@@ -22,6 +25,8 @@ namespace Inf1nity_Manager.Browse
             Guilds = guilds;
         }
 
+        #region Properties
+
         List<SocketGuild> _guilds;
         public List<SocketGuild> Guilds
         {
@@ -32,6 +37,20 @@ namespace Inf1nity_Manager.Browse
             }
             get => _guilds;
         }
+
+        public static readonly DependencyProperty UserPanelOpenProperty = DependencyProperty.Register(
+            "UserPanelOpen", typeof(bool), typeof(DiscordView), new PropertyMetadata(false));
+        public bool UserPanelOpen
+        {
+            set
+            {
+                SetValue(UserPanelOpenProperty, value);
+                NotifyPropertyChanged();
+            }
+            get => (bool)GetValue(UserPanelOpenProperty);
+        }
+
+        #endregion
 
         public void TextInit()
         {
@@ -66,8 +85,13 @@ namespace Inf1nity_Manager.Browse
 
         public Task Navigate(SocketGuild guild)
         {
-            GuildFrame.Child = new DiscordGuild(guild);
-            //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
+            var dGuild = new DiscordGuild(guild);
+
+            dGuild.Expander.IsExpanded = UserPanelOpen;
+            GuildFrame.Child = dGuild;
+            var bind = new Binding("UserPanelOpen") { Source = dGuild };
+            SetBinding(UserPanelOpenProperty, bind);
+
             return Task.CompletedTask;
         }
 
@@ -82,5 +106,17 @@ namespace Inf1nity_Manager.Browse
             var guild = GuildsPanel.SelectedItem as Discord.IGuild;
             guild.ShowInvites();
         }
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string PropertyName = "")
+        {
+            if (PropertyName != null)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        #endregion
+
     }
 }

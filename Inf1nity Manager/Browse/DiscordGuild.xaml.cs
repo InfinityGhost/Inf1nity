@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,7 +12,7 @@ namespace Inf1nity_Manager.Browse
     /// <summary>
     /// Interaction logic for DiscordGuild.xaml
     /// </summary>
-    public partial class DiscordGuild : UserControl
+    public partial class DiscordGuild : UserControl, INotifyPropertyChanged
     {
         public DiscordGuild()
         {
@@ -24,6 +25,17 @@ namespace Inf1nity_Manager.Browse
         }
 
         public SocketGuild Guild { set; get; }
+
+        private bool _userpanelopen;
+        public bool UserPanelOpen
+        {
+            set
+            {
+                _userpanelopen = value;
+                NotifyPropertyChanged();
+            }
+            get => _userpanelopen;
+        }
 
         public void Init(SocketGuild guild)
         {
@@ -98,5 +110,17 @@ namespace Inf1nity_Manager.Browse
                 ChannelFrame.SetValue(Grid.ColumnSpanProperty, 2);
             }
         }
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string PropertyName = "")
+        {
+            if (PropertyName != null)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        #endregion
+
     }
 }
