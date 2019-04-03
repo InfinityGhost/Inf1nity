@@ -32,7 +32,7 @@ namespace Inf1nity_Manager.Browse
             ChannelsPanel.ItemsSource = sorted;
             ChannelsPanel.SelectionChanged += ChannelsPanel_SelectionChanged;
 
-            foreach (var user in guild.Users)
+            foreach (var user in guild.Users.OrderBy(u => u.Nickname ?? u.Username))
             {
                 var dUser = new DiscordUser(user);
                 dUser.RequestAddContent += (u, text) =>
