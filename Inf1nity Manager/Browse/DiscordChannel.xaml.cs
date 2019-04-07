@@ -137,7 +137,8 @@ namespace Inf1nity_Manager.Browse
         private async void CommandProcessor_CommandRun(object sender, string e)
         {
             if (!string.IsNullOrWhiteSpace(e))
-                await Channel.SendMessageAsync(e);
+                try { await Channel.SendMessageAsync(e); }
+                catch (Exception ex) { Trace.WriteLine(ex); }
         }
 
         public void AddMessage(IMessage msg)

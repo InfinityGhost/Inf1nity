@@ -34,6 +34,8 @@ namespace Inf1nity_Manager
                 Bot.MessageUpdated += (bot, args) => AppDispatcher.Invoke(() => dV.NotifyUpdated(args.Item2, args.Item1));
                 BrowseFrame.Child = dV;
             });
+
+            Bot.CurrentGame = 'v' + Information.AssemblyVersion;
         }
 
         private void Bot_BotMentioned(object sender, SocketMessage e)

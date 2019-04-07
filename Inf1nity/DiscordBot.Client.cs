@@ -10,6 +10,15 @@ namespace Inf1nity
         public DiscordSocketClient Client { private set; get; } = new DiscordSocketClient();
         public DiscordSocketConfig Configuration { set; get; } = new DiscordSocketConfig();
 
+        public string CurrentGame
+        {
+            set
+            {
+                Client?.SetGameAsync(value);
+                NotifyPropertyChanged();
+            }
+            get => Client?.CurrentUser.Activity.Name;
+        }
 
         #region Event Handlers
 
