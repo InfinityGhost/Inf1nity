@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Inf1nity_Manager.Browse
@@ -28,6 +29,7 @@ namespace Inf1nity_Manager.Browse
 
         public async Task Init()
         {
+            Cursor = Cursors.Wait;
             try
             {
                 var msgs = await Channel.GetMessagesAsync().FlattenAsync();
@@ -56,6 +58,7 @@ namespace Inf1nity_Manager.Browse
 
                 Input.IsEnabled = false;
             }
+            Cursor = default;
         }
 
         #region Tools
