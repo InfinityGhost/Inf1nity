@@ -15,6 +15,6 @@
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <TextBlock Foreground="White" Background="Black" FontFamily="Lucida Console" Padding="2"
                    MouseRightButtonDown="ShowContextMenu"
-                   DataContext="{Binding ElementName=ControlRoot}" Text="{Binding Buffer, Mode=TwoWay}"/>
+                   DataContext="{Binding ElementName=ControlRoot}" Text="{Binding Buffer}"/>
     </ScrollViewer>
 </UserControl>

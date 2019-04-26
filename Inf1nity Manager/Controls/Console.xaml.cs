@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Inf1nity_Manager.Controls
 {
@@ -15,6 +19,8 @@ namespace Inf1nity_Manager.Controls
         public Console()
         {
             InitializeComponent();
+            QueueDispatcher.Tick += DispatchQueue;
+            QueueDispatcher.Start();
         }
 
         #region Properties & Events
@@ -26,7 +32,7 @@ namespace Inf1nity_Manager.Controls
         private string _buffer;
         public string Buffer
         {
-            set
+            private set
             {
                 _buffer = value;
                 NotifyPropertyChanged();
@@ -36,17 +42,51 @@ namespace Inf1nity_Manager.Controls
 
         public bool IsEmpty => string.IsNullOrWhiteSpace(Buffer);
 
+        private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
+        private ConcurrentQueue<string> Queue
+        {
+            set
+            {
+                _queue = value;
+                if (Queue.IsEmpty)
+                    QueueDispatcher.Stop();
+                else
+                    QueueDispatcher.Start();
+            }
+            get => _queue;
+        }
+
+        private DispatcherTimer QueueDispatcher { set; get; } 
+            = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+
         #endregion
 
         #region Methods
 
-        public void Log(object sender, string text) => Log(text);
-        public void Log(object content)
+        public void Log(object sender, string text) => Enqueue(text);
+        public void Log(object content) => Enqueue(content.ToString());
+        
+        #endregion
+
+        #region Queue
+
+        private void Enqueue(string text)
         {
-            if (!IsEmpty)
-                Buffer += Environment.NewLine;
-            Buffer += Prefix + content;
-            Updated?.Invoke(this, content.ToString());
+            Queue.Enqueue(Prefix + text);
+        }
+
+        private void DispatchQueue(object sender, EventArgs e)
+        {
+            while(!Queue.IsEmpty)
+            {
+                if (Queue.TryDequeue(out string line))
+                {
+                    if (!IsEmpty)
+                        Buffer += Environment.NewLine;
+                    Buffer += line;
+                    Updated?.Invoke(this, line);
+                }
+            }
         }
 
         #endregion
