@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Inf1nity.Tools;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -41,6 +45,7 @@ namespace Inf1nity_Manager.Controls
         }
 
         public bool IsEmpty => string.IsNullOrWhiteSpace(Buffer);
+        public int MaxLines { set; get; } = 200;
 
         private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
         private ConcurrentQueue<string> Queue
@@ -61,7 +66,7 @@ namespace Inf1nity_Manager.Controls
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public void Log(object sender, string text) => Enqueue(text);
         public void Log(object content) => Enqueue(content.ToString());
@@ -75,18 +80,34 @@ namespace Inf1nity_Manager.Controls
             Queue.Enqueue(Prefix + text);
         }
 
-        private void DispatchQueue(object sender, EventArgs e)
+        private async void DispatchQueue(object sender, EventArgs e)
         {
-            while(!Queue.IsEmpty)
+            while(Queue.TryDequeue(out string line))
             {
-                if (Queue.TryDequeue(out string line))
-                {
-                    if (!IsEmpty)
-                        Buffer += Environment.NewLine;
-                    Buffer += line;
-                    Updated?.Invoke(this, line);
-                }
+                if (!IsEmpty)
+                    Buffer += Environment.NewLine;
+                Buffer += line;
+                Updated?.Invoke(this, line);
+                ScrollViewer.ScrollToBottom();
             }
+            await ManageLines().ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Memory Management
+
+        private Task ManageLines()
+        {
+            var lines = Buffer.SplitLines();
+            var count = lines.Count();
+            if (count > MaxLines)
+            {
+                var skip = count - MaxLines;
+                lines = lines.Skip(skip);
+                Buffer = lines.Combine();
+            }
+            return Task.CompletedTask;
         }
 
         #endregion

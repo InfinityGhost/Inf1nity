@@ -90,6 +90,7 @@
     <Compile Include="Browse\DiscordView.xaml.cs">
       <DependentUpon>DiscordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\StringTools.cs" />
     <Compile Include="MainWindow.Bot.cs" />
     <Compile Include="MainWindow.Interaction.cs" />
     <Compile Include="ManagerInformation.cs" />
@@ -226,8 +227,6 @@
     <EmbeddedResource Include="Assets\Icon.ico" />
     <Resource Include="Assets\Icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
