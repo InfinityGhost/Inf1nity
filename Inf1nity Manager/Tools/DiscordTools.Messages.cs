@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Inf1nity_Manager.Tools
 {
-    public static class DiscordTools
+    public static partial class DiscordTools
     {
         public static void Copy(this string value) => Clipboard.SetText(value);
 

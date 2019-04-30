@@ -84,7 +84,6 @@ namespace Inf1nity_Manager.Browse
                 EditedTime.SetValue(VisibilityProperty, Visibility.Hidden);
 
             Header.Content = header;
-            MessageContent.Text = Message.Content;
             EditBox.Text = Message.Content;
             EditBox.GotFocus += EditBox_GotFocus;
             EditBox.LostFocus += EditBox_LostFocus;
@@ -118,6 +117,11 @@ namespace Inf1nity_Manager.Browse
             {
                 System.Diagnostics.Trace.WriteLine(ex, "Message.Attachments.get()[Warning]");
             }
+
+            // Message Text
+            MessageContent.Text = null;
+            if (Message.Content != null)
+                MessageContent.Inlines.AddRange(Message.Content.GetInlines());
         }
 
         private void EditBox_KeyDown(object sender, KeyEventArgs e)
